@@ -1,3 +1,5 @@
+import { normalizeImageUrl } from "./imageUrl";
+
 const parseTags = (tags) => {
   if (Array.isArray(tags)) {
     return tags.filter(Boolean).map((tag) => String(tag).trim()).filter(Boolean);
@@ -20,6 +22,28 @@ const pickString = (value, fallback = "") => {
   return String(value).trim() || fallback;
 };
 
+const pickImageValue = (raw = {}) => {
+  const candidates = [
+    raw?.previewImage,
+    raw?.preview_image,
+    raw?.image,
+    raw?.imageUrl,
+    raw?.imageURL,
+    raw?.thumbnail,
+    raw?.thumbnailUrl,
+    raw?.coverImage,
+    raw?.cover,
+    raw?.photo,
+    raw?.img
+  ];
+
+  const found = candidates.find(
+    (candidate) => candidate !== null && candidate !== undefined && String(candidate).trim()
+  );
+
+  return found || "";
+};
+
 const normalizePrompt = (raw, index) => {
   const id = pickString(raw?.id, `prompt-${index + 1}`);
   const title = pickString(raw?.title, "Untitled Prompt");
@@ -34,7 +58,7 @@ const normalizePrompt = (raw, index) => {
     model: pickString(raw?.model, "Any Model"),
     aspectRatio: pickString(raw?.aspectRatio, "Flexible"),
     createdAt: pickString(raw?.createdAt, new Date().toISOString()),
-    previewImage: pickString(raw?.previewImage)
+    previewImage: normalizeImageUrl(pickImageValue(raw))
   };
 };
 

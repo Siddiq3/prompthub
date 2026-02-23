@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaArrowLeft, FaBookmark, FaCopy, FaRegBookmark } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
@@ -6,6 +6,7 @@ import LoadingSkeleton from "../components/LoadingSkeleton";
 import ErrorState from "../components/ErrorState";
 import PromptCard from "../components/PromptCard";
 import MasonryGrid from "../components/MasonryGrid";
+import { getImageCandidates } from "../utils/imageUrl";
 
 const getInitials = (title = "Prompt") =>
   title
@@ -60,7 +61,8 @@ function PromptBlock({ title, value, onCopy, primary = false, copied = false }) 
 function PromptDetails() {
   const { id } = useParams();
   const [copyState, setCopyState] = useState({ prompt: false, negative: false, full: false });
-  const [imageError, setImageError] = useState(false);
+  const [imageAttempt, setImageAttempt] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const {
     prompts,
@@ -79,6 +81,17 @@ function PromptDetails() {
     () => prompts.find((item) => String(item.id) === String(id)),
     [prompts, id]
   );
+  const imageCandidates = useMemo(() => getImageCandidates(prompt?.previewImage), [prompt?.previewImage]);
+  const activeImage = imageCandidates[imageAttempt] || "";
+  const hasImageCandidates = imageCandidates.length > 0;
+  const isImageExhausted = hasImageCandidates && imageAttempt >= imageCandidates.length;
+  const showSkeleton = hasImageCandidates && !imageLoaded && !isImageExhausted;
+  const showFallbackInitials = !hasImageCandidates || isImageExhausted;
+
+  useEffect(() => {
+    setImageAttempt(0);
+    setImageLoaded(false);
+  }, [prompt?.id, prompt?.previewImage]);
 
   const similarPrompts = useMemo(() => {
     if (!prompt) return [];
@@ -141,18 +154,32 @@ function PromptDetails() {
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-4">
           <div className="overflow-hidden rounded-3xl border border-primary/10 bg-white/90 shadow-lift">
-            {prompt.previewImage && !imageError ? (
-              <img
-                src={prompt.previewImage}
-                alt={prompt.title}
-                onError={() => setImageError(true)}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-primary/20 via-cyan-100 to-secondary/20 text-5xl font-black text-primary-dark">
-                {getInitials(prompt.title)}
-              </div>
-            )}
+            <div className="relative aspect-[4/3] w-full bg-slate-100">
+              {activeImage && (
+                <img
+                  src={activeImage}
+                  alt={prompt.title}
+                  loading="lazy"
+                  decoding="async"
+                  onLoad={() => setImageLoaded(true)}
+                  onError={() => {
+                    setImageLoaded(false);
+                    setImageAttempt((prev) => prev + 1);
+                  }}
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
+                    imageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              )}
+              {showSkeleton && (
+                <div className="skeleton-shimmer absolute inset-0 bg-slate-200 dark:bg-slate-700" />
+              )}
+              {showFallbackInitials && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 via-cyan-100 to-secondary/20 text-5xl font-black text-primary-dark">
+                  {getInitials(prompt.title)}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">

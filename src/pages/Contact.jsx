@@ -1,5 +1,5 @@
 import { FaEnvelope, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
-import { WHATSAPP_PHONE } from "../config";
+import { WHATSAPP_CHANNEL_URL } from "../config";
 
 function Contact() {
   return (
@@ -23,7 +23,14 @@ function Contact() {
               </p>
               <p className="flex items-center gap-2">
                 <FaWhatsapp className="text-brand-secondary dark:text-brand-accent" />
-                WhatsApp: +{WHATSAPP_PHONE}
+                <a
+                  href={WHATSAPP_CHANNEL_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-blue-900 underline decoration-blue-300 underline-offset-2 transition hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+                >
+                  Join our WhatsApp Channel
+                </a>
               </p>
               <p className="flex items-center gap-2">
                 <FaPhoneAlt className="text-brand-secondary dark:text-brand-accent" />

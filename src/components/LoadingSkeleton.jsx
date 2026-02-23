@@ -2,17 +2,17 @@ const heights = ["h-36", "h-48", "h-56", "h-44", "h-52", "h-40"];
 
 function LoadingCard({ index }) {
   return (
-    <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-4">
-      <div className={`w-full rounded-xl bg-primary/10 ${heights[index % heights.length]} animate-pulse`} />
-      <div className="mt-4 h-4 w-2/3 animate-pulse rounded bg-primary/10" />
-      <div className="mt-2 h-3 w-1/2 animate-pulse rounded bg-primary/10" />
+    <div className="fade-in-up overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white p-4">
+      <div className={`skeleton-shimmer w-full rounded-xl ${heights[index % heights.length]}`} />
+      <div className="skeleton-shimmer mt-4 h-4 w-2/3 rounded" />
+      <div className="skeleton-shimmer mt-2 h-3 w-1/2 rounded" />
       <div className="mt-4 flex gap-2">
-        <div className="h-7 w-20 animate-pulse rounded-xl bg-primary/10" />
-        <div className="h-7 w-16 animate-pulse rounded-xl bg-primary/10" />
+        <div className="skeleton-shimmer h-7 w-20 rounded-xl" />
+        <div className="skeleton-shimmer h-7 w-16 rounded-xl" />
       </div>
       <div className="mt-4 grid grid-cols-2 gap-2">
-        <div className="h-9 animate-pulse rounded-xl bg-primary/10" />
-        <div className="h-9 animate-pulse rounded-xl bg-primary/10" />
+        <div className="skeleton-shimmer h-9 rounded-xl" />
+        <div className="skeleton-shimmer h-9 rounded-xl" />
       </div>
     </div>
   );

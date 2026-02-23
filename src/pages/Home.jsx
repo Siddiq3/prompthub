@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaRegFolderOpen } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
 import Hero from "../components/Hero";
@@ -8,6 +8,7 @@ import MasonryGrid from "../components/MasonryGrid";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import ErrorState from "../components/ErrorState";
 import AdsensePlaceholder from "../components/AdsensePlaceholder";
+import Pagination from "../components/Pagination";
 
 const getTimestamp = (value) => {
   const timestamp = new Date(value).getTime();
@@ -16,6 +17,8 @@ const getTimestamp = (value) => {
 
 function Home() {
   const [showModal, setShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   const promptsRef = useRef(null);
 
   const {
@@ -82,6 +85,16 @@ function Home() {
     return sorted;
   }, [prompts, filters, searchQuery, sortBy, copyCounts]);
 
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(filteredPrompts.length / itemsPerPage)),
+    [filteredPrompts.length, itemsPerPage]
+  );
+
+  const paginatedPrompts = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredPrompts.slice(start, start + itemsPerPage);
+  }, [filteredPrompts, currentPage, itemsPerPage]);
+
   const mostCopiedTitle = useMemo(() => {
     if (!prompts.length) return "";
 
@@ -97,6 +110,20 @@ function Home() {
   };
 
   const handleCreatePrompt = () => setShowModal(true);
+
+  const handlePageChange = (page) => {
+    const next = Math.min(Math.max(page, 1), totalPages);
+    setCurrentPage(next);
+    promptsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, filters.category, filters.model, filters.aspectRatio, sortBy]);
+
+  useEffect(() => {
+    setCurrentPage((prev) => Math.min(prev, totalPages));
+  }, [totalPages]);
 
   return (
     <>
@@ -125,12 +152,14 @@ function Home() {
           <h2 className="font-heading text-2xl font-semibold tracking-tight text-primary-dark sm:text-3xl">
             Prompt Gallery
           </h2>
-          <p className="text-sm text-slate-500">{filteredPrompts.length} prompts shown</p>
+          <p className="text-sm text-slate-500">
+            {filteredPrompts.length} prompts found • Page {currentPage} of {totalPages}
+          </p>
         </div>
 
         <AdsensePlaceholder label="Responsive Banner Placeholder (Top of Gallery)" />
 
-        {loading && <LoadingSkeleton count={12} />}
+        {loading && <LoadingSkeleton count={itemsPerPage} />}
 
         {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
 
@@ -154,18 +183,34 @@ function Home() {
         )}
 
         {!loading && !error && filteredPrompts.length > 0 && (
-          <MasonryGrid
-            items={filteredPrompts}
-            renderItem={(prompt) => (
-              <PromptCard
-                prompt={prompt}
-                copyCount={copyCounts[prompt.id] || 0}
-                isSaved={savedPrompts.includes(prompt.id)}
-                onCopy={() => copyPrompt(prompt)}
-                onToggleSave={toggleSaved}
-              />
-            )}
-          />
+          <>
+            <MasonryGrid
+              items={paginatedPrompts}
+              renderItem={(prompt) => (
+                <PromptCard
+                  prompt={prompt}
+                  copyCount={copyCounts[prompt.id] || 0}
+                  isSaved={savedPrompts.includes(prompt.id)}
+                  onCopy={() => copyPrompt(prompt)}
+                  onToggleSave={toggleSaved}
+                />
+              )}
+            />
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalItems={filteredPrompts.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={handlePageChange}
+              onItemsPerPageChange={(value) => {
+                setItemsPerPage(value);
+                setCurrentPage(1);
+              }}
+              pageSizeOptions={[12, 24, 36]}
+              itemLabel="prompts"
+            />
+          </>
         )}
       </section>
 

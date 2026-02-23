@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { GITHUB_RAW_URL } from "./config";
 import { AppContext } from "./context/AppContext";
@@ -13,14 +13,17 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Toast from "./components/Toast";
 import WhatsAppFloat from "./components/WhatsAppFloat";
-import Home from "./pages/Home";
-import PromptDetails from "./pages/PromptDetails";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Terms from "./pages/Terms";
-import Disclaimer from "./pages/Disclaimer";
-import Saved from "./pages/Saved";
+import RouteFallback from "./components/RouteFallback";
+import ScrollToTop from "./components/ScrollToTop";
+
+const Home = lazy(() => import("./pages/Home"));
+const PromptDetails = lazy(() => import("./pages/PromptDetails"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+const Saved = lazy(() => import("./pages/Saved"));
 
 const initialFilters = {
   category: "all",
@@ -243,23 +246,24 @@ function App() {
   return (
     <AppContext.Provider value={contextValue}>
       <BrowserRouter>
-        <div className="relative min-h-screen bg-gradient-to-br from-white to-brand-soft font-sans text-slate-900 antialiased transition-colors duration-300 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
-          <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(11,31,58,0.06),transparent_60%),radial-gradient(ellipse_at_bottom,rgba(56,189,248,0.08),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(56,189,248,0.08),transparent_60%),radial-gradient(ellipse_at_bottom,rgba(17,24,39,0.35),transparent_65%)]" />
-
+        <ScrollToTop />
+        <div className="relative min-h-screen bg-white font-sans text-slate-900 antialiased transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
           <Navbar />
 
           <main className="mx-auto w-full max-w-7xl px-4 pb-20 pt-6 sm:px-6 lg:px-8">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/prompt/:id" element={<PromptDetails />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/disclaimer" element={<Disclaimer />} />
-              <Route path="/saved" element={<Saved />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <Suspense fallback={<RouteFallback />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/prompt/:id" element={<PromptDetails />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
+                <Route path="/saved" element={<Saved />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
           </main>
 
           <Footer />

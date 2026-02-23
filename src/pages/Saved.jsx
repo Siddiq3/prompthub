@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaImages } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
@@ -5,8 +6,12 @@ import MasonryGrid from "../components/MasonryGrid";
 import PromptCard from "../components/PromptCard";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import ErrorState from "../components/ErrorState";
+import Pagination from "../components/Pagination";
 
 function Saved() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const savedRef = useRef(null);
   const {
     prompts,
     loading,
@@ -18,19 +23,47 @@ function Saved() {
     copyPrompt
   } = useAppContext();
 
-  const savedItems = prompts.filter((prompt) => savedPrompts.includes(prompt.id));
+  const savedItems = useMemo(
+    () => prompts.filter((prompt) => savedPrompts.includes(prompt.id)),
+    [prompts, savedPrompts]
+  );
+
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(savedItems.length / itemsPerPage)),
+    [savedItems.length, itemsPerPage]
+  );
+
+  const paginatedSavedItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return savedItems.slice(start, start + itemsPerPage);
+  }, [savedItems, currentPage, itemsPerPage]);
+
+  const handlePageChange = (page) => {
+    const next = Math.min(Math.max(page, 1), totalPages);
+    setCurrentPage(next);
+    savedRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    setCurrentPage((prev) => Math.min(prev, totalPages));
+  }, [totalPages]);
 
   return (
-    <section className="space-y-6">
+    <section ref={savedRef} className="space-y-6">
       <header className="rounded-3xl border border-primary/10 bg-white/84 p-6 shadow-soft backdrop-blur">
         <h1 className="flex items-center gap-2 font-heading text-4xl font-bold tracking-tight text-primary-dark">
           <FaBookmark className="text-primary" />
           Saved Prompts
         </h1>
         <p className="mt-2 text-sm text-slate-600">Your bookmarked prompts are stored in localStorage on this device.</p>
+        {savedItems.length > 0 && (
+          <p className="mt-2 text-sm text-slate-500">
+            {savedItems.length} saved prompts • Page {currentPage} of {totalPages}
+          </p>
+        )}
       </header>
 
-      {loading && <LoadingSkeleton count={8} />}
+      {loading && <LoadingSkeleton count={itemsPerPage} />}
 
       {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
 
@@ -53,18 +86,34 @@ function Saved() {
       )}
 
       {!loading && !error && savedItems.length > 0 && (
-        <MasonryGrid
-          items={savedItems}
-          renderItem={(item) => (
-            <PromptCard
-              prompt={item}
-              copyCount={copyCounts[item.id] || 0}
-              isSaved={savedPrompts.includes(item.id)}
-              onCopy={() => copyPrompt(item)}
-              onToggleSave={toggleSaved}
-            />
-          )}
-        />
+        <>
+          <MasonryGrid
+            items={paginatedSavedItems}
+            renderItem={(item) => (
+              <PromptCard
+                prompt={item}
+                copyCount={copyCounts[item.id] || 0}
+                isSaved={savedPrompts.includes(item.id)}
+                onCopy={() => copyPrompt(item)}
+                onToggleSave={toggleSaved}
+              />
+            )}
+          />
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={savedItems.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            onItemsPerPageChange={(value) => {
+              setItemsPerPage(value);
+              setCurrentPage(1);
+            }}
+            pageSizeOptions={[8, 16, 24]}
+            itemLabel="saved prompts"
+          />
+        </>
       )}
     </section>
   );
