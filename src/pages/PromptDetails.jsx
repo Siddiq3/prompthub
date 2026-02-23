@@ -18,9 +18,9 @@ const getInitials = (title = "Prompt") =>
 
 function InfoItem({ label, value }) {
   return (
-    <div className="rounded-2xl border border-primary/10 bg-white/86 p-4 shadow-soft">
+    <div className="rounded-xl border border-primary/12 bg-white/90 p-4 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
       <p className="text-xs uppercase tracking-[0.12em] text-slate-500">{label}</p>
-      <p className="mt-1 text-sm font-semibold text-primary-dark">{value || "-"}</p>
+      <p className="mt-1 text-sm font-semibold text-primary-dark dark:text-slate-100">{value || "-"}</p>
     </div>
   );
 }
@@ -29,18 +29,22 @@ function PromptBlock({ title, value, onCopy, primary = false, copied = false }) 
   return (
     <div
       className={`rounded-2xl border p-4 shadow-soft ${
-        primary ? "border-primary-dark bg-primary-dark text-white" : "border-primary/10 bg-white/86"
+        primary
+          ? "border-primary-dark bg-primary-dark text-white"
+          : "border-primary/12 bg-white/90 dark:border-white/10 dark:bg-white/[0.03]"
       }`}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h3 className={`text-sm font-semibold ${primary ? "text-white" : "text-primary-dark"}`}>{title}</h3>
+        <h3 className={`text-sm font-semibold ${primary ? "text-white" : "text-primary-dark dark:text-slate-100"}`}>
+          {title}
+        </h3>
         <button
           type="button"
           onClick={onCopy}
           className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 ${
             primary
               ? "border border-white/30 bg-white/15 text-white hover:bg-white/25"
-              : "border border-blue-900 bg-white text-blue-900 hover:bg-blue-50"
+              : "border border-primary/25 bg-white text-primary hover:bg-indigo-50 dark:border-white/15 dark:bg-white/[0.05] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
           }`}
         >
           <FaCopy />
@@ -49,7 +53,7 @@ function PromptBlock({ title, value, onCopy, primary = false, copied = false }) 
       </div>
       <pre
         className={`overflow-x-auto whitespace-pre-wrap break-words rounded-xl p-4 font-mono text-sm leading-relaxed ${
-          primary ? "bg-white/10 text-slate-100" : "bg-primary/5 text-ink/80"
+          primary ? "bg-white/10 text-slate-100" : "bg-primary/5 text-ink/80 dark:text-slate-300"
         }`}
       >
         {value || "No text available"}
@@ -135,7 +139,7 @@ function PromptDetails() {
       <div className="flex items-center justify-between gap-3">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 rounded-xl border border-blue-900 bg-white px-4 py-2 text-sm font-semibold text-blue-900 transition hover:bg-blue-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+          className="inline-flex items-center gap-2 rounded-lg border border-primary/25 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60 dark:border-white/15 dark:bg-white/[0.03] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
         >
           <FaArrowLeft />
           Back
@@ -144,7 +148,7 @@ function PromptDetails() {
         <button
           type="button"
           onClick={() => toggleSaved(prompt.id)}
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
         >
           {savedPrompts.includes(prompt.id) ? <FaBookmark /> : <FaRegBookmark />}
           {savedPrompts.includes(prompt.id) ? "Saved" : "Save Prompt"}
@@ -153,7 +157,7 @@ function PromptDetails() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-4">
-          <div className="overflow-hidden rounded-3xl border border-primary/10 bg-white/90 shadow-lift">
+          <div className="overflow-hidden rounded-xl border border-primary/12 bg-white/90 shadow-lift dark:border-white/10 dark:bg-white/[0.03]">
             <div className="relative aspect-[4/3] w-full bg-slate-100">
               {activeImage && (
                 <img
@@ -193,7 +197,7 @@ function PromptDetails() {
         </div>
 
         <div className="space-y-4">
-          <h1 className="font-heading text-3xl font-bold tracking-tight text-primary-dark sm:text-4xl">
+          <h1 className="font-heading text-3xl font-bold tracking-tight text-primary-dark dark:text-slate-100 sm:text-4xl">
             {prompt.title}
           </h1>
 
@@ -233,7 +237,7 @@ function PromptDetails() {
       {similarPrompts.length > 0 && (
         <section className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-heading text-2xl font-bold text-primary-dark">Similar prompts</h2>
+            <h2 className="font-heading text-2xl font-bold text-primary-dark dark:text-slate-100">Similar prompts</h2>
             <p className="text-sm text-slate-500">{similarPrompts.length} matches</p>
           </div>
 

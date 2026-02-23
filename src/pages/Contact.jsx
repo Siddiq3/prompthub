@@ -3,9 +3,9 @@ import { WHATSAPP_CHANNEL_URL } from "../config";
 
 function Contact() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-brand-soft dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
-      <div className="max-w-4xl mx-auto px-6 py-16">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-white to-brand-soft transition-colors duration-300 dark:from-[#020617] dark:to-[#0b0e14]">
+      <div className="mx-auto max-w-4xl px-6 py-16">
+        <h1 className="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-4xl">
           Contact Us
         </h1>
         <p className="mt-4 text-slate-600 dark:text-slate-400">
@@ -14,7 +14,7 @@ function Contact() {
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <section className="rounded-2xl border border-brand-border bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+          <section className="rounded-xl border border-brand-border bg-white/95 p-5 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
             <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Direct Contact</h2>
             <div className="mt-4 space-y-3 text-slate-600 dark:text-slate-400">
               <p className="flex items-center gap-2">
@@ -27,7 +27,7 @@ function Contact() {
                   href={WHATSAPP_CHANNEL_URL}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-medium text-blue-900 underline decoration-blue-300 underline-offset-2 transition hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200"
+                  className="font-medium text-primary underline decoration-primary-light/60 underline-offset-2 transition hover:text-primary-light dark:text-indigo-300 dark:hover:text-indigo-200"
                 >
                   Join our WhatsApp Channel
                 </a>
@@ -39,7 +39,7 @@ function Contact() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-brand-border bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+          <section className="rounded-xl border border-brand-border bg-white/95 p-5 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
             <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Before You Message</h2>
             <p className="mt-2 text-slate-600 dark:text-slate-400">
               For faster support, include a clear subject such as "Policy Question", "Ad Issue", "Prompt

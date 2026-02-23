@@ -16,14 +16,16 @@ function StatItem({ label, value }) {
 
 function Hero({ onExplore, onCreate, totalPrompts, categoriesCount, mostCopiedTitle }) {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-blue-50 p-6 dark:from-slate-950 dark:to-slate-900 sm:p-8">
+    <section className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white via-indigo-50/80 to-white p-6 shadow-soft dark:border-white/10 dark:bg-gradient-to-br dark:from-[#0b0e14] dark:via-[#111827] dark:to-[#020617] sm:p-8">
+      <div className="pointer-events-none absolute -left-20 -top-14 h-56 w-56 rounded-full bg-gradient-to-br from-primary-light/20 to-transparent blur-3xl dark:from-primary-light/30" />
+      <div className="pointer-events-none absolute -bottom-20 -right-16 h-56 w-56 rounded-full bg-gradient-to-br from-secondary/15 to-transparent blur-3xl dark:from-secondary/25" />
       <div className="relative z-10 max-w-3xl">
-        <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1 text-xs font-medium text-brand-secondary dark:border-slate-700 dark:bg-slate-900 dark:text-brand-accent">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white px-3 py-1 text-xs font-medium text-brand-secondary dark:border-white/15 dark:bg-white/5 dark:text-brand-accent">
           <FaWandMagicSparkles />
           Premium prompt library
         </span>
 
-        <h1 className="mt-4 font-heading text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-5xl">
+        <h1 className="hero-fluid-title mt-4 font-heading font-bold text-slate-900 dark:text-slate-100">
           Craft standout visuals with curated photo prompts
         </h1>
 
@@ -35,7 +37,7 @@ function Hero({ onExplore, onCreate, totalPrompts, categoriesCount, mostCopiedTi
           <button
             type="button"
             onClick={onExplore}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+            className="btn-shimmer inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
           >
             Explore Prompts
             <FaArrowRight className="text-xs" />
@@ -44,13 +46,13 @@ function Hero({ onExplore, onCreate, totalPrompts, categoriesCount, mostCopiedTi
           <button
             type="button"
             onClick={onCreate}
-            className="rounded-xl border border-blue-900 bg-white px-5 py-3 text-sm font-semibold text-blue-900 transition hover:bg-blue-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:border-blue-700 dark:bg-slate-900 dark:text-blue-300 dark:hover:bg-slate-800"
+            className="rounded-lg border border-primary/25 bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60 dark:border-white/20 dark:bg-white/5 dark:text-indigo-200 dark:hover:bg-white/10"
           >
             Create Prompt
           </button>
         </div>
 
-        <div className="mt-7 grid gap-5 border-t border-brand-border pt-5 dark:border-slate-700 sm:grid-cols-3">
+        <div className="mt-7 grid gap-5 border-t border-brand-border pt-5 dark:border-white/10 sm:grid-cols-3">
           <StatItem label="Total Prompts" value={totalPrompts} />
           <StatItem label="Categories" value={categoriesCount} />
           <StatItem label="Most Copied" value={mostCopiedTitle || "No copies yet"} />

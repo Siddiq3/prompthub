@@ -247,7 +247,13 @@ function App() {
     <AppContext.Provider value={contextValue}>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="relative min-h-screen bg-white font-sans text-slate-900 antialiased transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+        <div className="relative min-h-screen bg-white font-sans text-slate-900 antialiased transition-colors duration-300 dark:bg-[#020617] dark:text-slate-100">
+          <div className="pointer-events-none fixed inset-0 -z-10 hidden dark:block">
+            <div className="absolute -left-28 top-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.18)_0%,rgba(99,102,241,0)_70%)] blur-3xl" />
+            <div className="absolute right-[-9rem] top-[24%] h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(129,140,248,0.18)_0%,rgba(129,140,248,0)_70%)] blur-3xl" />
+            <div className="absolute bottom-[-9rem] left-[25%] h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.13)_0%,rgba(16,185,129,0)_70%)] blur-3xl" />
+          </div>
+
           <Navbar />
 
           <main className="mx-auto w-full max-w-7xl px-4 pb-20 pt-6 sm:px-6 lg:px-8">

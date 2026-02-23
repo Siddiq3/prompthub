@@ -149,7 +149,7 @@ function Home() {
 
       <section ref={promptsRef} className="mt-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-heading text-2xl font-semibold tracking-tight text-primary-dark sm:text-3xl">
+          <h2 className="font-heading text-2xl font-semibold tracking-tight text-primary-dark dark:text-slate-100 sm:text-3xl">
             Prompt Gallery
           </h2>
           <p className="text-sm text-slate-500">
@@ -164,18 +164,20 @@ function Home() {
         {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
 
         {!loading && !error && filteredPrompts.length === 0 && (
-          <div className="rounded-3xl border border-primary/10 bg-white/84 p-10 text-center shadow-soft">
+          <div className="rounded-xl border border-primary/12 bg-white/90 p-10 text-center shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
             <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
               <FaRegFolderOpen className="text-xl" />
             </div>
-            <h3 className="mt-4 font-heading text-2xl font-semibold text-primary-dark">No prompts found</h3>
+            <h3 className="mt-4 font-heading text-2xl font-semibold text-primary-dark dark:text-slate-100">
+              No prompts found
+            </h3>
             <p className="mx-auto mt-2 max-w-lg text-sm text-slate-600">
               Try a different keyword or clear your filters to view more prompt ideas.
             </p>
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-5 rounded-xl bg-blue-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+              className="mt-5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
             >
               Clear filters
             </button>
@@ -216,16 +218,16 @@ function Home() {
 
       {showModal && (
         <div className="fixed inset-0 z-[80] grid place-items-center bg-ink/45 px-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-3xl border border-primary/12 bg-white p-6 text-primary-dark shadow-lift">
+          <div className="w-full max-w-md rounded-xl border border-primary/12 bg-white p-6 text-primary-dark shadow-lift dark:border-white/10 dark:bg-[#0b0e14] dark:text-slate-100">
             <h3 className="font-heading text-2xl font-semibold">Create Prompt</h3>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
               Submission flow is coming soon. For now, use the WhatsApp button to request custom prompts.
             </p>
             <div className="mt-5 flex justify-end">
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="rounded-xl bg-blue-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+                className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
               >
                 Close
               </button>

@@ -50,7 +50,7 @@ function Saved() {
 
   return (
     <section ref={savedRef} className="space-y-6">
-      <header className="rounded-3xl border border-primary/10 bg-white/84 p-6 shadow-soft backdrop-blur">
+      <header className="rounded-xl border border-primary/12 bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/[0.03]">
         <h1 className="flex items-center gap-2 font-heading text-4xl font-bold tracking-tight text-primary-dark">
           <FaBookmark className="text-primary" />
           Saved Prompts
@@ -68,7 +68,7 @@ function Saved() {
       {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
 
       {!loading && !error && savedItems.length === 0 && (
-        <div className="rounded-3xl border border-primary/10 bg-white/84 p-10 text-center shadow-soft">
+        <div className="rounded-xl border border-primary/12 bg-white/90 p-10 text-center shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
           <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <FaImages className="text-xl" />
           </div>
@@ -78,7 +78,7 @@ function Saved() {
           </p>
           <Link
             to="/"
-            className="mt-5 inline-flex rounded-xl bg-blue-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+            className="mt-5 inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
           >
             Explore prompts
           </Link>

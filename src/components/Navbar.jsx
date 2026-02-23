@@ -22,8 +22,8 @@ const policyLinks = [
 const linkClass = ({ isActive }) =>
   `rounded-xl px-3 py-2 text-sm font-medium transition ${
     isActive
-      ? "bg-white/15 text-white"
-      : "text-white/90 hover:text-blue-200 hover:bg-white/10"
+      ? "bg-white/15 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]"
+      : "text-white/90 hover:bg-white/10 hover:text-indigo-200"
   } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200`;
 
 function Navbar() {
@@ -36,7 +36,7 @@ function Navbar() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-blue-800 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-[#111827] via-[#0f172a] to-[#111827] text-white shadow-sm backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
@@ -55,7 +55,7 @@ function Navbar() {
               value={searchQuery}
               onChange={setSearchQuery}
               placeholder="Search by title, tags, or category"
-              className="mx-auto max-w-xl border-white/30 bg-white/95 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+              className="mx-auto max-w-xl border-white/20 bg-white/95 dark:border-white/15 dark:bg-white/[0.06] dark:text-slate-100"
             />
           </div>
         )}
@@ -96,13 +96,13 @@ function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="border-t border-blue-800 bg-blue-900 px-4 pb-4 pt-3 lg:hidden">
+        <div className="border-t border-white/10 bg-[#0f172a]/95 px-4 pb-4 pt-3 lg:hidden backdrop-blur">
           {showSearch && (
             <SearchBar
               value={searchQuery}
               onChange={setSearchQuery}
               placeholder="Search prompts"
-              className="mb-3 border-white/30 bg-white/95 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+              className="mb-3 border-white/20 bg-white/95 dark:border-white/15 dark:bg-white/[0.06] dark:text-slate-100"
             />
           )}
 

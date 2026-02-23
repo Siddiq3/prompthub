@@ -1,7 +1,7 @@
 import { FaBroom, FaSort } from "react-icons/fa6";
 
 const selectBaseClass =
-  "rounded-xl border border-brand-border bg-white px-4 py-2 text-sm font-medium text-slate-700 outline-none transition duration-300 focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/40 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200";
+  "rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-slate-700 outline-none transition duration-300 focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/40 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-200";
 
 function FilterBar({
   categories,
@@ -22,7 +22,7 @@ function FilterBar({
   ].filter(Boolean);
 
   return (
-    <section className="sticky top-16 z-40 mt-4">
+    <section className="sticky top-16 z-40 mt-4 rounded-xl border border-slate-200/80 bg-white/90 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/[0.03]">
       <div className="overflow-x-auto px-3 py-3 sm:px-4">
         <div className="flex min-w-max items-center gap-2">
           <select
@@ -67,7 +67,7 @@ function FilterBar({
             ))}
           </select>
 
-          <label className="inline-flex items-center gap-2 rounded-xl border border-brand-border bg-white px-4 py-2 text-sm font-medium text-slate-700 transition duration-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          <label className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-slate-700 transition duration-300 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-200">
             <FaSort className="text-brand-secondary dark:text-brand-accent" />
             <span className="sr-only">Sort prompts</span>
             <select
@@ -85,7 +85,7 @@ function FilterBar({
           <button
             type="button"
             onClick={onClear}
-            className="inline-flex items-center gap-2 rounded-xl border border-blue-900 bg-white px-4 py-2 text-sm font-semibold text-blue-900 transition hover:bg-blue-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:border-blue-700 dark:bg-slate-900 dark:text-blue-300 dark:hover:bg-slate-800"
+            className="inline-flex items-center gap-2 rounded-lg border border-primary/25 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/50 dark:border-white/15 dark:bg-white/[0.03] dark:text-indigo-200 dark:hover:bg-white/[0.08]"
           >
             <FaBroom />
             Clear filters

@@ -38,7 +38,7 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
   };
 
   return (
-    <article className="group relative isolate overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white transition duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-blue-400">
+    <article className="group relative isolate overflow-hidden rounded-2xl border border-slate-200/90 bg-white/95 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-primary-light/45 hover:shadow-[0_18px_40px_-28px_rgba(99,102,241,0.6)] dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-primary-light/55 dark:hover:shadow-[0_22px_46px_-30px_rgba(99,102,241,0.55)]">
       <div className="relative aspect-[4/3] w-full bg-slate-100 dark:bg-slate-800">
         {activeImage && (
           <img
@@ -65,7 +65,7 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
           </div>
         )}
 
-        <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#162f5e]/82 via-[#1f3b73]/32 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#0f1c3f]/82 via-[#1b2958]/28 to-transparent" />
 
         <div className="absolute left-3 right-3 top-3 z-20 flex items-center justify-between">
           <span className="rounded-full border border-white/35 bg-primary-dark/35 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
@@ -80,7 +80,7 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-primary-dark/45 text-white transition hover:bg-primary-dark/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-primary-dark/45 text-white transition hover:bg-primary-dark/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
             aria-label={`Copy ${prompt.title}`}
           >
             {copied ? <FaCheck className="text-emerald-300" /> : <FaCopy />}
@@ -88,7 +88,7 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
           <button
             type="button"
             onClick={() => onToggleSave(prompt.id)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-primary-dark/45 text-white transition hover:bg-primary-dark/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-primary-dark/45 text-white transition hover:bg-primary-dark/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
             aria-label={isSaved ? `Unsave ${prompt.title}` : `Save ${prompt.title}`}
           >
             {isSaved ? <FaBookmark className="text-secondary-light" /> : <FaRegBookmark />}
@@ -113,7 +113,7 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white/95 px-3 py-2 text-sm font-semibold text-blue-900 transition hover:bg-blue-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:border-blue-700 dark:bg-slate-900/95 dark:text-blue-200 dark:hover:bg-slate-800"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-primary/20 bg-white/95 px-3 py-2 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60 dark:border-white/15 dark:bg-white/[0.08] dark:text-indigo-200 dark:hover:bg-white/[0.14]"
             >
               {copied ? <FaCheck className="text-emerald-500" /> : <FaCopy />}
               {copied ? "Copied" : "Copy"}
@@ -121,7 +121,7 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
 
             <Link
               to={`/prompt/${prompt.id}`}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
             >
               <FaExpand />
               Details

@@ -40,18 +40,18 @@ function Pagination({
   const to = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-primary/10 bg-white/90 p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
-      <div className="text-sm text-slate-600">
+    <div className="flex flex-col gap-3 rounded-xl border border-primary/12 bg-white/90 p-4 shadow-soft backdrop-blur sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="text-sm text-slate-600 dark:text-slate-400">
         Showing <span className="font-semibold text-primary-dark">{from}</span>-
         <span className="font-semibold text-primary-dark">{to}</span> of{" "}
         <span className="font-semibold text-primary-dark">{totalItems}</span> {itemLabel}
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <label className="inline-flex items-center gap-2 text-sm text-slate-600">
+        <label className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
           <span>Per page</span>
           <select
-            className="rounded-lg border border-primary/20 bg-white px-2 py-1 text-sm text-primary-dark outline-none transition focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+            className="rounded-lg border border-primary/20 bg-white px-2 py-1 text-sm text-primary-dark outline-none transition focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/40 dark:border-white/15 dark:bg-white/[0.06] dark:text-indigo-200"
             value={itemsPerPage}
             onChange={(event) => onItemsPerPageChange(Number(event.target.value))}
             aria-label="Items per page"
@@ -69,7 +69,7 @@ function Pagination({
             type="button"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-primary/20 bg-white text-primary-dark transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-primary/20 bg-white text-primary-dark transition hover:bg-indigo-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/15 dark:bg-white/[0.06] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
             aria-label="Previous page"
           >
             <FaChevronLeft />
@@ -88,8 +88,8 @@ function Pagination({
                 aria-current={item === currentPage ? "page" : undefined}
                 className={`inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-semibold transition ${
                   item === currentPage
-                    ? "bg-blue-900 text-white"
-                    : "border border-primary/20 bg-white text-primary-dark hover:bg-blue-50"
+                    ? "bg-primary text-white"
+                    : "border border-primary/20 bg-white text-primary-dark hover:bg-indigo-50 dark:border-white/15 dark:bg-white/[0.06] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
                 }`}
               >
                 {item}
@@ -101,7 +101,7 @@ function Pagination({
             type="button"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-primary/20 bg-white text-primary-dark transition hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-primary/20 bg-white text-primary-dark transition hover:bg-indigo-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/15 dark:bg-white/[0.06] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
             aria-label="Next page"
           >
             <FaChevronRight />
