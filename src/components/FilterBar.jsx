@@ -1,110 +1,132 @@
-import { FaBroom, FaSort } from "react-icons/fa6";
+import SearchBar from "./SearchBar";
 
-const selectBaseClass =
-  "rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-slate-700 outline-none transition duration-300 focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/40 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-200";
+const selectClass =
+  "h-11 rounded-full border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/30";
 
 function FilterBar({
+  searchQuery,
+  onSearchChange,
   categories,
   models,
   aspectRatios,
-  filters,
-  onFilterChange,
+  activeCategory,
+  activeModel,
+  activeRatio,
+  activeTag,
+  topTags,
   sortBy,
+  onFilterChange,
+  onTagChange,
   onSortChange,
-  onClear,
-  searchQuery
+  onClear
 }) {
-  const activePills = [
-    filters.category !== "all" ? `Category: ${filters.category}` : null,
-    filters.model !== "all" ? `Model: ${filters.model}` : null,
-    filters.aspectRatio !== "all" ? `Ratio: ${filters.aspectRatio}` : null,
-    searchQuery ? `Search: ${searchQuery}` : null
+  const pills = [
+    searchQuery ? `Search: ${searchQuery}` : null,
+    activeCategory !== "all" ? `Category: ${activeCategory}` : null,
+    activeModel !== "all" ? `Model: ${activeModel}` : null,
+    activeRatio !== "all" ? `Ratio: ${activeRatio}` : null,
+    activeTag ? `Tag: ${activeTag}` : null
   ].filter(Boolean);
 
   return (
-    <section className="sticky top-16 z-40 mt-4 rounded-xl border border-slate-200/80 bg-white/90 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/[0.03]">
-      <div className="overflow-x-auto px-3 py-3 sm:px-4">
-        <div className="flex min-w-max items-center gap-2">
-          <select
-            className={selectBaseClass}
-            value={filters.category}
-            onChange={(event) => onFilterChange("category", event.target.value)}
-            aria-label="Filter by category"
-          >
-            <option value="all">All Categories</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className={selectBaseClass}
-            value={filters.model}
-            onChange={(event) => onFilterChange("model", event.target.value)}
-            aria-label="Filter by model"
-          >
-            <option value="all">All Models</option>
-            {models.map((model) => (
-              <option key={model} value={model}>
-                {model}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className={selectBaseClass}
-            value={filters.aspectRatio}
-            onChange={(event) => onFilterChange("aspectRatio", event.target.value)}
-            aria-label="Filter by aspect ratio"
-          >
-            <option value="all">All Aspect Ratios</option>
-            {aspectRatios.map((ratio) => (
-              <option key={ratio} value={ratio}>
-                {ratio}
-              </option>
-            ))}
-          </select>
-
-          <label className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-slate-700 transition duration-300 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-200">
-            <FaSort className="text-brand-secondary dark:text-brand-accent" />
-            <span className="sr-only">Sort prompts</span>
-            <select
-              className="bg-transparent outline-none"
-              value={sortBy}
-              onChange={(event) => onSortChange(event.target.value)}
-              aria-label="Sort prompts"
-            >
-              <option value="newest">Newest</option>
-              <option value="oldest">Oldest</option>
-              <option value="mostCopied">Most Copied</option>
-            </select>
-          </label>
-
-          <button
-            type="button"
-            onClick={onClear}
-            className="inline-flex items-center gap-2 rounded-lg border border-primary/25 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/50 dark:border-white/15 dark:bg-white/[0.03] dark:text-indigo-200 dark:hover:bg-white/[0.08]"
-          >
-            <FaBroom />
-            Clear filters
-          </button>
-        </div>
+    <section className="sticky top-16 z-30 rounded-[2rem] border border-slate-200 bg-white/92 p-4 shadow-soft backdrop-blur">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,1.6fr)_repeat(4,minmax(0,1fr))]">
+        <SearchBar
+          value={searchQuery}
+          onChange={onSearchChange}
+          showButton={false}
+          placeholder="Search AI photo prompts, tags, models, or categories"
+        />
+        <select
+          className={selectClass}
+          value={activeCategory}
+          onChange={(event) => onFilterChange("category", event.target.value)}
+          aria-label="Filter prompts by category"
+        >
+          <option value="all">All categories</option>
+          {categories.map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        <select
+          className={selectClass}
+          value={activeModel}
+          onChange={(event) => onFilterChange("model", event.target.value)}
+          aria-label="Filter prompts by model"
+        >
+          <option value="all">All models</option>
+          {models.map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        <select
+          className={selectClass}
+          value={activeRatio}
+          onChange={(event) => onFilterChange("ratio", event.target.value)}
+          aria-label="Filter prompts by aspect ratio"
+        >
+          <option value="all">All ratios</option>
+          {aspectRatios.map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        <select
+          className={selectClass}
+          value={sortBy}
+          onChange={(event) => onSortChange(event.target.value)}
+          aria-label="Sort prompts"
+        >
+          <option value="latest">Latest</option>
+          <option value="popular">Popular</option>
+          <option value="featured">Featured</option>
+        </select>
       </div>
 
-      {activePills.length > 0 && (
-        <div className="flex flex-wrap gap-2 px-3 pb-3 pt-2 sm:px-4">
-          {activePills.map((pill) => (
-            <span
-              key={pill}
-              className="rounded-full border border-brand-accent/35 bg-brand-accent/10 px-3 py-1 text-xs font-medium text-brand-secondary dark:border-brand-accent/50 dark:bg-brand-accent/20 dark:text-brand-accent"
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        {topTags.map((item) => {
+          const active = activeTag === item.name;
+          return (
+            <button
+              key={item.name}
+              type="button"
+              onClick={() => onTagChange(active ? "" : item.name)}
+              className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 ${
+                active
+                  ? "bg-brand-ink text-white"
+                  : "border border-slate-200 bg-slate-50 text-slate-600 hover:border-brand-accent hover:text-brand-ink"
+              }`}
             >
-              {pill}
+              {item.name} <span className="opacity-70">({item.count})</span>
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          onClick={onClear}
+          className="ml-auto rounded-full border border-brand-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-brand-ink transition hover:bg-brand-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+        >
+          Clear all
+        </button>
+      </div>
+
+      {pills.length ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {pills.map((item) => (
+            <span
+              key={item}
+              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-slate-500"
+            >
+              {item}
             </span>
           ))}
         </div>
-      )}
+      ) : null}
     </section>
   );
 }

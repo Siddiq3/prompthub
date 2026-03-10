@@ -3,7 +3,9 @@ import { FaMoon, FaSun } from "react-icons/fa";
 
 function ThemeToggle() {
   const [theme, setTheme] = useState(() =>
-    document.documentElement.classList.contains("dark") ? "dark" : "light"
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light"
   );
 
   useEffect(() => {
@@ -18,7 +20,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition duration-300 hover:border-indigo-300 hover:text-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/60"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-ink transition duration-300 hover:border-brand-accent hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/30"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Light mode" : "Dark mode"}
     >

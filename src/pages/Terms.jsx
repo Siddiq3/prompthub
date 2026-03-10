@@ -1,65 +1,111 @@
+import ContentPageLayout from "../components/ContentPageLayout";
+import { SITE_NAME, SUPPORT_EMAIL } from "../config";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "../seo/schema";
+
 function Terms() {
+  const breadcrumbs = [
+    { label: "Home", to: "/" },
+    { label: "Terms & Conditions", to: "/terms" }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-brand-soft transition-colors duration-300 dark:from-[#020617] dark:to-[#0b0e14]">
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <h1 className="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-4xl">
-          Terms & Conditions
-        </h1>
-        <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-          Effective date: February 22, 2026
+    <ContentPageLayout
+      title="Terms & Conditions"
+      description="These Terms & Conditions explain how PhotoPromptsHub may be used, how prompts and example content should be treated, and why AI image results cannot be guaranteed."
+      path="/terms"
+      seoTitle="Terms & Conditions for PhotoPromptsHub"
+      seoDescription="Read the PhotoPromptsHub Terms & Conditions for using AI prompts, example images, third-party platforms, and site content responsibly."
+      breadcrumbs={breadcrumbs}
+      eyebrow="Terms & Conditions"
+      meta={["Effective March 10, 2026", "Applies to global visitors"]}
+      schema={[
+        buildBreadcrumbSchema(breadcrumbs),
+        buildWebPageSchema({
+          title: `Terms & Conditions | ${SITE_NAME}`,
+          description:
+            "Terms & Conditions for PhotoPromptsHub covering prompt use, no guarantee of AI results, third-party platforms, and limitation of liability.",
+          path: "/terms"
+        })
+      ]}
+    >
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Acceptance of Terms</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          By using {SITE_NAME}, you agree to these Terms & Conditions. If you do not agree with them, you should stop using the website.
         </p>
+      </section>
 
-        <div className="mt-8 space-y-6 rounded-xl border border-brand-border bg-white/95 p-6 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
-          <section className="space-y-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">1. Acceptance of Terms</h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              By using Photo Prompt Hub, you agree to these Terms & Conditions and applicable laws. If you
-              do not agree, please stop using the website.
-            </p>
-          </section>
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Website Purpose</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          PhotoPromptsHub is a discovery platform that curates AI photo prompts, example images, and creative inspiration for AI image generation tools such as Midjourney, DALL·E, Stable Diffusion, Flux, and related systems.
+        </p>
+      </section>
 
-          <section className="space-y-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">2. Proper Use of Prompts</h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              Prompts are provided for creative and educational support. You are responsible for reviewing,
-              adapting, and validating prompts before commercial or sensitive use.
-            </p>
-          </section>
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Use of Content</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          You may read, copy, and adapt prompts from the website for personal, educational, editorial, or creative use. You are responsible for making sure your use follows applicable laws and the terms of any AI platform or service you choose to use.
+        </p>
+      </section>
 
-          <section className="space-y-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">3. Intellectual Property</h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              The website design, branding, and original text content are owned by or licensed to the site
-              operator. Third-party names, models, and trademarks belong to their respective owners.
-            </p>
-          </section>
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">No Guarantee of Results</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          AI image outputs vary depending on the model, settings, platform, prompt wording, and user input. Because of that, PhotoPromptsHub cannot guarantee that a prompt will produce identical or predictable results across different tools or future versions of those tools.
+        </p>
+      </section>
 
-          <section className="space-y-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">4. No Guarantee of Results</h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              AI outputs can vary based on model versions, settings, platform behavior, and user input. We
-              do not guarantee that any prompt will produce a specific outcome.
-            </p>
-          </section>
-
-          <section className="space-y-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">5. Acceptable Use</h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              You agree not to misuse the website, attempt unauthorized access, distribute malicious code, or
-              use content for unlawful, abusive, or rights-violating activities.
-            </p>
-          </section>
-
-          <section className="space-y-2">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">6. Limitation of Liability</h2>
-            <p className="text-slate-600 dark:text-slate-400">
-              To the maximum extent allowed by law, Photo Prompt Hub is not liable for direct or indirect
-              losses resulting from use of the website, prompts, or third-party services.
-            </p>
-          </section>
+      <section className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">Intellectual Property</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            The PhotoPromptsHub name, branding, website design, and original site presentation belong to the website owner unless stated otherwise. Prompts are provided as creative inspiration and practical starting points for users.
+          </p>
         </div>
-      </div>
-    </div>
+
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">Third-Party Platforms</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            AI tools referenced on the website, including Midjourney, DALL·E, Stable Diffusion, Flux, and similar services, are independent third-party platforms. Their features, terms, moderation systems, and output rules are separate from PhotoPromptsHub.
+          </p>
+        </div>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">User Responsibility</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            You are responsible for how you use prompts from the website and how you use any generated output. That includes checking whether your use is lawful, appropriate, and allowed under the rules of the AI tool, marketplace, or platform involved.
+          </p>
+        </div>
+
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">Limitation of Liability</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            PhotoPromptsHub is provided on an &quot;as is&quot; basis without warranties of any kind. The website does not guarantee uninterrupted availability, error-free content, or any specific outcome from using a listed prompt.
+          </p>
+        </div>
+      </section>
+
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Changes to Terms</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          These Terms & Conditions may be updated in the future as the website changes. The latest version will always be published on this page.
+        </p>
+      </section>
+
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Contact Information</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          If you have questions about these Terms & Conditions, you can contact PhotoPromptsHub at{" "}
+          <a className="font-semibold text-brand-accent" href={`mailto:${SUPPORT_EMAIL}`}>
+            {SUPPORT_EMAIL}
+          </a>
+          .
+        </p>
+      </section>
+    </ContentPageLayout>
   );
 }
 

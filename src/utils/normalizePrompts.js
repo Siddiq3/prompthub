@@ -1,4 +1,4 @@
-import { normalizeImageUrl } from "./imageUrl";
+import { normalizeImageUrl } from "./imageUrl.js";
 
 const parseTags = (tags) => {
   if (Array.isArray(tags)) {

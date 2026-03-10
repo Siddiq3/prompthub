@@ -1,73 +1,67 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { FaArrowLeft, FaBookmark, FaCopy, FaRegBookmark } from "react-icons/fa";
-import { useAppContext } from "../context/AppContext";
-import LoadingSkeleton from "../components/LoadingSkeleton";
+import { useMemo, useState } from "react";
+import { FaBookmark, FaCopy, FaRegBookmark, FaShareAlt } from "react-icons/fa";
+import { Link, Navigate, useParams } from "react-router-dom";
+import AdSlot from "../components/AdSlot";
+import Breadcrumbs from "../components/Breadcrumbs";
 import ErrorState from "../components/ErrorState";
-import PromptCard from "../components/PromptCard";
-import MasonryGrid from "../components/MasonryGrid";
-import { getImageCandidates } from "../utils/imageUrl";
+import LoadingSkeleton from "../components/LoadingSkeleton";
+import PromptShelf from "../components/PromptShelf";
+import SmartImage from "../components/SmartImage";
+import { useAppContext } from "../context/AppContext";
+import {
+  buildCategoryPath,
+  getPromptByParam,
+  getRelatedPrompts,
+  getSimilarPrompts
+} from "../lib/content";
+import { sharePromptLink } from "../lib/share";
+import Seo from "../seo/Seo";
+import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
 
-const getInitials = (title = "Prompt") =>
-  title
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase())
-    .join("") || "PP";
-
-function InfoItem({ label, value }) {
+function InfoCard({ label, value }) {
   return (
-    <div className="rounded-xl border border-primary/12 bg-white/90 p-4 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
-      <p className="text-xs uppercase tracking-[0.12em] text-slate-500">{label}</p>
-      <p className="mt-1 text-sm font-semibold text-primary-dark dark:text-slate-100">{value || "-"}</p>
+    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-soft">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</p>
+      <p className="mt-2 text-sm font-medium leading-7 text-brand-ink">{value || "-"}</p>
     </div>
   );
 }
 
-function PromptBlock({ title, value, onCopy, primary = false, copied = false }) {
+function PromptBlock({ title, value, onCopy, emphasis = false }) {
   return (
-    <div
-      className={`rounded-2xl border p-4 shadow-soft ${
-        primary
-          ? "border-primary-dark bg-primary-dark text-white"
-          : "border-primary/12 bg-white/90 dark:border-white/10 dark:bg-white/[0.03]"
-      }`}
+    <section
+      className={`rounded-[2rem] border p-5 shadow-soft ${emphasis ? "border-brand-ink bg-brand-ink text-white" : "border-slate-200 bg-white"}`}
     >
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <h3 className={`text-sm font-semibold ${primary ? "text-white" : "text-primary-dark dark:text-slate-100"}`}>
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <h2 className={`font-heading text-2xl font-semibold ${emphasis ? "text-white" : "text-brand-ink"}`}>
           {title}
-        </h3>
+        </h2>
         <button
           type="button"
           onClick={onCopy}
-          className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 ${
-            primary
-              ? "border border-white/30 bg-white/15 text-white hover:bg-white/25"
-              : "border border-primary/25 bg-white text-primary hover:bg-indigo-50 dark:border-white/15 dark:bg-white/[0.05] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 ${
+            emphasis
+              ? "border border-white/20 bg-white/10 text-white hover:bg-white/15"
+              : "border border-slate-200 text-brand-ink hover:border-brand-accent hover:text-brand-accent"
           }`}
         >
           <FaCopy />
-          {copied ? "Copied" : "Copy"}
+          Copy
         </button>
       </div>
       <pre
-        className={`overflow-x-auto whitespace-pre-wrap break-words rounded-xl p-4 font-mono text-sm leading-relaxed ${
-          primary ? "bg-white/10 text-slate-100" : "bg-primary/5 text-ink/80 dark:text-slate-300"
+        className={`overflow-x-auto whitespace-pre-wrap break-words rounded-[1.5rem] p-4 font-mono text-sm leading-7 ${
+          emphasis ? "bg-white/10 text-white" : "bg-slate-50 text-slate-700"
         }`}
       >
         {value || "No text available"}
       </pre>
-    </div>
+    </section>
   );
 }
 
 function PromptDetails() {
-  const { id } = useParams();
-  const [copyState, setCopyState] = useState({ prompt: false, negative: false, full: false });
-  const [imageAttempt, setImageAttempt] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
+  const { slug } = useParams();
   const {
     prompts,
     loading,
@@ -78,43 +72,17 @@ function PromptDetails() {
     toggleSaved,
     copyPrompt,
     copyNegativePrompt,
-    copyFullPrompt
+    copyFullPrompt,
+    notify
   } = useAppContext();
+  const prompt = getPromptByParam(prompts, slug);
+  const relatedPrompts = useMemo(() => getRelatedPrompts(prompts, prompt, 6), [prompts, prompt]);
+  const similarPrompts = useMemo(() => getSimilarPrompts(prompts, prompt, 6), [prompts, prompt]);
+  const [copyState, setCopyState] = useState("");
 
-  const prompt = useMemo(
-    () => prompts.find((item) => String(item.id) === String(id)),
-    [prompts, id]
-  );
-  const imageCandidates = useMemo(() => getImageCandidates(prompt?.previewImage), [prompt?.previewImage]);
-  const activeImage = imageCandidates[imageAttempt] || "";
-  const hasImageCandidates = imageCandidates.length > 0;
-  const isImageExhausted = hasImageCandidates && imageAttempt >= imageCandidates.length;
-  const showSkeleton = hasImageCandidates && !imageLoaded && !isImageExhausted;
-  const showFallbackInitials = !hasImageCandidates || isImageExhausted;
-
-  useEffect(() => {
-    setImageAttempt(0);
-    setImageLoaded(false);
-  }, [prompt?.id, prompt?.previewImage]);
-
-  const similarPrompts = useMemo(() => {
-    if (!prompt) return [];
-
-    return prompts
-      .filter((item) => {
-        if (String(item.id) === String(prompt.id)) return false;
-        const sameCategory = item.category === prompt.category;
-        const hasTagOverlap = item.tags.some((tag) => prompt.tags.includes(tag));
-        return sameCategory || hasTagOverlap;
-      })
-      .slice(0, 8);
-  }, [prompt, prompts]);
-
-  const triggerCopyState = (key) => {
-    setCopyState((prev) => ({ ...prev, [key]: true }));
-    setTimeout(() => {
-      setCopyState((prev) => ({ ...prev, [key]: false }));
-    }, 1200);
+  const flashCopy = (key) => {
+    setCopyState(key);
+    window.setTimeout(() => setCopyState(""), 1200);
   };
 
   if (loading) {
@@ -129,133 +97,176 @@ function PromptDetails() {
     return (
       <ErrorState
         title="Prompt not found"
-        message="The prompt ID does not exist in the current dataset."
+        message="The requested prompt does not exist in the current dataset."
       />
     );
   }
 
+  if (slug !== prompt.slug) {
+    return <Navigate to={prompt.url} replace />;
+  }
+
+  const breadcrumbs = [
+    { label: "Home", to: "/" },
+    { label: "Prompts", to: "/prompts" },
+    { label: prompt.category, to: buildCategoryPath(prompt.category) },
+    { label: prompt.title, to: prompt.url }
+  ];
+
   return (
-    <section className="space-y-8">
-      <div className="flex items-center justify-between gap-3">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 rounded-lg border border-primary/25 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60 dark:border-white/15 dark:bg-white/[0.03] dark:text-indigo-200 dark:hover:bg-white/[0.12]"
-        >
-          <FaArrowLeft />
-          Back
-        </Link>
+    <>
+      <Seo
+        title={prompt.title}
+        description={prompt.shortDescription}
+        path={prompt.url}
+        image={prompt.previewImage}
+        type="article"
+        schema={[
+          buildBreadcrumbSchema(breadcrumbs),
+          buildItemListSchema(relatedPrompts)
+        ]}
+      />
 
-        <button
-          type="button"
-          onClick={() => toggleSaved(prompt.id)}
-          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
-        >
-          {savedPrompts.includes(prompt.id) ? <FaBookmark /> : <FaRegBookmark />}
-          {savedPrompts.includes(prompt.id) ? "Saved" : "Save Prompt"}
-        </button>
-      </div>
+      <section className="space-y-8">
+        <Breadcrumbs items={breadcrumbs} />
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-4">
-          <div className="overflow-hidden rounded-xl border border-primary/12 bg-white/90 shadow-lift dark:border-white/10 dark:bg-white/[0.03]">
-            <div className="relative aspect-[4/3] w-full bg-slate-100">
-              {activeImage && (
-                <img
-                  src={activeImage}
-                  alt={prompt.title}
-                  loading="lazy"
-                  decoding="async"
-                  onLoad={() => setImageLoaded(true)}
-                  onError={() => {
-                    setImageLoaded(false);
-                    setImageAttempt((prev) => prev + 1);
-                  }}
-                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
-                    imageLoaded ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-              )}
-              {showSkeleton && (
-                <div className="skeleton-shimmer absolute inset-0 bg-slate-200 dark:bg-slate-700" />
-              )}
-              {showFallbackInitials && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 via-cyan-100 to-secondary/20 text-5xl font-black text-primary-dark">
-                  {getInitials(prompt.title)}
-                </div>
-              )}
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(340px,0.9fr)]">
+          <div className="space-y-5">
+            <SmartImage
+              src={prompt.previewImage}
+              alt={prompt.title}
+              title={prompt.title}
+              priority
+              className="rounded-[2rem] border border-slate-200 shadow-lift"
+              imageClassName="scale-[1.01]"
+              aspectClassName="aspect-[5/4]"
+              sizes="(min-width: 1280px) 50vw, 100vw"
+            />
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <InfoCard label="Category" value={prompt.category} />
+              <InfoCard label="Model" value={prompt.modelLabel} />
+              <InfoCard label="Aspect ratio" value={prompt.aspectRatio} />
+              <InfoCard label="Created" value={prompt.formattedDate} />
+              <InfoCard label="Copy count" value={`${copyCounts[prompt.id] || 0} copies`} />
+              <InfoCard label="Tags" value={prompt.tags.join(", ")} />
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            <InfoItem label="Category" value={prompt.category} />
-            <InfoItem label="Model" value={prompt.model} />
-            <InfoItem label="Aspect Ratio" value={prompt.aspectRatio} />
-            <InfoItem label="Created" value={prompt.createdAt} />
-            <InfoItem label="Copied" value={`${copyCounts[prompt.id] || 0} times`} />
-            <InfoItem label="Tags" value={prompt.tags.join(", ") || "None"} />
+          <div className="space-y-5">
+            <div className="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-soft sm:p-8">
+              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-brand-accent">
+                Prompt Detail
+              </span>
+              <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight text-brand-ink sm:text-5xl">
+                {prompt.title}
+              </h1>
+              <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">{prompt.seoIntro}</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => toggleSaved(prompt.id)}
+                  className="inline-flex items-center gap-2 rounded-full bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-ink/90"
+                >
+                  {savedPrompts.includes(prompt.id) ? <FaBookmark /> : <FaRegBookmark />}
+                  {savedPrompts.includes(prompt.id) ? "Saved" : "Save prompt"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => sharePromptLink(prompt, notify)}
+                  className="inline-flex items-center gap-2 rounded-full border border-brand-ink px-5 py-3 text-sm font-semibold text-brand-ink transition hover:bg-brand-ink hover:text-white"
+                >
+                  <FaShareAlt />
+                  Share
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-soft">
+              <h2 className="font-heading text-2xl font-semibold text-brand-ink">Best for</h2>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {prompt.bestFor.map((item) => (
+                  <span
+                    key={item.id}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600"
+                  >
+                    {item.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-slate-200 bg-white/95 p-6 shadow-soft">
+              <h2 className="font-heading text-2xl font-semibold text-brand-ink">How to use this prompt</h2>
+              <ol className="mt-4 space-y-3 text-sm leading-7 text-slate-600">
+                <li>1. Copy the main prompt and paste it into your preferred AI image model.</li>
+                <li>2. Adjust styling, subject details, lens cues, or aspect ratio to match your creative brief.</li>
+                <li>3. Test the negative prompt when available to improve consistency and remove unwanted artifacts.</li>
+              </ol>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <h1 className="font-heading text-3xl font-bold tracking-tight text-primary-dark dark:text-slate-100 sm:text-4xl">
-            {prompt.title}
-          </h1>
+        <PromptBlock
+          title={copyState === "prompt" ? "Prompt copied" : "Main prompt"}
+          value={prompt.prompt}
+          onCopy={async () => {
+            const copied = await copyPrompt(prompt);
+            if (copied) flashCopy("prompt");
+          }}
+        />
 
-          <PromptBlock
-            title="Prompt"
-            value={prompt.prompt}
-            copied={copyState.prompt}
-            onCopy={async () => {
-              const success = await copyPrompt(prompt);
-              if (success) triggerCopyState("prompt");
-            }}
-          />
+        <PromptBlock
+          title={copyState === "negative" ? "Negative prompt copied" : "Negative prompt"}
+          value={prompt.negativePrompt}
+          onCopy={async () => {
+            const copied = await copyNegativePrompt(prompt);
+            if (copied) flashCopy("negative");
+          }}
+        />
 
-          <PromptBlock
-            title="Negative Prompt"
-            value={prompt.negativePrompt}
-            copied={copyState.negative}
-            onCopy={async () => {
-              const success = await copyNegativePrompt(prompt);
-              if (success) triggerCopyState("negative");
-            }}
-          />
+        <PromptBlock
+          title={copyState === "full" ? "Full prompt copied" : "Full prompt package"}
+          value={`Prompt:\n${prompt.prompt}\n\nNegative Prompt:\n${prompt.negativePrompt}`}
+          onCopy={async () => {
+            const copied = await copyFullPrompt(prompt);
+            if (copied) flashCopy("full");
+          }}
+          emphasis
+        />
 
-          <PromptBlock
-            title="Full Prompt"
-            value={`Prompt:\n${prompt.prompt || ""}\n\nNegative Prompt:\n${prompt.negativePrompt || ""}`}
-            copied={copyState.full}
-            primary
-            onCopy={async () => {
-              const success = await copyFullPrompt(prompt);
-              if (success) triggerCopyState("full");
-            }}
-          />
-        </div>
-      </div>
+        <AdSlot label="Inline detail-page ad placeholder after prompt content" variant="inline" />
 
-      {similarPrompts.length > 0 && (
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-heading text-2xl font-bold text-primary-dark dark:text-slate-100">Similar prompts</h2>
-            <p className="text-sm text-slate-500">{similarPrompts.length} matches</p>
-          </div>
-
-          <MasonryGrid
-            items={similarPrompts}
-            renderItem={(item) => (
-              <PromptCard
-                prompt={item}
-                copyCount={copyCounts[item.id] || 0}
-                isSaved={savedPrompts.includes(item.id)}
-                onCopy={() => copyPrompt(item)}
-                onToggleSave={toggleSaved}
-              />
-            )}
-          />
+        <section className="rounded-[2rem] border border-slate-200 bg-white/92 p-6 shadow-soft sm:p-8">
+          <h2 className="font-heading text-3xl font-semibold tracking-tight text-brand-ink">
+            Related prompt metadata
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
+            This prompt is categorized under{" "}
+            <Link to={buildCategoryPath(prompt.category)} className="font-semibold text-brand-accent">
+              {prompt.category}
+            </Link>
+            , uses <span className="font-semibold text-brand-accent">{prompt.modelLabel}</span>, and is
+            formatted for a <span className="font-semibold text-brand-accent">{prompt.aspectRatio}</span>{" "}
+            composition. Use the related sections below to continue exploring prompts with similar tags and
+            visual intent.
+          </p>
         </section>
-      )}
-    </section>
+
+        <PromptShelf
+          title="Related prompts"
+          description="These prompts share category, model, aspect ratio, or tag overlap with the current prompt."
+          prompts={relatedPrompts}
+        />
+
+        <PromptShelf
+          title={`More ${prompt.category.toLowerCase()} prompts`}
+          description={`Continue browsing ${prompt.category.toLowerCase()} prompt ideas from the same category landing page.`}
+          prompts={similarPrompts}
+          linkTo={buildCategoryPath(prompt.category)}
+          linkLabel={`More ${prompt.category}`}
+        />
+      </section>
+    </>
   );
 }
 

@@ -1,36 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBookmark, FaCheck, FaCopy, FaExpand, FaRegBookmark } from "react-icons/fa";
-import { getImageCandidates } from "../utils/imageUrl";
+import { FaBookmark, FaCheck, FaCopy, FaRegBookmark, FaShareAlt } from "react-icons/fa";
+import { useAppContext } from "../context/AppContext";
+import { sharePromptLink } from "../lib/share";
+import SmartImage from "./SmartImage";
 
-const getInitials = (title = "Prompt") =>
-  title
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0]?.toUpperCase())
-    .join("") || "PP";
-
-function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
-  const [imageAttempt, setImageAttempt] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
+function PromptCard({ prompt, priority = false }) {
   const [copied, setCopied] = useState(false);
-
-  const fallbackLabel = useMemo(() => getInitials(prompt.title), [prompt.title]);
-  const imageCandidates = useMemo(() => getImageCandidates(prompt.previewImage), [prompt.previewImage]);
-  const activeImage = imageCandidates[imageAttempt] || "";
-  const hasImageCandidates = imageCandidates.length > 0;
-  const isImageExhausted = hasImageCandidates && imageAttempt >= imageCandidates.length;
-  const showSkeleton = hasImageCandidates && !imageLoaded && !isImageExhausted;
-  const showFallbackInitials = !hasImageCandidates || isImageExhausted;
-
-  useEffect(() => {
-    setImageAttempt(0);
-    setImageLoaded(false);
-  }, [prompt.id, prompt.previewImage]);
+  const { copyCounts, savedPrompts, toggleSaved, copyPrompt, notify } = useAppContext();
+  const isSaved = savedPrompts.includes(prompt.id);
+  const copyCount = copyCounts[prompt.id] || 0;
 
   const handleCopy = async () => {
-    const success = await onCopy(prompt);
+    const success = await copyPrompt(prompt);
     if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
@@ -38,95 +20,85 @@ function PromptCard({ prompt, copyCount, isSaved, onCopy, onToggleSave }) {
   };
 
   return (
-    <article className="group relative isolate overflow-hidden rounded-2xl border border-slate-200/90 bg-white/95 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-primary-light/45 hover:shadow-[0_18px_40px_-28px_rgba(99,102,241,0.6)] dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-primary-light/55 dark:hover:shadow-[0_22px_46px_-30px_rgba(99,102,241,0.55)]">
-      <div className="relative aspect-[4/3] w-full bg-slate-100 dark:bg-slate-800">
-        {activeImage && (
-          <img
-            src={activeImage}
-            alt={prompt.title}
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setImageLoaded(true)}
-            onError={() => {
-              setImageLoaded(false);
-              setImageAttempt((prev) => prev + 1);
-            }}
-            className={`absolute inset-0 z-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.035] ${
-              imageLoaded ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        )}
-
-        {showSkeleton && <div className="skeleton-shimmer absolute inset-0 z-0 bg-slate-200 dark:bg-slate-700" />}
-
-        {showFallbackInitials && (
-          <div className="absolute inset-0 z-0 flex items-center justify-center bg-gradient-to-br from-brand-secondary/20 via-white to-brand-accent/20 text-2xl font-semibold text-brand-primary dark:via-slate-900 dark:text-slate-100">
-            {fallbackLabel}
+    <article className="group overflow-hidden rounded-[1.9rem] border border-slate-200/90 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(253,253,252,0.96))] shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-brand-accent/25 hover:shadow-lift">
+      <Link to={prompt.url} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40">
+        <SmartImage
+          src={prompt.previewImage}
+          alt={prompt.title}
+          title={prompt.title}
+          priority={priority}
+          imageClassName="group-hover:scale-[1.03]"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#132238]/70 via-[#132238]/10 to-transparent" />
+          <div className="absolute left-4 right-4 top-4 flex items-center justify-between gap-3">
+            <span className="rounded-full bg-white/92 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-brand-ink shadow-sm">
+              {prompt.category}
+            </span>
+            <span className="rounded-full bg-[#132238]/76 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-sm">
+              {copyCount} copies
+            </span>
           </div>
-        )}
+        </SmartImage>
+      </Link>
 
-        <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#0f1c3f]/82 via-[#1b2958]/28 to-transparent" />
-
-        <div className="absolute left-3 right-3 top-3 z-20 flex items-center justify-between">
-          <span className="rounded-full border border-white/35 bg-primary-dark/35 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
-            {prompt.category}
-          </span>
-          <span className="rounded-full border border-white/35 bg-primary-dark/35 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
-            {copyCount} copies
-          </span>
+      <div className="space-y-5 p-5 sm:p-6">
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <span>{prompt.modelLabel}</span>
+            <span>•</span>
+            <span>{prompt.aspectRatio}</span>
+          </div>
+          <Link to={prompt.url} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40">
+            <h3 className="text-balance font-heading text-[1.75rem] font-semibold tracking-tight text-brand-ink transition group-hover:text-brand-accent">
+              {prompt.title}
+            </h3>
+          </Link>
+          <p className="text-sm leading-7 text-slate-600">{prompt.shortDescription}</p>
         </div>
 
-        <div className="absolute right-3 top-12 z-30 hidden gap-2 group-hover:flex">
+        <div className="flex flex-wrap gap-2">
+          {prompt.tags.slice(0, 4).map((tag) => (
+            <span
+              key={`${prompt.id}-${tag}`}
+              className="rounded-full border border-slate-200/90 bg-slate-50/88 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-slate-600"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-primary-dark/45 text-white transition hover:bg-primary-dark/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-            aria-label={`Copy ${prompt.title}`}
+            className="col-span-2 inline-flex items-center justify-center gap-2 rounded-full bg-brand-ink px-4 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-brand-ink/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 sm:col-span-1"
           >
             {copied ? <FaCheck className="text-emerald-300" /> : <FaCopy />}
+            {copied ? "Copied" : "Copy prompt"}
+          </button>
+          <Link
+            to={prompt.url}
+            className="inline-flex items-center justify-center rounded-full border border-brand-ink/20 bg-white px-4 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+          >
+            View
+          </Link>
+          <button
+            type="button"
+            onClick={() => sharePromptLink(prompt, notify)}
+            className="inline-flex h-[3rem] w-[3rem] items-center justify-center rounded-full border border-slate-200 bg-slate-50/75 text-slate-600 transition hover:border-brand-accent hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+            aria-label={`Share ${prompt.title}`}
+          >
+            <FaShareAlt />
           </button>
           <button
             type="button"
-            onClick={() => onToggleSave(prompt.id)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-primary-dark/45 text-white transition hover:bg-primary-dark/60 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-            aria-label={isSaved ? `Unsave ${prompt.title}` : `Save ${prompt.title}`}
+            onClick={() => toggleSaved(prompt.id)}
+            className="col-span-2 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-slate-50/72 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-brand-accent hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 sm:col-span-1 sm:col-start-3 sm:row-start-2 sm:h-[3rem] sm:w-[3rem] sm:bg-white sm:px-0"
+            aria-label={isSaved ? `Remove ${prompt.title} from saved prompts` : `Save ${prompt.title}`}
           >
-            {isSaved ? <FaBookmark className="text-secondary-light" /> : <FaRegBookmark />}
+            {isSaved ? <FaBookmark className="text-brand-accent" /> : <FaRegBookmark />}
+            <span className="sm:hidden">{isSaved ? "Saved" : "Save"}</span>
           </button>
-        </div>
-
-        <div className="absolute inset-x-0 bottom-0 z-20 p-4 text-white">
-          <h3 className="font-heading text-lg font-semibold leading-tight tracking-tight">{prompt.title}</h3>
-
-          <div className="mt-2 flex flex-wrap gap-2">
-            {prompt.tags.slice(0, 3).map((tag) => (
-              <span
-                key={`${prompt.id}-${tag}`}
-                className="rounded-full border border-white/35 bg-primary-dark/28 px-2 py-1 text-xs text-white/95 backdrop-blur"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-primary/20 bg-white/95 px-3 py-2 text-sm font-semibold text-primary transition hover:bg-indigo-50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60 dark:border-white/15 dark:bg-white/[0.08] dark:text-indigo-200 dark:hover:bg-white/[0.14]"
-            >
-              {copied ? <FaCheck className="text-emerald-500" /> : <FaCopy />}
-              {copied ? "Copied" : "Copy"}
-            </button>
-
-            <Link
-              to={`/prompt/${prompt.id}`}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-white transition hover:bg-primary-light active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/60"
-            >
-              <FaExpand />
-              Details
-            </Link>
-          </div>
         </div>
       </div>
     </article>

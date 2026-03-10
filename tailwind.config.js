@@ -5,18 +5,26 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Plus Jakarta Sans", "Inter", "system-ui", "Segoe UI", "sans-serif"],
-        heading: ["Plus Jakarta Sans", "Inter", "system-ui", "Segoe UI", "sans-serif"],
+        sans: ["Manrope", "system-ui", "Segoe UI", "sans-serif"],
+        heading: ["Fraunces", "Georgia", "serif"],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
       },
       colors: {
+        site: "#f7f4ee",
         brand: {
-          primary: "#111827",
-          secondary: "#4F46E5",
-          accent: "#818CF8",
-          soft: "#EEF2FF",
-          border: "#E2E8F0"
+          primary: "#132238",
+          secondary: "#2A7D72",
+          accent: "#8E5A2B",
+          ink: "#132238",
+          gold: "#C99A5D",
+          "gold-soft": "#E1BB84",
+          soft: "#EEF3F6",
+          border: "#DCE4E9"
         },
+        "brand-ink": "#132238",
+        "brand-accent": "#8E5A2B",
+        "brand-gold": "#C99A5D",
+        "brand-gold-soft": "#E1BB84",
         primary: "#4F46E5",
         "primary-light": "#6366F1",
         "primary-dark": "#312E81",
@@ -28,8 +36,8 @@ export default {
         ink: "#0B0E14"
       },
       boxShadow: {
-        soft: "0 10px 30px -18px rgba(49, 46, 129, 0.28)",
-        lift: "0 18px 40px -22px rgba(49, 46, 129, 0.35)"
+        soft: "0 14px 30px -24px rgba(19, 34, 56, 0.28)",
+        lift: "0 24px 48px -28px rgba(19, 34, 56, 0.36)"
       },
       keyframes: {
         float: {

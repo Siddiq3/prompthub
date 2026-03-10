@@ -1,50 +1,122 @@
+import { Link } from "react-router-dom";
+import ContentPageLayout from "../components/ContentPageLayout";
+import {
+  COMPANY_NAME,
+  COUNTRY,
+  OWNER_NAME,
+  SITE_NAME,
+  STATE,
+  SUPPORT_EMAIL
+} from "../config";
+import { buildBreadcrumbSchema, buildWebPageSchema } from "../seo/schema";
+
 function About() {
+  const breadcrumbs = [
+    { label: "Home", to: "/" },
+    { label: "About Us", to: "/about" }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-brand-soft transition-colors duration-300 dark:from-[#020617] dark:to-[#0b0e14]">
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <h1 className="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 md:text-4xl">
-          About Photo Prompt Hub
-        </h1>
-        <p className="mt-4 text-slate-600 dark:text-slate-400">
-          Photo Prompt Hub is a focused AI photo prompt library designed to help creators discover ideas
-          faster, reduce trial-and-error, and build better visual outputs.
+    <ContentPageLayout
+      title="About PhotoPromptsHub"
+      description="PhotoPromptsHub is an independent AI prompt discovery website built to help creators browse organized photo prompts, example images, and related inspiration without the clutter of a generic feed."
+      path="/about"
+      seoTitle="About PhotoPromptsHub AI Prompt Discovery Website"
+      seoDescription="Learn what PhotoPromptsHub is, how the prompt library is organized, who operates the site, and how the platform approaches AI photo prompt discovery."
+      breadcrumbs={breadcrumbs}
+      eyebrow="About Us"
+      meta={[OWNER_NAME, "Independent project", `${STATE}, ${COUNTRY}`]}
+      actions={
+        <>
+          <a
+            className="inline-flex items-center justify-center rounded-full bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-brand-ink/92"
+            href={`mailto:${SUPPORT_EMAIL}`}
+          >
+            Email support
+          </a>
+          <Link
+            className="inline-flex items-center justify-center rounded-full border border-brand-ink/20 bg-white/80 px-5 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+            to="/contact"
+          >
+            Contact page
+          </Link>
+        </>
+      }
+      schema={[
+        buildBreadcrumbSchema(breadcrumbs),
+        buildWebPageSchema({
+          title: `About ${SITE_NAME}`,
+          description:
+            "Learn what PhotoPromptsHub is, how its AI photo prompt library is organized, and who operates the project.",
+          path: "/about",
+          type: "AboutPage"
+        })
+      ]}
+    >
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Why this website exists</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          {SITE_NAME} was created to make AI photo prompt discovery simpler and more useful. Many prompt websites feel like fast-moving feeds with very little structure. This project takes the opposite approach by organizing prompts into categories, collections, latest additions, trending picks, and individual detail pages that are easier to browse and easier to understand.
         </p>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          The aim is not to overwhelm visitors with volume. The aim is to help creators find a strong starting point quickly, copy a prompt, understand the context around it, and keep exploring related ideas without losing their place.
+        </p>
+      </section>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <section className="rounded-xl border border-brand-border bg-white/95 p-5 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Our Mission</h2>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              To make prompt discovery simple, practical, and reliable for photographers, designers,
-              marketers, and content creators.
-            </p>
-          </section>
-
-          <section className="rounded-xl border border-brand-border bg-white/95 p-5 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">What You Can Do</h2>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Browse categorized prompts, search by tags and styles, copy prompt text instantly, and save
-              favorites for later use.
-            </p>
-          </section>
-
-          <section className="rounded-xl border border-brand-border bg-white/95 p-5 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Why It Matters</h2>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Better prompt structure leads to clearer outputs and faster iteration. Our library is built to
-              support real creative workflows with practical prompt references.
-            </p>
-          </section>
-
-          <section className="rounded-xl border border-brand-border bg-white/95 p-5 shadow-soft dark:border-white/10 dark:bg-white/[0.03]">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Platform Values</h2>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Clarity, usability, and trust. We keep the experience clean, transparent, and continuously
-              improved for long-term creator value.
-            </p>
-          </section>
+      <section className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">What you will find here</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            The library focuses on AI photo prompts, example images, category pages, collection pages, and prompt detail pages with useful metadata such as model, aspect ratio, tags, and related prompts. The overall structure is designed to help both people and search engines navigate the content more clearly.
+          </p>
         </div>
-      </div>
-    </div>
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">Who the site is for</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            {SITE_NAME} is built for creators, designers, marketers, students, researchers, and anyone experimenting with AI image generation who wants practical prompt ideas instead of vague inspiration.
+          </p>
+        </div>
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">How prompts are presented</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            Prompt pages are meant to be practical. Where available, they include the full prompt, negative prompt, model context, tags, related prompts, and paths back into the rest of the library. That structure helps first-time visitors understand what they are looking at instead of just copying blind text.
+          </p>
+        </div>
+        <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+          <h2 className="font-heading text-2xl font-semibold text-brand-ink">What this website is not</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">
+            {SITE_NAME} is an independent project. It is not an official product of Midjourney, OpenAI, Stability AI, or any other model provider, and it does not promise that a copied prompt will produce identical results across tools or future model versions.
+          </p>
+        </div>
+      </section>
+
+      <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Ownership and transparency</h2>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          {SITE_NAME} is operated by {OWNER_NAME} under {COMPANY_NAME}. The project is based in {STATE}, {COUNTRY}. Support, privacy, terms, disclaimer, and content-removal pages are published so visitors can understand how the website is run and how to get in touch when needed.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link
+            className="rounded-full border border-brand-ink/20 bg-white px-5 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+            to="/privacy-policy"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            className="rounded-full border border-brand-ink/20 bg-white px-5 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+            to="/disclaimer"
+          >
+            Disclaimer
+          </Link>
+          <Link
+            className="rounded-full border border-brand-ink/20 bg-white px-5 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+            to="/dmca"
+          >
+            DMCA / Content Removal
+          </Link>
+        </div>
+      </section>
+    </ContentPageLayout>
   );
 }
 
