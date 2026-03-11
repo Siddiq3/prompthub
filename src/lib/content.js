@@ -1,4 +1,4 @@
-import { FEATURED_PROMPT_IDS } from "../config.js";
+import { FALLBACK_OG_IMAGE } from "../config.js";
 import { COLLECTION_DEFINITIONS } from "./collections.js";
 import {
   derivePrimaryCategory,
@@ -48,6 +48,8 @@ const clampText = (value, length = 160) => {
 
 const getSourceIndex = (prompt) =>
   Number.isFinite(prompt?.sourceIndex) ? prompt.sourceIndex : -1;
+
+const DEFAULT_FEATURED_LIMIT = 6;
 
 export const comparePromptsByDate = (left, right, direction = "desc") => {
   const timeDiff =
@@ -184,19 +186,26 @@ export const enrichPrompts = (prompts) => {
 export const sortPromptsByDate = (prompts, direction = "desc") =>
   [...prompts].sort((a, b) => comparePromptsByDate(a, b, direction));
 
-export const getFeaturedPrompts = (prompts) =>
-  FEATURED_PROMPT_IDS.map((id) => prompts.find((prompt) => prompt.id === id)).filter(Boolean);
-
 export const getLatestPrompts = (prompts, limit) => {
   const sorted = sortPromptsByDate(prompts);
   return typeof limit === "number" ? sorted.slice(0, limit) : sorted;
 };
 
+export const getFeaturedPrompts = (prompts, limit = DEFAULT_FEATURED_LIMIT) => {
+  const explicitFeatured = getLatestPrompts(prompts.filter((prompt) => prompt.featured), prompts.length);
+  const source = explicitFeatured.length ? explicitFeatured : getLatestPrompts(prompts, prompts.length);
+
+  return typeof limit === "number" ? source.slice(0, limit) : source;
+};
+
+export const getDefaultOgImage = (prompts, fallback = FALLBACK_OG_IMAGE) =>
+  getLatestPrompts(prompts, prompts.length).find((prompt) => prompt.previewImage)?.previewImage || fallback;
+
 export const getLatestPromptsByTag = (prompts, tag, limit) =>
   getLatestPrompts(prompts.filter((prompt) => hasTag(prompt, tag)), limit);
 
 export const getTrendingPrompts = (prompts, limit = 12) => {
-  const featured = getFeaturedPrompts(prompts);
+  const featured = getFeaturedPrompts(prompts, limit);
   const latest = getLatestPrompts(prompts).filter(
     (prompt) => !featured.some((item) => item.id === prompt.id)
   );

@@ -42,9 +42,9 @@ function Footer() {
         <div className="grid gap-8 py-12 sm:py-14 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,0.85fr))] xl:gap-10">
           <div className="max-w-md">
             <p className="section-kicker text-white/70">PhotoPromptsHub</p>
-            <h4 className="mt-3 font-heading text-[1.9rem] font-semibold tracking-tight text-white">
+            <p className="mt-3 font-heading text-[1.9rem] font-semibold tracking-tight text-white">
               {SITE_NAME}
-            </h4>
+            </p>
             <p className="mt-4 text-sm leading-7 text-slate-200">
               Curated prompt discovery for creators who want cleaner browsing, copy-ready prompt pages, and clear support information.
             </p>
@@ -55,7 +55,7 @@ function Footer() {
               {SUPPORT_EMAIL}
             </a>
             <div className="mt-5 rounded-[1.25rem] border border-white/10 bg-white/[0.08] p-4">
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/65">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/75">
                 Trust signals
               </p>
               <p className="mt-3 text-sm leading-7 text-slate-200">
@@ -66,7 +66,7 @@ function Footer() {
               </p>
             </div>
             <div className="mt-5">
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/60">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/75">
                 Quick collections
               </p>
               <div className="mt-3 flex flex-wrap gap-2">

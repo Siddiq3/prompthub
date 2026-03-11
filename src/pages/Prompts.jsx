@@ -152,7 +152,7 @@ function Prompts() {
                       className="ui-tag"
                     >
                       {relatedCategory.name}
-                      <span className="opacity-70">({relatedCategory.count})</span>
+                      <span className="text-slate-600">({relatedCategory.count})</span>
                     </Link>
                   ))}
                 </div>

@@ -20,7 +20,7 @@ const stripQueryHash = (value) => {
   return withoutHash;
 };
 
-const toRawFromGithubBlob = (value) => {
+const toJsDelivrFromGithubBlob = (value) => {
   const clean = stripQueryHash(value);
   const match = clean.match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.+)$/i);
 
@@ -29,7 +29,7 @@ const toRawFromGithubBlob = (value) => {
   }
 
   const [, owner, repo, ref, path] = match;
-  return `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${path}`;
+  return `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${ref}/${path}`;
 };
 
 const toRawFromJsDelivr = (value) => {
@@ -86,7 +86,7 @@ export const normalizeImageUrl = (value) => {
 
   const httpsUrl = toHttpsUrl(trimmed);
 
-  return toGoogleDriveDirect(httpsUrl) || toRawFromGithubBlob(httpsUrl) || httpsUrl;
+  return toGoogleDriveDirect(httpsUrl) || toJsDelivrFromGithubBlob(httpsUrl) || toJsDelivrFromRaw(httpsUrl) || httpsUrl;
 };
 
 export const getImageCandidates = (value) => {
@@ -98,9 +98,9 @@ export const getImageCandidates = (value) => {
 
   return [
     primary,
-    toRawFromJsDelivr(primary),
     toJsDelivrFromRaw(primary),
-    toRawFromGithubBlob(primary),
+    toJsDelivrFromGithubBlob(primary),
+    toRawFromJsDelivr(primary),
     toGoogleDriveDirect(primary)
   ]
     .map(toTrimmedString)

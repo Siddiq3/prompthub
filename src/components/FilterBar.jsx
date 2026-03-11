@@ -186,7 +186,7 @@ function FilterBar({
                   className={`${active ? "ui-pill-accent" : "ui-tag"} shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25`}
                 >
                   {item.label}
-                  <span className="opacity-70">({item.count})</span>
+                  <span className="text-slate-600">({item.count})</span>
                 </button>
               );
             })}

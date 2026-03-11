@@ -11,6 +11,7 @@ import {
   buildPromptsPathWithTag,
   getCategories,
   getCollectionHighlights,
+  getDefaultOgImage,
   getLatestPrompts,
   getPopularCategories,
   getTopTags,
@@ -29,6 +30,7 @@ function Home() {
   const { prompts, loading, error, retryFetch } = useAppContext();
   const [searchQuery, setSearchQuery] = useState("");
   const categories = useMemo(() => getCategories(prompts), [prompts]);
+  const defaultOgImage = useMemo(() => getDefaultOgImage(prompts), [prompts]);
   const popularCategories = useMemo(() => getPopularCategories(prompts, 6), [prompts]);
   const trendingPrompts = useMemo(() => getTrendingPrompts(prompts, 6), [prompts]);
   const latestPrompts = useMemo(() => {
@@ -60,6 +62,7 @@ function Home() {
         title="AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion"
         description="Discover AI photo prompts through a cleaner category-first browsing flow on PhotoPromptsHub."
         path="/"
+        image={defaultOgImage}
         schema={[
           buildWebPageSchema({
             title: "AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
@@ -197,7 +200,7 @@ function Home() {
                   {styleTags.map((tag) => (
                     <Link key={tag.slug} to={buildPromptsPathWithTag(tag.name)} className="ui-tag text-sm">
                       {tag.label}
-                      <span className="opacity-70">({tag.count})</span>
+                      <span className="text-slate-600">({tag.count})</span>
                     </Link>
                   ))}
                 </div>

@@ -52,6 +52,7 @@ function Collections() {
               <Link
                 key={collection.slug}
                 to={collection.href}
+                aria-label={`Open ${collection.title} collection`}
                 className="group ui-card ui-card-hover flex h-full flex-col p-5 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -70,7 +71,7 @@ function Collections() {
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <p className="text-sm leading-6 text-slate-500">{collection.intro}</p>
                   <span className="text-sm font-semibold text-brand-accent transition-colors duration-180 ease-smooth group-hover:text-primary-dark">
-                    Open
+                    Open collection
                   </span>
                 </div>
               </Link>

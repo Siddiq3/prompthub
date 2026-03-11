@@ -1,5 +1,5 @@
 export const GITHUB_RAW_URL =
-  "https://raw.githubusercontent.com/Siddiq3/promtdata/main/promptdata.json";
+  "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/promptdata.json";
 export const SITE_NAME = "PhotoPromptsHub";
 export const SITE_DOMAIN = "photopromptshub.in";
 export const SITE_URL = `https://${SITE_DOMAIN}`;
@@ -12,9 +12,7 @@ export const SUPPORT_EMAIL = "photopromptshub@gmail.com";
 export const CONTACT_EMAIL = "photopromptshub@gmail.com";
 export const COUNTRY = "India";
 export const STATE = "Telangana";
-export const DEFAULT_OG_IMAGE =
-  "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/previews/p0026.webp";
-export const FEATURED_PROMPT_IDS = ["p0014", "p0026", "p0048", "p0051", "p0055", "p0067"];
+export const FALLBACK_OG_IMAGE = `${SITE_URL}/apple-touch-icon.png`;
 export const HOME_FAQS = [
   {
     question: "What is PhotoPromptsHub?",

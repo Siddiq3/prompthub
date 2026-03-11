@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { FEATURED_PROMPT_IDS } from "../config";
 import {
   comparePromptsByDate,
   getCategories,
+  getFeaturedPrompts,
   getFilterTags,
   getTopTags,
   getTrendingPrompts,
@@ -51,11 +51,11 @@ export const usePromptListing = (prompts, copyCounts) => {
 
   const featuredOrder = useMemo(() => {
     const map = new Map();
-    FEATURED_PROMPT_IDS.forEach((id, index) => {
-      map.set(id, index);
+    getFeaturedPrompts(prompts, prompts.length).forEach((prompt, index) => {
+      map.set(prompt.id, index);
     });
     return map;
-  }, []);
+  }, [prompts]);
 
   const filteredPrompts = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();

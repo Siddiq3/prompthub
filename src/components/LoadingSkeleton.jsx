@@ -2,7 +2,7 @@ const heights = ["h-36", "h-48", "h-56", "h-44", "h-52", "h-40"];
 
 function LoadingCard({ index }) {
   return (
-    <div className="fade-in-up ui-card overflow-hidden p-4">
+    <div className="ui-card overflow-hidden p-4">
       <div className={`skeleton-shimmer w-full rounded-xl ${heights[index % heights.length]}`} />
       <div className="skeleton-shimmer mt-4 h-4 w-2/3 rounded" />
       <div className="skeleton-shimmer mt-2 h-3 w-1/2 rounded" />

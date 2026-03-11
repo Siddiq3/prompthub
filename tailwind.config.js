@@ -18,7 +18,7 @@ export default {
       fontFamily: {
         sans: ["Manrope", "Inter", "system-ui", "Segoe UI", "sans-serif"],
         heading: ["Manrope", "Inter", "system-ui", "Segoe UI", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
       },
       colors: {
         site: "#F8FAFC",

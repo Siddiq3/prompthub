@@ -121,17 +121,6 @@
   }
 }
 
-@keyframes fade-in-up {
-  0% {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes popup-overlay-in {
   0% {
     opacity: 0;
@@ -149,30 +138,6 @@
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes float-gentle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes pulse-glow-soft {
-  0%,
-  100% {
-    box-shadow:
-      0 16px 40px -18px rgba(37, 99, 235, 0.38),
-      0 0 0 0 rgba(59, 130, 246, 0.18);
-  }
-  50% {
-    box-shadow:
-      0 24px 56px -20px rgba(37, 99, 235, 0.5),
-      0 0 0 10px rgba(59, 130, 246, 0);
   }
 }
 
@@ -216,7 +181,7 @@
   }
 
   .ui-card-hover:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     border-color: rgba(99, 102, 241, 0.16);
     box-shadow:
       0 1px 2px rgba(15, 23, 42, 0.03),
@@ -421,10 +386,6 @@
     animation: skeleton-shimmer 1.25s linear infinite;
   }
 
-  .fade-in-up {
-    animation: fade-in-up 0.24s ease-out both;
-  }
-
   .signature-script {
     font-family: "Brush Script MT", "Segoe Script", "Lucida Handwriting", cursive;
     font-size: 1.2em;
@@ -439,14 +400,6 @@
 
   .popup-scale-in {
     animation: popup-scale-in 0.34s cubic-bezier(0.18, 0.88, 0.24, 1) both;
-  }
-
-  .float-gentle {
-    animation: float-gentle 3.6s ease-in-out infinite;
-  }
-
-  .pulse-glow-soft {
-    animation: pulse-glow-soft 2.2s ease-in-out infinite;
   }
 
   .text-balance {
@@ -468,11 +421,8 @@
     scroll-behavior: auto;
   }
 
-  .fade-in-up,
   .popup-overlay-in,
   .popup-scale-in,
-  .float-gentle,
-  .pulse-glow-soft,
   .skeleton-shimmer {
     animation: none !important;
   }

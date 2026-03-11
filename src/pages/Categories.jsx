@@ -52,6 +52,7 @@ function Categories() {
               <Link
                 key={category.slug}
                 to={category.href}
+                aria-label={`Browse ${category.name} prompts`}
                 className="group ui-card ui-card-hover flex h-full flex-col p-5 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -84,13 +85,13 @@ function Categories() {
                       Latest: <span className="font-medium text-slate-700">{category.latestPrompt.title}</span>
                     </p>
                     <span className="text-sm font-semibold text-brand-accent transition-colors duration-180 ease-smooth group-hover:text-primary-dark">
-                      Browse
+                      Browse {category.name}
                     </span>
                   </div>
                 ) : (
                   <div className="mt-4 flex justify-end">
                     <span className="text-sm font-semibold text-brand-accent transition-colors duration-180 ease-smooth group-hover:text-primary-dark">
-                      Browse
+                      Browse {category.name}
                     </span>
                   </div>
                 )}

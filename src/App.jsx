@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { Suspense, lazy, startTransition, useEffect, useState } from "react";
 import { BrowserRouter, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
-import TelegramPopup from "./components/TelegramPopup";
 import Toast from "./components/Toast";
-import WhatsAppFloat from "./components/WhatsAppFloat";
 import { AppProvider, useAppContext } from "./context/AppContext";
 import About from "./pages/About";
 import Categories from "./pages/Categories";
@@ -24,6 +22,9 @@ import Prompts from "./pages/Prompts";
 import Saved from "./pages/Saved";
 import Terms from "./pages/Terms";
 import Trending from "./pages/Trending";
+
+const TelegramPopup = lazy(() => import("./components/TelegramPopup"));
+const WhatsAppFloat = lazy(() => import("./components/WhatsAppFloat"));
 
 function PrerenderSignal() {
   const { loading } = useAppContext();
@@ -44,6 +45,41 @@ function PrerenderSignal() {
   return null;
 }
 
+function DeferredEngagementWidgets() {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const enableWidgets = () => {
+      startTransition(() => {
+        setEnabled(true);
+      });
+    };
+
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(enableWidgets, { timeout: 1500 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = window.setTimeout(enableWidgets, 900);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  if (!enabled) {
+    return null;
+  }
+
+  return (
+    <Suspense fallback={null}>
+      <WhatsAppFloat />
+      <TelegramPopup />
+    </Suspense>
+  );
+}
+
 function Layout() {
   const { toast, dismissToast } = useAppContext();
 
@@ -62,8 +98,7 @@ function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <WhatsAppFloat />
-      <TelegramPopup />
+      <DeferredEngagementWidgets />
       <Toast toast={toast} onClose={dismissToast} />
     </div>
   );

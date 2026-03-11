@@ -1,10 +1,13 @@
 import { Helmet } from "react-helmet-async";
+import { useContext, useMemo } from "react";
+import { AppContext } from "../context/AppContext";
 import {
-  DEFAULT_OG_IMAGE,
+  FALLBACK_OG_IMAGE,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL
 } from "../config";
+import { getDefaultOgImage } from "../lib/content";
 import { buildOrganizationSchema } from "./schema";
 
 const toAbsoluteUrl = (path = "/") => new URL(path, SITE_URL).toString();
@@ -13,14 +16,19 @@ function Seo({
   title,
   description = SITE_DESCRIPTION,
   path = "/",
-  image = DEFAULT_OG_IMAGE,
+  image,
   type = "website",
   noindex = false,
   schema = []
 }) {
+  const appContext = useContext(AppContext);
+  const dynamicDefaultImage = useMemo(
+    () => getDefaultOgImage(appContext?.prompts || [], FALLBACK_OG_IMAGE),
+    [appContext?.prompts]
+  );
   const canonical = toAbsoluteUrl(path);
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-  const resolvedImage = toAbsoluteUrl(image);
+  const resolvedImage = toAbsoluteUrl(image || dynamicDefaultImage);
   const imageAlt = title || SITE_NAME;
   const schemas = [buildOrganizationSchema(), ...schema];
 

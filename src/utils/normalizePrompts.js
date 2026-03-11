@@ -22,6 +22,30 @@ const pickString = (value, fallback = "") => {
   return String(value).trim() || fallback;
 };
 
+const pickBoolean = (value, fallback = false) => {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (["true", "1", "yes"].includes(normalized)) {
+      return true;
+    }
+
+    if (["false", "0", "no"].includes(normalized)) {
+      return false;
+    }
+  }
+
+  if (typeof value === "number") {
+    return value !== 0;
+  }
+
+  return fallback;
+};
+
 const pickImageValue = (raw = {}) => {
   const candidates = [
     raw?.previewImage,
@@ -59,6 +83,7 @@ const normalizePrompt = (raw, index) => {
     model: pickString(raw?.model, "Any Model"),
     aspectRatio: pickString(raw?.aspectRatio, "Flexible"),
     createdAt: pickString(raw?.createdAt, new Date().toISOString()),
+    featured: pickBoolean(raw?.featured, false),
     previewImage: normalizeImageUrl(pickImageValue(raw))
   };
 };

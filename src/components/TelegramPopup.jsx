@@ -50,7 +50,7 @@ function TelegramPopup() {
   }
 
   return (
-    <div className="popup-overlay-in fixed inset-0 z-[95] flex items-center justify-center bg-slate-950/48 px-4 backdrop-blur-[8px] sm:px-6">
+    <div className="popup-overlay-in fixed inset-0 z-[95] flex items-center justify-center bg-slate-950/48 px-4 backdrop-blur-[6px] sm:px-6">
       <div
         className="popup-scale-in relative w-full max-w-[25.5rem] overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,248,255,0.94))] shadow-[0_32px_90px_-34px_rgba(15,23,42,0.45)] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(15,23,42,0.92))]"
         role="dialog"
@@ -65,7 +65,7 @@ function TelegramPopup() {
         <button
           type="button"
           onClick={() => setIsVisible(false)}
-          className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white/85 text-slate-500 transition duration-200 hover:scale-[1.03] hover:bg-white hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+          className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/80 bg-white/85 text-slate-500 transition duration-200 hover:bg-white hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
           aria-label="Close Telegram popup"
         >
           <FaTimes />
@@ -73,7 +73,7 @@ function TelegramPopup() {
 
         <div className="relative px-6 pb-6 pt-7 sm:px-7 sm:pb-7 sm:pt-8">
           <div className="mx-auto flex max-w-[18rem] flex-col items-center text-center">
-            <div className="float-gentle relative inline-flex h-20 w-20 items-center justify-center">
+            <div className="relative inline-flex h-20 w-20 items-center justify-center">
               <div className="absolute inset-0 rounded-[1.75rem] bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400 shadow-[0_24px_48px_-20px_rgba(37,99,235,0.55)]" />
               <div className="absolute inset-[1px] rounded-[1.7rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.28),rgba(255,255,255,0.08))]" />
               <div className="relative inline-flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-white/16 text-[1.7rem] text-white backdrop-blur-sm">
@@ -106,7 +106,7 @@ function TelegramPopup() {
               target="_blank"
               rel="noreferrer"
               onClick={() => setIsVisible(false)}
-              className="pulse-glow-soft inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-500 px-5 py-3.5 text-sm font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:brightness-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-600 via-blue-600 to-cyan-500 px-5 py-3.5 text-sm font-semibold text-white shadow-[0_16px_40px_-20px_rgba(37,99,235,0.42)] transition duration-200 hover:brightness-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
             >
               <FaTelegramPlane />
               Join Telegram
@@ -116,7 +116,7 @@ function TelegramPopup() {
             <button
               type="button"
               onClick={() => setIsVisible(false)}
-              className="inline-flex w-full items-center justify-center rounded-full border border-slate-200/90 bg-white/70 px-5 py-3.5 text-sm font-semibold text-slate-700 transition duration-200 hover:border-sky-200 hover:bg-white hover:text-sky-700 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 dark:border-white/10 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:border-sky-400/25 dark:hover:bg-slate-900 dark:hover:text-sky-200"
+              className="inline-flex w-full items-center justify-center rounded-full border border-slate-200/90 bg-white/70 px-5 py-3.5 text-sm font-semibold text-slate-700 transition duration-200 hover:border-sky-200 hover:bg-white hover:text-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 dark:border-white/10 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:border-sky-400/25 dark:hover:bg-slate-900 dark:hover:text-sky-200"
             >
               Maybe later
             </button>
