@@ -44,8 +44,8 @@ export default {
           text: "#111827",
           muted: "#4B5563",
           subtle: "#6B7280",
-          accent: "#6366F1",
-          "accent-hover": "#4F46E5",
+          accent: "#4F46E5",
+          "accent-hover": "#4338CA",
           "accent-soft": "#EEF2FF",
           success: "#10B981",
           "success-soft": "#ECFDF5",
@@ -57,7 +57,7 @@ export default {
         brand: {
           primary: "#6366F1",
           secondary: "#10B981",
-          accent: "#6366F1",
+          accent: "#4F46E5",
           ink: "#111827",
           gold: "#818CF8",
           "gold-soft": "#C7D2FE",
@@ -65,7 +65,7 @@ export default {
           border: "#E5E7EB"
         },
         "brand-ink": "#111827",
-        "brand-accent": "#6366F1",
+        "brand-accent": "#4F46E5",
         "brand-gold": "#818CF8",
         "brand-gold-soft": "#C7D2FE"
       },

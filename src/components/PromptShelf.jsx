@@ -8,7 +8,8 @@ function PromptShelf({
   prompts,
   linkTo,
   linkLabel = "View all",
-  eyebrow = "Prompt Shelf"
+  eyebrow = "Prompt Shelf",
+  priorityCount = 0
 }) {
   if (!prompts?.length) return null;
 
@@ -24,7 +25,7 @@ function PromptShelf({
 
       <MasonryGrid
         items={prompts}
-        renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />}
+        renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < priorityCount} />}
       />
       {linkTo ? (
         <div className="flex justify-center pt-1 sm:justify-start">

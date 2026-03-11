@@ -39,7 +39,7 @@ function Categories() {
         <PageHeader
           eyebrow="Categories"
           title="Browse prompts by category"
-          description="Category pages are designed for SEO-friendly browsing and easier internal linking. Use them to narrow prompt discovery by subject matter and creative intent."
+          description="Categories represent the primary subject or theme. Start here when you want the clearest browsing path before applying secondary filters."
           meta={[`${categories.length} categories`, `${prompts.length} prompts`]}
         />
 
@@ -66,6 +66,17 @@ function Categories() {
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{category.description}</p>
+                {(category.topSubjects.length || category.topTags.length) ? (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {(category.topSubjects.length ? category.topSubjects : category.topTags)
+                      .slice(0, 3)
+                      .map((tag) => (
+                      <span key={tag.slug} className="ui-tag">
+                        {tag.label}
+                      </span>
+                      ))}
+                  </div>
+                ) : null}
                 <div className="soft-divider mt-5" />
                 {category.latestPrompt ? (
                   <div className="mt-4 flex items-center justify-between gap-3">

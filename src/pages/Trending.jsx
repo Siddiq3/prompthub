@@ -48,14 +48,14 @@ function Trending() {
           eyebrow="Trending Prompts"
           title="Trending prompt ideas and featured discoveries"
           description="Explore featured and high-interest prompt pages that give creators a faster starting point when they want proven visual directions instead of browsing the full archive first."
-          meta={[`${items.length} prompts`, "Featured + recent mix"]}
+          meta={[`${items.length} prompts`, "Sorted by newest dataset date"]}
         />
 
         {loading && <LoadingSkeleton count={8} />}
         {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
         {!loading && !error ? (
           <>
-            <MasonryGrid items={paginatedItems} renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />} />
+            <MasonryGrid items={paginatedItems} renderItem={(prompt) => <PromptCard prompt={prompt} />} />
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

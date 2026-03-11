@@ -2,16 +2,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaCheck, FaCopy, FaRegBookmark, FaShareAlt } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
+import { buildCategoryPath, buildPromptsPathWithTag } from "../lib/content";
+import { formatTagLabel } from "../lib/taxonomy";
 import { sharePromptLink } from "../lib/share";
 import SmartImage from "./SmartImage";
 
 function PromptCard({ prompt, priority = false }) {
   const [copied, setCopied] = useState(false);
-  const { copyCounts, savedPrompts, toggleSaved, copyPrompt, notify } = useAppContext();
+  const { savedPrompts, toggleSaved, copyPrompt, notify } = useAppContext();
   const isSaved = savedPrompts.includes(prompt.id);
-  const copyCount = copyCounts[prompt.id] || 0;
-  const visibleTags = prompt.tags.slice(0, 2);
-  const hiddenTagCount = Math.max(0, prompt.tags.length - visibleTags.length);
+  const subjectTagSlugs = new Set((prompt.subjectTags || []).map((tag) => String(tag).trim().toLowerCase()));
+  const orderedTags = [
+    ...(prompt.subjectTags || []),
+    ...prompt.displayTags.filter((tag) => !subjectTagSlugs.has(String(tag).trim().toLowerCase()))
+  ];
+  const visibleTags = orderedTags.slice(0, 2);
+  const hiddenTagCount = Math.max(0, orderedTags.length - visibleTags.length);
 
   const handleCopy = async () => {
     const success = await copyPrompt(prompt);
@@ -31,38 +37,30 @@ function PromptCard({ prompt, priority = false }) {
           priority={priority}
           className="rounded-none"
           imageClassName="group-hover:scale-[1.02]"
-        >
-          <div className="absolute left-4 top-4">
-            <span className="rounded-pill border border-white/70 bg-white/90 px-3 py-1.5 text-[0.72rem] font-semibold text-brand-ink shadow-sm backdrop-blur">
-              {prompt.category}
-            </span>
-          </div>
-        </SmartImage>
+        />
       </Link>
 
-      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-5">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-2">
-            <span className="ui-pill">{prompt.modelLabel}</span>
-            <span className="ui-pill">{prompt.aspectRatio}</span>
-          </div>
-          <p className="text-xs font-medium text-slate-500">{copyCount} copies</p>
-        </div>
-
-        <div className="space-y-2.5">
+      <div className="flex flex-1 flex-col gap-4 p-5">
+        <div className="space-y-3">
           <Link to={prompt.url} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35">
-            <h3 className="text-balance font-heading text-[1.28rem] font-semibold leading-tight tracking-tight text-brand-ink transition-colors duration-180 ease-smooth group-hover:text-brand-accent sm:text-[1.4rem]">
+            <h3 className="text-balance font-heading text-[1.2rem] font-semibold leading-tight tracking-tight text-brand-ink transition-colors duration-180 ease-smooth group-hover:text-brand-accent sm:text-[1.35rem]">
               {prompt.title}
             </h3>
           </Link>
-          <p className="min-h-[4.6rem] text-sm leading-6 text-slate-600">{prompt.shortDescription}</p>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Link to={buildCategoryPath(prompt.category)} className="ui-pill-accent">
+              {prompt.category}
+            </Link>
+            <span className="text-xs font-medium text-slate-600">{prompt.modelLabel}</span>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2">
           {visibleTags.map((tag) => (
-            <span key={`${prompt.id}-${tag}`} className="ui-tag">
-              {tag}
-            </span>
+            <Link key={`${prompt.id}-${tag}`} to={buildPromptsPathWithTag(tag)} className="ui-tag">
+              {formatTagLabel(tag)}
+            </Link>
           ))}
           {hiddenTagCount ? <span className="ui-tag">+{hiddenTagCount} more</span> : null}
         </div>

@@ -5,12 +5,13 @@ import MasonryGrid from "../components/MasonryGrid";
 import PageHeader from "../components/PageHeader";
 import PromptCard from "../components/PromptCard";
 import { useAppContext } from "../context/AppContext";
+import { sortPromptsByDate } from "../lib/content";
 import Seo from "../seo/Seo";
 import { buildBreadcrumbSchema } from "../seo/schema";
 
 function Saved() {
   const { prompts, loading, error, retryFetch, savedPrompts } = useAppContext();
-  const items = prompts.filter((prompt) => savedPrompts.includes(prompt.id));
+  const items = sortPromptsByDate(prompts.filter((prompt) => savedPrompts.includes(prompt.id)));
   const breadcrumbs = [
     { label: "Home", to: "/" },
     { label: "Saved", to: "/saved" }
@@ -43,7 +44,7 @@ function Saved() {
           />
         ) : null}
         {!loading && !error && items.length > 0 ? (
-          <MasonryGrid items={items} renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />} />
+          <MasonryGrid items={items} renderItem={(prompt) => <PromptCard prompt={prompt} />} />
         ) : null}
       </section>
     </>

@@ -8,7 +8,7 @@ import Pagination from "../components/Pagination";
 import PromptCard from "../components/PromptCard";
 import MasonryGrid from "../components/MasonryGrid";
 import { useAppContext } from "../context/AppContext";
-import { getCategories, getCategoryBySlug, getCollections } from "../lib/content";
+import { buildPromptsPathWithTag, getCategoryBySlug, getCollections } from "../lib/content";
 import Seo from "../seo/Seo";
 import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
@@ -83,6 +83,52 @@ function CategoryPage() {
           meta={[`${category.count} prompts`, `Latest: ${category.latestPrompt?.formattedDate || "Available"}`]}
         />
 
+        <section className="section-shell surface-subtle p-6 sm:p-8">
+          <div className="grid gap-6 xl:grid-cols-[minmax(0,1.12fr)_minmax(300px,0.88fr)]">
+            <div>
+              <span className="section-kicker text-brand-accent">Category Intro</span>
+              <h2 className="mt-3 font-heading text-[1.8rem] font-semibold tracking-tight text-brand-ink sm:text-[2.1rem]">
+                What belongs in {category.name.toLowerCase()} prompts
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-slate-700 sm:text-base">{category.intro}</p>
+            </div>
+
+            <div className="ui-card p-5">
+              {category.topSubjects.length ? (
+                <div>
+                  <p className="ui-meta">People focus</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-700">
+                    These labels make it clearer whether the prompts in this category mainly lean toward men, women, boys, or girls.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {category.topSubjects.map((tag) => (
+                      <Link key={tag.slug} to={buildPromptsPathWithTag(tag.name)} className="ui-tag">
+                        {tag.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {category.topTags.length ? (
+                <div className={category.topSubjects.length ? "mt-5" : ""}>
+                  <p className="ui-meta">Common refinements</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-700">
+                    Use tags as secondary modifiers for style, mood, lighting, or location after you pick the main category.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {category.topTags.map((tag) => (
+                      <Link key={tag.slug} to={buildPromptsPathWithTag(tag.name)} className="ui-tag">
+                        {tag.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </section>
+
         {relatedCollections.length ? (
           <div className="rounded-[2rem] border border-slate-200 bg-white/92 p-6 shadow-soft">
             <h2 className="font-heading text-2xl font-semibold text-brand-ink">Related collections</h2>
@@ -100,7 +146,7 @@ function CategoryPage() {
           </div>
         ) : null}
 
-        <MasonryGrid items={paginatedItems} renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />} />
+        <MasonryGrid items={paginatedItems} renderItem={(prompt) => <PromptCard prompt={prompt} />} />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

@@ -1,7 +1,14 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FEATURED_PROMPT_IDS } from "../config";
-import { getTopTags, getTrendingPrompts, sortPromptsByDate } from "../lib/content";
+import {
+  comparePromptsByDate,
+  getCategories,
+  getFilterTags,
+  getTopTags,
+  getTrendingPrompts,
+  sortPromptsByDate
+} from "../lib/content";
 
 const normalizeSort = (value) =>
   ["latest", "popular", "featured"].includes(value) ? value : "latest";
@@ -13,10 +20,7 @@ const parsePage = (value) => {
 
 export const usePromptListing = (prompts, copyCounts) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const categories = useMemo(
-    () => [...new Set(prompts.map((prompt) => prompt.category).filter(Boolean))].sort(),
-    [prompts]
-  );
+  const categories = useMemo(() => getCategories(prompts).map((category) => category.name), [prompts]);
   const models = useMemo(
     () => [...new Set(prompts.map((prompt) => prompt.model).filter(Boolean))].sort(),
     [prompts]
@@ -25,6 +29,7 @@ export const usePromptListing = (prompts, copyCounts) => {
     () => [...new Set(prompts.map((prompt) => prompt.aspectRatio).filter(Boolean))].sort(),
     [prompts]
   );
+  const filterTags = useMemo(() => getFilterTags(prompts), [prompts]);
   const topTags = useMemo(() => getTopTags(prompts, 12), [prompts]);
 
   const searchQuery = searchParams.get("q") || "";
@@ -59,17 +64,19 @@ export const usePromptListing = (prompts, copyCounts) => {
       if (category !== "all" && prompt.category !== category) return false;
       if (model !== "all" && prompt.model !== model) return false;
       if (ratio !== "all" && prompt.aspectRatio !== ratio) return false;
-      if (tag && !prompt.tags.includes(tag)) return false;
+      if (tag && !prompt.displayTags.includes(tag) && !prompt.rawTags.includes(tag)) return false;
 
       if (!q) return true;
 
       const haystack = [
         prompt.title,
         prompt.category,
+        prompt.rawCategory,
         prompt.model,
         prompt.prompt,
         prompt.negativePrompt,
-        ...prompt.tags
+        ...prompt.displayTags,
+        ...prompt.rawTags
       ]
         .join(" ")
         .toLowerCase();
@@ -81,7 +88,7 @@ export const usePromptListing = (prompts, copyCounts) => {
       return [...results].sort((a, b) => {
         const left = featuredOrder.has(a.id) ? featuredOrder.get(a.id) : Number.MAX_SAFE_INTEGER;
         const right = featuredOrder.has(b.id) ? featuredOrder.get(b.id) : Number.MAX_SAFE_INTEGER;
-        return left - right || b.createdTimestamp - a.createdTimestamp;
+        return left - right || comparePromptsByDate(a, b);
       });
     }
 
@@ -91,7 +98,7 @@ export const usePromptListing = (prompts, copyCounts) => {
         const trendDiff =
           (trendingOrder.get(a.id) ?? Number.MAX_SAFE_INTEGER) -
           (trendingOrder.get(b.id) ?? Number.MAX_SAFE_INTEGER);
-        return copyDiff || trendDiff || b.createdTimestamp - a.createdTimestamp;
+        return copyDiff || trendDiff || comparePromptsByDate(a, b);
       });
     }
 
@@ -139,6 +146,7 @@ export const usePromptListing = (prompts, copyCounts) => {
     categories,
     models,
     aspectRatios,
+    filterTags,
     topTags,
     searchQuery,
     category,

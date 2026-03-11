@@ -51,6 +51,7 @@ const normalizePrompt = (raw, index) => {
   return {
     id,
     title,
+    sourceIndex: index,
     prompt: pickString(raw?.prompt),
     negativePrompt: pickString(raw?.negativePrompt),
     tags: parseTags(raw?.tags),

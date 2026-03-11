@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { GITHUB_RAW_URL } from "../config";
-import { enrichPrompts } from "../lib/content";
+import { enrichPrompts, sortPromptsByDate } from "../lib/content";
 import { normalizePrompts } from "../utils/normalizePrompts";
 import {
   getCopyCounts,
@@ -95,7 +95,7 @@ export function AppProvider({ children }) {
         }
 
         if (!cancelled) {
-          setPrompts(enrichPrompts(normalized));
+          setPrompts(sortPromptsByDate(enrichPrompts(normalized)));
         }
       } catch (err) {
         if (err?.name === "AbortError") {

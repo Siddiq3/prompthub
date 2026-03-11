@@ -55,7 +55,7 @@ function Latest() {
         {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
         {!loading && !error ? (
           <>
-            <MasonryGrid items={paginatedItems} renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />} />
+            <MasonryGrid items={paginatedItems} renderItem={(prompt) => <PromptCard prompt={prompt} />} />
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

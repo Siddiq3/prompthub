@@ -17,7 +17,7 @@ function SmartImage({
   imageClassName = "",
   aspectClassName = "aspect-[4/3]",
   priority = false,
-  sizes = "(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 100vw",
+  sizes = "(min-width: 1280px) 29vw, (min-width: 768px) 46vw, 92vw",
   children
 }) {
   const [imageAttempt, setImageAttempt] = useState(0);
@@ -41,7 +41,7 @@ function SmartImage({
           src={activeImage}
           alt={alt || title}
           loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : "auto"}
+          fetchPriority={priority ? "high" : undefined}
           decoding="async"
           sizes={sizes}
           onLoad={() => setImageLoaded(true)}

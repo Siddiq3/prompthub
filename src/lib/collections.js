@@ -44,7 +44,7 @@ export const COLLECTION_DEFINITIONS = [
       "A curated set of cinematic AI photo prompts spanning moody lighting, film-inspired scenes, and story-driven compositions.",
     intro:
       "This collection prioritizes atmosphere, narrative framing, and image prompts with strong emotional or filmic direction.",
-    matcher: (prompt) => prompt.category === "Cinematic" || hasTag(prompt, "cinematic")
+    matcher: (prompt) => prompt.category === "Cinematic" || prompt.rawCategory === "Cinematic" || hasTag(prompt, "cinematic")
   },
   {
     slug: "fashion-editorial-photo-prompts",
@@ -53,7 +53,7 @@ export const COLLECTION_DEFINITIONS = [
       "Browse premium fashion and editorial prompt ideas featuring styling direction, beauty cues, and polished visual references.",
     intro:
       "Editorial fashion prompts are grouped here for creators working on brand campaigns, stylized portraits, and premium lookbooks.",
-    matcher: (prompt) => prompt.category === "Fashion" || hasTag(prompt, "editorial")
+    matcher: (prompt) => prompt.category === "Fashion" || prompt.rawCategory === "Fashion" || hasTag(prompt, "editorial")
   },
   {
     slug: "candid-photo-prompts",
@@ -71,6 +71,6 @@ export const COLLECTION_DEFINITIONS = [
       "A focused collection of romantic and emotional AI prompts for wedding scenes, couple portraits, and soft cinematic storytelling.",
     intro:
       "Use these prompts when you need emotional warmth, romantic tension, or celebratory couple imagery for weddings and storytelling work.",
-    matcher: (prompt) => prompt.category === "Wedding" || hasTag(prompt, "romantic")
+    matcher: (prompt) => prompt.category === "Wedding" || prompt.rawCategory === "Wedding" || hasTag(prompt, "romantic")
   }
 ];

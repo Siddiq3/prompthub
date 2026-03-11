@@ -19,6 +19,7 @@ function Prompts() {
     categories,
     models,
     aspectRatios,
+    filterTags,
     topTags,
     searchQuery,
     category,
@@ -68,8 +69,8 @@ function Prompts() {
         <Breadcrumbs items={breadcrumbs} />
         <PageHeader
           eyebrow="Prompt Gallery"
-          title="Search and filter AI photo prompts"
-          description="Use the main discovery page to search prompt text, refine by category or model, browse style tags, and sort by latest, popular, or featured results."
+          title="Browse prompts with guided filters"
+          description="Pick a primary category first, then narrow the archive by model, aspect ratio, and secondary style tags."
           meta={[`${prompts.length} total prompts`, `${filteredPrompts.length} matching prompts`]}
           actions={[
             <Link key="latest" to="/latest" className="ui-button-secondary">
@@ -87,6 +88,7 @@ function Prompts() {
           categories={categories}
           models={models}
           aspectRatios={aspectRatios}
+          filterTags={filterTags}
           activeCategory={category}
           activeModel={model}
           activeRatio={ratio}
@@ -106,7 +108,7 @@ function Prompts() {
               {filteredPrompts.length} prompts ready to browse
             </h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              The archive is built for direct search, quick filtering, and crawlable discovery. Open any card for full prompt text, copy actions, metadata, and related prompts.
+              The archive keeps category as the main browse path while tags work as secondary refinements. Open any card for the full prompt, copy actions, and related prompts.
             </p>
           </div>
           <AdSlot label="Responsive banner placeholder below discovery filters" variant="banner" className="h-full" />
@@ -132,7 +134,7 @@ function Prompts() {
           <>
             <MasonryGrid
               items={paginatedPrompts}
-              renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />}
+              renderItem={(prompt) => <PromptCard prompt={prompt} />}
             />
             <Pagination
               currentPage={currentPage}

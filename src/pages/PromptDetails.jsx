@@ -16,6 +16,7 @@ import {
   getSimilarPrompts
 } from "../lib/content";
 import { sharePromptLink } from "../lib/share";
+import { formatTagLabel } from "../lib/taxonomy";
 import Seo from "../seo/Seo";
 import {
   buildArticleSchema,
@@ -37,7 +38,7 @@ const formatHumanList = (items = []) => {
 const getPromptDescriptionParagraphs = (prompt) => {
   if (!prompt) return [];
 
-  const tagSummary = formatHumanList(prompt.tags.slice(0, 4));
+  const tagSummary = formatHumanList(prompt.displayTags.slice(0, 4).map((tag) => formatTagLabel(tag)));
   const bestForSummary = formatHumanList(prompt.bestFor.slice(0, 4).map((item) => item.label));
   const negativePromptSummary = prompt.negativePrompt
     ? "Adding the included negative prompt can help reduce distracting artifacts and keep the final image cleaner."
@@ -165,7 +166,7 @@ function PromptDetails() {
             path: prompt.url,
             image: prompt.previewImage,
             datePublished: prompt.createdAt,
-            keywords: [prompt.category, prompt.modelLabel, ...prompt.tags.slice(0, 6)]
+            keywords: [prompt.category, prompt.modelLabel, ...prompt.displayTags.slice(0, 6)]
           }),
           buildBreadcrumbSchema(breadcrumbs),
           buildItemListSchema(relatedPrompts)
@@ -207,9 +208,9 @@ function PromptDetails() {
                 </h1>
                 <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">{prompt.seoIntro}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {prompt.tags.slice(0, 6).map((tag) => (
+                  {prompt.displayTags.slice(0, 6).map((tag) => (
                     <Link key={tag} to={buildPromptsPathWithTag(tag)} className="ui-tag">
-                      {tag}
+                      {formatTagLabel(tag)}
                     </Link>
                   ))}
                 </div>
@@ -293,9 +294,9 @@ function PromptDetails() {
                 Use this page as a reference when you want a copy-ready prompt, a negative prompt, and related ideas for the same visual direction.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                {prompt.tags.slice(0, 6).map((tag) => (
+                {prompt.displayTags.slice(0, 6).map((tag) => (
                   <Link key={`snapshot-${tag}`} to={buildPromptsPathWithTag(tag)} className="ui-tag">
-                    {tag}
+                    {formatTagLabel(tag)}
                   </Link>
                 ))}
               </div>
@@ -363,9 +364,9 @@ function PromptDetails() {
                 <Link to="/prompts" className="ui-button-secondary">
                   Full archive
                 </Link>
-                {prompt.tags.slice(0, 3).map((tag) => (
+                {prompt.displayTags.slice(0, 3).map((tag) => (
                   <Link key={tag} to={buildPromptsPathWithTag(tag)} className="ui-tag">
-                    {tag}
+                    {formatTagLabel(tag)}
                   </Link>
                 ))}
               </div>
