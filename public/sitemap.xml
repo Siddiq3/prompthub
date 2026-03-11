@@ -1,589 +1,799 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://photopromptshub.com/</loc>
+    <loc>https://photopromptshub.in/</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompts</loc>
+    <loc>https://photopromptshub.in/prompts</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/categories</loc>
+    <loc>https://photopromptshub.in/categories</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collections</loc>
+    <loc>https://photopromptshub.in/collections</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/latest</loc>
+    <loc>https://photopromptshub.in/latest</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/trending</loc>
+    <loc>https://photopromptshub.in/trending</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/about</loc>
+    <loc>https://photopromptshub.in/about</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/contact</loc>
+    <loc>https://photopromptshub.in/contact</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/privacy-policy</loc>
+    <loc>https://photopromptshub.in/privacy-policy</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/terms</loc>
+    <loc>https://photopromptshub.in/terms</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/disclaimer</loc>
+    <loc>https://photopromptshub.in/disclaimer</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/dmca</loc>
+    <loc>https://photopromptshub.in/dmca</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/kids</loc>
+    <loc>https://photopromptshub.in/category/fashion</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/category/kids</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/wedding</loc>
+    <loc>https://photopromptshub.in/category/wedding</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/fashion</loc>
-    <lastmod>2026-02-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://photopromptshub.com/category/portrait</loc>
+    <loc>https://photopromptshub.in/category/portrait</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/sports</loc>
+    <loc>https://photopromptshub.in/category/sports</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/cinematic</loc>
+    <loc>https://photopromptshub.in/category/cinematic</loc>
     <lastmod>2025-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/beauty</loc>
+    <loc>https://photopromptshub.in/category/beauty</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/category/street</loc>
+    <loc>https://photopromptshub.in/category/street</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/midjourney-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/midjourney-photo-prompts</loc>
     <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/dalle-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/dalle-photo-prompts</loc>
     <lastmod>2026-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/flux-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/flux-photo-prompts</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/stable-diffusion-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/stable-diffusion-photo-prompts</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/cinematic-photo-prompts</loc>
-    <lastmod>2025-11-16</lastmod>
+    <loc>https://photopromptshub.in/collection/cinematic-photo-prompts</loc>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/fashion-editorial-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/fashion-editorial-photo-prompts</loc>
     <lastmod>2026-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/candid-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/candid-photo-prompts</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/collection/romantic-photo-prompts</loc>
+    <loc>https://photopromptshub.in/collection/romantic-photo-prompts</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/golden-hour-studio-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/golden-hour-studio-portrait</loc>
     <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/high-key-professional-headshot</loc>
+    <loc>https://photopromptshub.in/prompt/high-key-professional-headshot</loc>
     <lastmod>2025-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/moody-split-light-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/moody-split-light-portrait</loc>
     <lastmod>2025-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/environmental-artisan-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/environmental-artisan-portrait</loc>
     <lastmod>2025-10-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/cinestill-film-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/cinestill-film-portrait</loc>
     <lastmod>2025-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/candid-telephoto-street-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/candid-telephoto-street-portrait</loc>
     <lastmod>2025-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/double-exposure-nature-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/double-exposure-nature-portrait</loc>
     <lastmod>2025-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/harsh-flash-editorial-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/harsh-flash-editorial-portrait</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/rembrandt-lighting-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/rembrandt-lighting-portrait</loc>
     <lastmod>2025-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/rainy-window-cinematic-face</loc>
+    <loc>https://photopromptshub.in/prompt/rainy-window-cinematic-face</loc>
     <lastmod>2025-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/fisheye-skater-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/fisheye-skater-portrait</loc>
     <lastmod>2025-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/silhouette-sunset-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/silhouette-sunset-portrait</loc>
     <lastmod>2025-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/high-contrast-b-and-w-headshot</loc>
+    <loc>https://photopromptshub.in/prompt/high-contrast-b-and-w-headshot</loc>
     <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/dark-thriller-alleyway</loc>
+    <loc>https://photopromptshub.in/prompt/dark-thriller-alleyway</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/indie-film-diner-scene</loc>
+    <loc>https://photopromptshub.in/prompt/indie-film-diner-scene</loc>
     <lastmod>2025-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/romantic-rain-embrace</loc>
+    <loc>https://photopromptshub.in/prompt/romantic-rain-embrace</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/hacker-den-monitors</loc>
+    <loc>https://photopromptshub.in/prompt/hacker-den-monitors</loc>
     <lastmod>2025-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/documentary-tearful-vows</loc>
+    <loc>https://photopromptshub.in/prompt/documentary-tearful-vows</loc>
     <lastmod>2026-02-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/light-and-airy-couple</loc>
+    <loc>https://photopromptshub.in/prompt/light-and-airy-couple</loc>
     <lastmod>2026-03-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/dark-moody-editorial-bride</loc>
+    <loc>https://photopromptshub.in/prompt/dark-moody-editorial-bride</loc>
     <lastmod>2026-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/sparkler-exit-night</loc>
+    <loc>https://photopromptshub.in/prompt/sparkler-exit-night</loc>
     <lastmod>2026-03-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/epic-mountain-elopement</loc>
+    <loc>https://photopromptshub.in/prompt/epic-mountain-elopement</loc>
     <lastmod>2026-03-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/candid-dance-floor-blur</loc>
+    <loc>https://photopromptshub.in/prompt/candid-dance-floor-blur</loc>
     <lastmod>2026-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/bridal-preparation-window</loc>
+    <loc>https://photopromptshub.in/prompt/bridal-preparation-window</loc>
     <lastmod>2026-03-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/silhouette-sunset-kiss</loc>
+    <loc>https://photopromptshub.in/prompt/silhouette-sunset-kiss</loc>
     <lastmod>2026-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/first-look-emotion</loc>
+    <loc>https://photopromptshub.in/prompt/first-look-emotion</loc>
     <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/vintage-getaway-car</loc>
+    <loc>https://photopromptshub.in/prompt/vintage-getaway-car</loc>
     <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/flower-girl-candid</loc>
+    <loc>https://photopromptshub.in/prompt/flower-girl-candid</loc>
     <lastmod>2026-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/champagne-tower-pour</loc>
+    <loc>https://photopromptshub.in/prompt/champagne-tower-pour</loc>
     <lastmod>2026-03-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/groomsmen-walking-city</loc>
+    <loc>https://photopromptshub.in/prompt/groomsmen-walking-city</loc>
     <lastmod>2026-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/lace-veil-detail</loc>
+    <loc>https://photopromptshub.in/prompt/lace-veil-detail</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/confetti-exit-joy</loc>
+    <loc>https://photopromptshub.in/prompt/confetti-exit-joy</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/family-walking-hand-in-hand</loc>
+    <loc>https://photopromptshub.in/prompt/family-walking-hand-in-hand</loc>
     <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/cozy-storybook-bedtime</loc>
+    <loc>https://photopromptshub.in/prompt/cozy-storybook-bedtime</loc>
     <lastmod>2026-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/muddy-puddle-jump</loc>
+    <loc>https://photopromptshub.in/prompt/muddy-puddle-jump</loc>
     <lastmod>2026-03-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/newborn-gentle-hands</loc>
+    <loc>https://photopromptshub.in/prompt/newborn-gentle-hands</loc>
     <lastmod>2026-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/siblings-board-game-laughs</loc>
+    <loc>https://photopromptshub.in/prompt/siblings-board-game-laughs</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/beach-running-sunset</loc>
+    <loc>https://photopromptshub.in/prompt/beach-running-sunset</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/messy-spaghetti-eating</loc>
+    <loc>https://photopromptshub.in/prompt/messy-spaghetti-eating</loc>
     <lastmod>2026-03-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/baby-first-steps</loc>
+    <loc>https://photopromptshub.in/prompt/baby-first-steps</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/father-and-son-workshop</loc>
+    <loc>https://photopromptshub.in/prompt/father-and-son-workshop</loc>
     <lastmod>2026-03-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/kids-baking-flour-fight</loc>
+    <loc>https://photopromptshub.in/prompt/kids-baking-flour-fight</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/teenager-skateboard-hangout</loc>
+    <loc>https://photopromptshub.in/prompt/teenager-skateboard-hangout</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/sleeping-baby-wrap</loc>
+    <loc>https://photopromptshub.in/prompt/sleeping-baby-wrap</loc>
     <lastmod>2026-03-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/blowing-dandelion-seeds</loc>
+    <loc>https://photopromptshub.in/prompt/blowing-dandelion-seeds</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/family-dog-cuddles</loc>
+    <loc>https://photopromptshub.in/prompt/family-dog-cuddles</loc>
     <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/raincoat-urban-adventure</loc>
+    <loc>https://photopromptshub.in/prompt/raincoat-urban-adventure</loc>
     <lastmod>2026-03-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/treehouse-imagination</loc>
+    <loc>https://photopromptshub.in/prompt/treehouse-imagination</loc>
     <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/soccer-mid-air-strike</loc>
+    <loc>https://photopromptshub.in/prompt/soccer-mid-air-strike</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/surfing-wave-barrel</loc>
+    <loc>https://photopromptshub.in/prompt/surfing-wave-barrel</loc>
     <lastmod>2026-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/basketball-slam-dunk</loc>
+    <loc>https://photopromptshub.in/prompt/basketball-slam-dunk</loc>
     <lastmod>2026-04-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/boxing-ring-sweat</loc>
+    <loc>https://photopromptshub.in/prompt/boxing-ring-sweat</loc>
     <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/swimming-butterfly-stroke</loc>
+    <loc>https://photopromptshub.in/prompt/swimming-butterfly-stroke</loc>
     <lastmod>2026-04-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/tennis-serve-focus</loc>
+    <loc>https://photopromptshub.in/prompt/tennis-serve-focus</loc>
     <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/harsh-shadow-architect</loc>
+    <loc>https://photopromptshub.in/prompt/harsh-shadow-architect</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/soft-femininity-lace-editorial</loc>
+    <loc>https://photopromptshub.in/prompt/soft-femininity-lace-editorial</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/dusty-pastel-babydoll-street-editorial</loc>
+    <loc>https://photopromptshub.in/prompt/dusty-pastel-babydoll-street-editorial</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/dark-romance-velvet-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/dark-romance-velvet-portrait</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/polka-dot-neo-retro-studio</loc>
+    <loc>https://photopromptshub.in/prompt/polka-dot-neo-retro-studio</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/cinched-waist-power-editorial</loc>
+    <loc>https://photopromptshub.in/prompt/cinched-waist-power-editorial</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/powder-blue-chikankari-editorial</loc>
+    <loc>https://photopromptshub.in/prompt/powder-blue-chikankari-editorial</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/jade-banarasi-evening-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/jade-banarasi-evening-portrait</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/mumbai-utility-saree-street-style</loc>
+    <loc>https://photopromptshub.in/prompt/mumbai-utility-saree-street-style</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/persimmon-ikat-co-ord-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/persimmon-ikat-co-ord-portrait</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/soft-grunge-lehenga-fusion</loc>
+    <loc>https://photopromptshub.in/prompt/soft-grunge-lehenga-fusion</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/checkered-kurta-runway-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/checkered-kurta-runway-portrait</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/opalescent-indian-bridal-beauty</loc>
+    <loc>https://photopromptshub.in/prompt/opalescent-indian-bridal-beauty</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/poetcore-anarkali-editorial</loc>
+    <loc>https://photopromptshub.in/prompt/poetcore-anarkali-editorial</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/mehfil-cabaret-glam-portrait</loc>
+    <loc>https://photopromptshub.in/prompt/mehfil-cabaret-glam-portrait</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.com/prompt/balletcore-sharara-fusion</loc>
+    <loc>https://photopromptshub.in/prompt/balletcore-sharara-fusion</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/pastel-gota-patti-studio-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/retro-polka-saree-night-editorial</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/quiet-luxury-kanjeevaram-tailoring</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/cool-blue-office-kurta-chic</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/jade-beauty-crop-with-bindi</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/structured-corset-saree-street-look</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/lavender-indo-western-night-edit</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/persimmon-bandhani-cape-studio</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/lace-and-ajrakh-leather-contrast</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/future-indian-couture-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/cargo-calling-menswear-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/blokecore-2-0-editorial</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/earthy-tone-evolution-menswear</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/devil-in-the-details-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/fit-and-flare-tailoring</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/brooched-formal-night</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/corporate-slim-office-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/rugged-luxury-expedition-style</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/retro-colors-menswear-pop</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/high-shine-evening-menswear</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/faux-leather-jacket-campaign</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/knit-polo-quiet-luxury</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/comfort-loafers-street-tailoring</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/leather-utility-jacket-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/poetcore-mens-editorial</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/wasabi-techwear-mens-street</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/cool-blue-minimal-mens-studio</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/plum-noir-club-tailoring</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/persimmon-knit-mens-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/jade-suit-contemporary-grooming</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/pleated-trouser-motion-shot</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/tie-pin-and-brooch-close-portrait</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/modern-safari-tailoring</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/street-smart-corporate-slim</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/prompt/heritage-knit-and-utility-fusion</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

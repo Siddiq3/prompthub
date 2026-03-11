@@ -56,7 +56,7 @@ function SmartImage({
       {showSkeleton && <div className="skeleton-shimmer absolute inset-0" />}
 
       {showFallback && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_top_left,#d9e5e8,transparent_60%),linear-gradient(135deg,#f7f4ee,#ffffff)] text-4xl font-semibold text-brand-ink">
+        <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_top_left,#e0e7ff,transparent_60%),linear-gradient(135deg,#f8fafc,#ffffff)] text-4xl font-semibold text-brand-ink">
           {getInitials(title)}
         </div>
       )}

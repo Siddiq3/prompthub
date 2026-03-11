@@ -40,8 +40,8 @@ function Pagination({
   const to = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className="flex flex-col gap-4 rounded-[1.75rem] border border-slate-200 bg-white/92 p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
-      <div className="text-sm text-slate-600">
+    <div className="section-shell flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="text-sm leading-7 text-slate-600">
         Showing <span className="font-semibold text-brand-ink">{from}</span>-
         <span className="font-semibold text-brand-ink">{to}</span> of{" "}
         <span className="font-semibold text-brand-ink">{totalItems}</span> {itemLabel}
@@ -50,19 +50,19 @@ function Pagination({
       <div className="flex flex-wrap items-center gap-2">
         {onItemsPerPageChange ? (
           <label className="inline-flex items-center gap-2 text-sm text-slate-600">
-          <span>Per page</span>
-          <select
-            className="rounded-full border border-slate-200 bg-white px-3 py-2 text-sm text-brand-ink outline-none transition focus-visible:border-brand-accent focus-visible:ring-2 focus-visible:ring-brand-accent/30"
-            value={itemsPerPage}
-            onChange={(event) => onItemsPerPageChange(Number(event.target.value))}
-            aria-label="Items per page"
-          >
-            {pageSizeOptions.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
+            <span>Per page</span>
+            <select
+              className="ui-select h-10 rounded-pill px-3 py-2"
+              value={itemsPerPage}
+              onChange={(event) => onItemsPerPageChange(Number(event.target.value))}
+              aria-label="Items per page"
+            >
+              {pageSizeOptions.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
           </label>
         ) : null}
 
@@ -71,7 +71,7 @@ function Pagination({
             type="button"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-ink transition hover:border-brand-accent hover:text-brand-accent disabled:cursor-not-allowed disabled:opacity-50"
+            className="ui-icon-button h-10 w-10 disabled:pointer-events-none disabled:opacity-50"
             aria-label="Previous page"
           >
             <FaChevronLeft />
@@ -88,10 +88,10 @@ function Pagination({
                 type="button"
                 onClick={() => onPageChange(item)}
                 aria-current={item === currentPage ? "page" : undefined}
-                className={`inline-flex h-10 min-w-10 items-center justify-center rounded-full px-3 text-sm font-semibold transition ${
+                className={`inline-flex h-10 min-w-10 items-center justify-center rounded-pill px-3 text-sm font-semibold transition-all duration-180 ease-smooth ${
                   item === currentPage
-                    ? "bg-brand-ink text-white"
-                    : "border border-slate-200 bg-white text-brand-ink hover:border-brand-accent hover:text-brand-accent"
+                    ? "border border-indigo-100 bg-indigo-50 text-indigo-700"
+                    : "border border-slate-200 bg-white text-brand-ink hover:border-brand-accent/30 hover:text-brand-accent"
                 }`}
               >
                 {item}
@@ -103,7 +103,7 @@ function Pagination({
             type="button"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-ink transition hover:border-brand-accent hover:text-brand-accent disabled:cursor-not-allowed disabled:opacity-50"
+            className="ui-icon-button h-10 w-10 disabled:pointer-events-none disabled:opacity-50"
             aria-label="Next page"
           >
             <FaChevronRight />

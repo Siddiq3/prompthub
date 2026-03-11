@@ -2,7 +2,7 @@ const heights = ["h-36", "h-48", "h-56", "h-44", "h-52", "h-40"];
 
 function LoadingCard({ index }) {
   return (
-    <div className="fade-in-up overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white/95 p-4 shadow-soft">
+    <div className="fade-in-up ui-card overflow-hidden p-4">
       <div className={`skeleton-shimmer w-full rounded-xl ${heights[index % heights.length]}`} />
       <div className="skeleton-shimmer mt-4 h-4 w-2/3 rounded" />
       <div className="skeleton-shimmer mt-2 h-3 w-1/2 rounded" />
@@ -20,7 +20,7 @@ function LoadingCard({ index }) {
 
 function LoadingSkeleton({ count = 8 }) {
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: count }).map((_, index) => (
         <div key={index}>
           <LoadingCard index={index} />

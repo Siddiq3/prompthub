@@ -20,36 +20,35 @@ function PromptCard({ prompt, priority = false }) {
   };
 
   return (
-    <article className="group overflow-hidden rounded-[1.9rem] border border-slate-200/90 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(253,253,252,0.96))] shadow-soft transition duration-300 hover:-translate-y-1.5 hover:border-brand-accent/25 hover:shadow-lift">
+    <article className="group ui-card ui-card-hover flex h-full flex-col overflow-hidden">
       <Link to={prompt.url} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40">
         <SmartImage
           src={prompt.previewImage}
           alt={prompt.title}
           title={prompt.title}
           priority={priority}
-          imageClassName="group-hover:scale-[1.03]"
+          imageClassName="group-hover:scale-[1.025] group-hover:brightness-[1.03]"
         >
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#132238]/70 via-[#132238]/10 to-transparent" />
           <div className="absolute left-4 right-4 top-4 flex items-center justify-between gap-3">
-            <span className="rounded-full bg-white/92 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-brand-ink shadow-sm">
+            <span className="rounded-pill border border-white/80 bg-white/92 px-3 py-1.5 text-[0.72rem] font-semibold text-brand-ink shadow-sm backdrop-blur">
               {prompt.category}
             </span>
-            <span className="rounded-full bg-[#132238]/76 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-sm">
+            <span className="rounded-pill border border-white/70 bg-white/88 px-3 py-1.5 text-[0.72rem] font-medium text-slate-600 shadow-sm backdrop-blur">
               {copyCount} copies
             </span>
           </div>
         </SmartImage>
       </Link>
 
-      <div className="space-y-5 p-5 sm:p-6">
+      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+        <div className="flex flex-wrap gap-2">
+          <span className="ui-pill">{prompt.modelLabel}</span>
+          <span className="ui-pill">{prompt.aspectRatio}</span>
+        </div>
+
         <div className="space-y-3">
-          <div className="flex flex-wrap gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-slate-500">
-            <span>{prompt.modelLabel}</span>
-            <span>•</span>
-            <span>{prompt.aspectRatio}</span>
-          </div>
           <Link to={prompt.url} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40">
-            <h3 className="text-balance font-heading text-[1.75rem] font-semibold tracking-tight text-brand-ink transition group-hover:text-brand-accent">
+            <h3 className="text-balance font-heading text-[1.35rem] font-semibold leading-tight tracking-tight text-brand-ink transition-colors duration-180 ease-smooth group-hover:text-brand-accent sm:text-[1.5rem]">
               {prompt.title}
             </h3>
           </Link>
@@ -57,35 +56,38 @@ function PromptCard({ prompt, priority = false }) {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {prompt.tags.slice(0, 4).map((tag) => (
-            <span
-              key={`${prompt.id}-${tag}`}
-              className="rounded-full border border-slate-200/90 bg-slate-50/88 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-slate-600"
-            >
+          {prompt.tags.slice(0, 3).map((tag) => (
+            <span key={`${prompt.id}-${tag}`} className="ui-tag">
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
+        <div className="soft-divider mt-auto" />
+
+        <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto_auto]">
           <button
             type="button"
             onClick={handleCopy}
-            className="col-span-2 inline-flex items-center justify-center gap-2 rounded-full bg-brand-ink px-4 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-brand-ink/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 sm:col-span-1"
+            className={`inline-flex h-11 items-center justify-center gap-2 rounded-pill px-4 text-sm font-semibold text-white transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2 ${
+              copied
+                ? "bg-emerald-600 hover:bg-emerald-600"
+                : "bg-brand-accent hover:-translate-y-0.5 hover:bg-primary-dark"
+            }`}
           >
-            {copied ? <FaCheck className="text-emerald-300" /> : <FaCopy />}
+            {copied ? <FaCheck className="text-emerald-100" /> : <FaCopy />}
             {copied ? "Copied" : "Copy prompt"}
           </button>
           <Link
             to={prompt.url}
-            className="inline-flex items-center justify-center rounded-full border border-brand-ink/20 bg-white px-4 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+            className="ui-button-secondary h-11 px-4"
           >
             View
           </Link>
           <button
             type="button"
             onClick={() => sharePromptLink(prompt, notify)}
-            className="inline-flex h-[3rem] w-[3rem] items-center justify-center rounded-full border border-slate-200 bg-slate-50/75 text-slate-600 transition hover:border-brand-accent hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+            className="ui-icon-button"
             aria-label={`Share ${prompt.title}`}
           >
             <FaShareAlt />
@@ -93,11 +95,10 @@ function PromptCard({ prompt, priority = false }) {
           <button
             type="button"
             onClick={() => toggleSaved(prompt.id)}
-            className="col-span-2 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-slate-50/72 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-brand-accent hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 sm:col-span-1 sm:col-start-3 sm:row-start-2 sm:h-[3rem] sm:w-[3rem] sm:bg-white sm:px-0"
+            className={`ui-icon-button ${isSaved ? "border-indigo-100 bg-indigo-50 text-brand-accent" : ""}`}
             aria-label={isSaved ? `Remove ${prompt.title} from saved prompts` : `Save ${prompt.title}`}
           >
-            {isSaved ? <FaBookmark className="text-brand-accent" /> : <FaRegBookmark />}
-            <span className="sm:hidden">{isSaved ? "Saved" : "Save"}</span>
+            {isSaved ? <FaBookmark /> : <FaRegBookmark />}
           </button>
         </div>
       </div>

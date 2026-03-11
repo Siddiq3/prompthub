@@ -57,13 +57,21 @@ function Prompts() {
         ]}
       />
 
-      <section className="space-y-6">
+      <section className="space-y-8">
         <Breadcrumbs items={breadcrumbs} />
         <PageHeader
           eyebrow="Prompt Gallery"
           title="Search and filter AI photo prompts"
           description="Use the main discovery page to search prompt text, refine by category or model, browse style tags, and sort by latest, popular, or featured results."
           meta={[`${prompts.length} total prompts`, `${filteredPrompts.length} matching prompts`]}
+          actions={[
+            <Link key="latest" to="/latest" className="ui-button-secondary">
+              Latest prompts
+            </Link>,
+            <Link key="categories" to="/categories" className="ui-button-secondary">
+              Browse categories
+            </Link>
+          ]}
         />
 
         <FilterBar
@@ -84,23 +92,30 @@ function Prompts() {
           onClear={clearFilters}
         />
 
-        <AdSlot label="Responsive banner placeholder below discovery filters" variant="banner" />
+        <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.75fr)]">
+          <div className="ui-panel p-5 sm:p-6">
+            <p className="section-kicker text-brand-accent">Archive View</p>
+            <h2 className="mt-3 font-heading text-[1.7rem] font-semibold tracking-tight text-brand-ink sm:text-[2rem]">
+              {filteredPrompts.length} prompts ready to browse
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              The archive is built for direct search, quick filtering, and crawlable discovery. Open any card for full prompt text, copy actions, metadata, and related prompts.
+            </p>
+          </div>
+          <AdSlot label="Responsive banner placeholder below discovery filters" variant="banner" className="h-full" />
+        </section>
 
         {loading && <LoadingSkeleton count={itemsPerPage} />}
 
         {!loading && error && <ErrorState message={error} onRetry={retryFetch} />}
 
         {!loading && !error && filteredPrompts.length === 0 ? (
-          <section className="rounded-[2rem] border border-slate-200 bg-white/92 p-8 shadow-soft">
-            <h2 className="font-heading text-2xl font-semibold text-brand-ink">No prompts found</h2>
+          <section className="section-shell p-8">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight text-brand-ink">No prompts found</h2>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
               Try broader keywords, remove one or more filters, or return to the full prompt gallery to continue browsing.
             </p>
-            <button
-              type="button"
-              onClick={clearFilters}
-              className="mt-5 rounded-full bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-ink/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
-            >
+            <button type="button" onClick={clearFilters} className="ui-button-primary mt-5">
               Clear filters
             </button>
           </section>
@@ -108,7 +123,10 @@ function Prompts() {
 
         {!loading && !error && paginatedPrompts.length > 0 ? (
           <>
-            <MasonryGrid items={paginatedPrompts} renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />} />
+            <MasonryGrid
+              items={paginatedPrompts}
+              renderItem={(prompt, index) => <PromptCard prompt={prompt} priority={index < 2} />}
+            />
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -117,24 +135,18 @@ function Prompts() {
               onPageChange={setPage}
               itemLabel="prompts"
             />
-            <div className="rounded-[2rem] border border-slate-200 bg-white/92 p-6 shadow-soft">
-              <h2 className="font-heading text-2xl font-semibold text-brand-ink">
+            <div className="section-shell surface-subtle p-6 sm:p-8">
+              <h2 className="font-heading text-2xl font-semibold tracking-tight text-brand-ink">
                 Explore categories and collections
               </h2>
               <p className="mt-3 text-sm leading-7 text-slate-600">
                 For more crawlable prompt discovery paths, browse the category directory or jump into curated collections grouped by style and model.
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
-                <Link
-                  to="/categories"
-                  className="rounded-full border border-brand-ink px-5 py-3 text-sm font-semibold text-brand-ink transition hover:bg-brand-ink hover:text-white"
-                >
+                <Link to="/categories" className="ui-button-primary">
                   View categories
                 </Link>
-                <Link
-                  to="/collections"
-                  className="rounded-full border border-brand-ink px-5 py-3 text-sm font-semibold text-brand-ink transition hover:bg-brand-ink hover:text-white"
-                >
+                <Link to="/collections" className="ui-button-secondary">
                   View collections
                 </Link>
               </div>

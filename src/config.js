@@ -1,15 +1,15 @@
 export const GITHUB_RAW_URL =
   "https://raw.githubusercontent.com/Siddiq3/promtdata/main/promptdata.json";
 export const SITE_NAME = "PhotoPromptsHub";
-export const SITE_DOMAIN = "photopromptshub.com";
+export const SITE_DOMAIN = "photopromptshub.in";
 export const SITE_URL = `https://${SITE_DOMAIN}`;
 export const SITE_DESCRIPTION =
   "PhotoPromptsHub curates AI-generated photo prompts, example images, and creative inspiration for Midjourney, DALL·E, Flux, Stable Diffusion, and modern image generation workflows.";
 export const SITE_TAGLINE = "Discover the latest AI photo prompts";
 export const OWNER_NAME = "Siddiq Kolimi";
 export const COMPANY_NAME = "PhotoPromptsHub (Independent Project)";
-export const SUPPORT_EMAIL = "support@photopromptshub.com";
-export const CONTACT_EMAIL = "support@photopromptshub.com";
+export const SUPPORT_EMAIL = "photopromptshub@gmail.com";
+export const CONTACT_EMAIL = "photopromptshub@gmail.com";
 export const COUNTRY = "India";
 export const STATE = "Telangana";
 export const DEFAULT_OG_IMAGE =
@@ -49,3 +49,4 @@ export const HOME_FAQS = [
 ];
 export const WHATSAPP_CHANNEL_URL =
   "https://whatsapp.com/channel/0029VbCfYa9002TAlsIdh71m";
+export const TELEGRAM_CHANNEL_URL = "https://t.me/photopromptshub";

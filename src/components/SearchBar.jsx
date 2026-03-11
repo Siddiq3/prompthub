@@ -9,7 +9,9 @@ function SearchBar({
   buttonLabel = "Search",
   showButton = true,
   className = "",
-  inputClassName = ""
+  inputClassName = "",
+  buttonClassName = "",
+  iconClassName = ""
 }) {
   const inputId = useId();
 
@@ -22,10 +24,14 @@ function SearchBar({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`group flex w-full items-center gap-3 rounded-full border border-slate-200/90 bg-white/95 px-4 py-2.5 shadow-soft transition duration-300 focus-within:border-brand-accent focus-within:shadow-[0_18px_32px_-28px_rgba(142,90,43,0.45)] focus-within:ring-2 focus-within:ring-brand-accent/20 ${className}`}
+      className={`group flex w-full items-center gap-3 rounded-[1.35rem] border border-slate-200 bg-white px-4 py-3 shadow-soft transition-all duration-180 ease-smooth focus-within:border-brand-accent/35 focus-within:shadow-panel focus-within:ring-2 focus-within:ring-brand-accent/20 ${className}`}
       role="search"
     >
-      <FaSearch className="shrink-0 text-slate-400 transition group-focus-within:text-brand-accent" />
+      <span
+        className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition duration-180 ease-smooth group-focus-within:bg-indigo-50 group-focus-within:text-brand-accent ${iconClassName}`}
+      >
+        <FaSearch />
+      </span>
       <label className="sr-only" htmlFor={inputId}>
         Search prompts
       </label>
@@ -35,12 +41,12 @@ function SearchBar({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className={`min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 sm:text-[0.95rem] ${inputClassName}`}
+        className={`min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 sm:text-[0.98rem] ${inputClassName}`}
       />
       {showButton ? (
         <button
           type="submit"
-          className="inline-flex h-10 items-center justify-center rounded-full bg-brand-ink px-5 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-brand-ink/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+          className={`ui-button-primary h-11 shrink-0 whitespace-nowrap px-5 ${buttonClassName}`}
         >
           {buttonLabel}
         </button>

@@ -13,19 +13,17 @@ function Hero({
   popularCategories = []
 }) {
   return (
-    <section className="section-shell surface-subtle editorial-grid relative p-6 sm:p-10 lg:p-14">
-      <div className="pointer-events-none absolute left-0 top-0 h-48 w-48 rounded-full bg-brand-gold/10 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-56 w-56 rounded-full bg-brand-secondary/10 blur-3xl" />
-      <div className="relative z-10 grid gap-8 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:items-end">
+    <section className="section-shell surface-subtle p-6 sm:p-8 lg:p-10 xl:p-12">
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] xl:items-start">
         <div className="max-w-3xl">
-          <span className="section-kicker inline-flex rounded-full border border-brand-accent/15 bg-white/88 px-4 py-2 text-brand-accent">
-            Latest AI Photo Prompts
+          <span className="section-kicker text-brand-accent">
+            AI Prompt Discovery
           </span>
-          <h1 className="hero-fluid-title text-balance mt-6 font-heading text-brand-ink">
-            Discover the latest AI photo prompts for realistic portraits, cinematic scenes, fashion editorials, weddings, products, and viral image ideas
+          <h1 className="hero-fluid-title text-balance mt-4 font-heading text-brand-ink">
+            Discover AI Photo Prompts That Create Stunning Images
           </h1>
-          <p className="mt-6 max-w-2xl text-[1.02rem] leading-8 text-slate-600 sm:text-[1.08rem]">
-            Browse curated prompt ideas for Midjourney, ChatGPT image generation, DALL·E, Flux, and Stable Diffusion. Start with the latest feed, open trending prompt picks, browse categories, and move into detail pages with copy-ready prompts, tags, and related suggestions.
+          <p className="mt-5 max-w-2xl text-[1rem] leading-8 text-slate-600 sm:text-[1.08rem]">
+            Explore curated prompts for Midjourney, DALL·E, Stable Diffusion, Flux, and more. Search the archive, browse categories, and open copy-ready prompt pages with preview images, tags, and related ideas.
           </p>
           <div className="mt-8 max-w-2xl">
             <SearchBar
@@ -38,7 +36,7 @@ function Hero({
           </div>
           {popularCategories.length ? (
             <div className="mt-5">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-500">
+              <p className="ui-meta">
                 Popular starting points
               </p>
               <div className="mt-3 flex flex-wrap gap-2.5">
@@ -46,7 +44,7 @@ function Hero({
                   <Link
                     key={category.slug}
                     to={category.href}
-                    className="rounded-full border border-slate-200/90 bg-white/82 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
+                    className="ui-tag text-sm"
                   >
                     {category.name}
                   </Link>
@@ -57,75 +55,92 @@ function Hero({
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to="/prompts"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-brand-ink/92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+              className="ui-button-primary"
             >
               Browse all prompts
               <FaArrowRight className="text-xs" />
             </Link>
             <Link
-              to="/latest"
-              className="inline-flex items-center rounded-full border border-brand-ink/20 bg-white/80 px-5 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+              to="/trending"
+              className="ui-button-secondary"
             >
-              See latest prompts
+              Explore trending prompts
             </Link>
           </div>
-          <div className="mt-8 flex flex-wrap gap-2">
+          <div className="mt-8 flex flex-wrap gap-2.5">
             {["Free to browse", "Copy-ready prompts", "Latest updates", "No signup required"].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-slate-200/90 bg-white/72 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600"
-              >
+              <span key={item} className="ui-pill">
                 {item}
               </span>
             ))}
           </div>
         </div>
 
-        <div className="grid gap-4 rounded-[2rem] border border-white/70 bg-white/86 p-5 shadow-soft backdrop-blur sm:p-6">
-          <div className="rounded-[1.5rem] border border-slate-200/90 bg-white/85 p-5">
+        <div className="grid gap-4">
+          <div className="ui-card p-5 sm:p-6">
             <p className="section-kicker text-brand-accent">Start Here</p>
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              First-time visitors usually start with the latest feed, trending prompts, or category pages to narrow the library quickly and open the most relevant prompt pages first.
+              First-time visitors usually get the fastest results by starting with the main archive, then moving into latest, trending, or category pages for narrower discovery.
             </p>
             <div className="mt-4 grid gap-2 text-sm">
-              <Link className="rounded-full border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition hover:border-brand-accent hover:text-brand-accent" to="/latest">
+              <Link
+                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                to="/prompts"
+              >
+                Prompt archive
+              </Link>
+              <Link
+                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                to="/latest"
+              >
                 Latest prompts
               </Link>
-              <Link className="rounded-full border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition hover:border-brand-accent hover:text-brand-accent" to="/trending">
+              <Link
+                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                to="/trending"
+              >
                 Trending prompts
               </Link>
-              <Link className="rounded-full border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition hover:border-brand-accent hover:text-brand-accent" to="/categories">
+              <Link
+                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                to="/categories"
+              >
                 Browse categories
               </Link>
-              <Link className="rounded-full border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition hover:border-brand-accent hover:text-brand-accent" to="/collections">
+              <Link
+                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                to="/collections"
+              >
                 Explore collections
               </Link>
             </div>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
-            <div className="rounded-[1.5rem] border border-slate-200/90 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,250,252,0.84))] p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Total prompts</p>
+
+          <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-3">
+            <div className="ui-panel p-4">
+              <p className="ui-meta">Total prompts</p>
               <p className="mt-2 font-heading text-3xl text-brand-ink">{totalPrompts}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-slate-500">Curated and crawlable</p>
+              <p className="mt-2 text-sm text-slate-500">Curated and crawlable</p>
             </div>
-            <div className="rounded-[1.5rem] border border-slate-200/90 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,250,252,0.84))] p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Categories</p>
+            <div className="ui-panel p-4">
+              <p className="ui-meta">Categories</p>
               <p className="mt-2 font-heading text-3xl text-brand-ink">{categoriesCount}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-slate-500">From portrait to street</p>
+              <p className="mt-2 text-sm text-slate-500">Portrait to street</p>
             </div>
-            <div className="rounded-[1.5rem] border border-slate-200/90 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(248,250,252,0.84))] p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Models covered</p>
+            <div className="ui-panel p-4">
+              <p className="ui-meta">Models covered</p>
               <p className="mt-2 font-heading text-3xl text-brand-ink">{modelsCount}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-slate-500">Production-ready references</p>
+              <p className="mt-2 text-sm text-slate-500">Current tool coverage</p>
             </div>
           </div>
-          <div className="rounded-[1.5rem] border border-slate-200/90 bg-white/85 p-5">
-            <p className="section-kicker text-brand-accent">Trust Signal</p>
+
+          <div className="ui-card p-5">
+            <p className="section-kicker text-brand-accent">Clear Trust Signals</p>
             <p className="mt-3 text-sm leading-7 text-slate-600">
               Support contact: <span className="font-semibold text-brand-ink">{SUPPORT_EMAIL}</span>
             </p>
             <p className="mt-2 text-sm leading-7 text-slate-600">
-              Clear legal and policy pages are visible in the footer, and ad placement is intentionally limited so the homepage stays content-first.
+              Contact and policy pages are visible, and ad placements are intentionally limited so discovery stays content-first.
             </p>
           </div>
         </div>

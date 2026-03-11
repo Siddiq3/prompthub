@@ -3,6 +3,7 @@ import { BrowserRouter, Outlet, Route, Routes, useLocation } from "react-router-
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
+import TelegramPopup from "./components/TelegramPopup";
 import Toast from "./components/Toast";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import { AppProvider, useAppContext } from "./context/AppContext";
@@ -62,6 +63,7 @@ function Layout() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <TelegramPopup />
       <Toast toast={toast} onClose={dismissToast} />
     </div>
   );

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /saved
 
-Sitemap: https://photopromptshub.com/sitemap.xml
+Sitemap: https://photopromptshub.in/sitemap.xml
