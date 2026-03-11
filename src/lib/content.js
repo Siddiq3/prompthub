@@ -213,6 +213,42 @@ export const getTopTags = (prompts, limit = 10) =>
 export const getFilterTags = (prompts) =>
   buildTagEntries(countTags(prompts, (prompt) => (prompt.styleTags.length ? prompt.styleTags : prompt.displayTags)));
 
+export const getTagLanding = (prompts, value) => {
+  const name = String(value || "").trim();
+
+  if (!name) return null;
+
+  const items = getLatestPrompts(prompts.filter((prompt) => hasTag(prompt, name)));
+
+  if (!items.length) {
+    return null;
+  }
+
+  const label = formatTagLabel(name);
+  const relatedCategories = [...countTags(items, (prompt) => [prompt.category]).entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([categoryName, count]) => ({
+      name: categoryName,
+      count,
+      href: buildCategoryPath(categoryName)
+    }))
+    .slice(0, 4);
+  const categorySummary = formatHumanList(relatedCategories.map((category) => category.name));
+
+  return {
+    name,
+    label,
+    slug: slugify(name),
+    href: buildPromptsPathWithTag(name),
+    count: items.length,
+    prompts: items,
+    latestPrompt: items[0] || null,
+    relatedCategories,
+    intro: `${label} prompts use ${label.toLowerCase()} as a secondary style, festival, mood, location, or visual modifier across ${categorySummary || "multiple categories"}.`,
+    description: `Browse ${label.toLowerCase()} AI photo prompts across ${categorySummary || "multiple categories"} on PhotoPromptsHub.`
+  };
+};
+
 export const getCategories = (prompts) =>
   sortCategoriesByPriority(
     [...new Set(prompts.map((prompt) => prompt.category).filter(Boolean))].map((name) => {

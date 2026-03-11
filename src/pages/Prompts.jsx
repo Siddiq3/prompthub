@@ -10,6 +10,7 @@ import Pagination from "../components/Pagination";
 import PromptCard from "../components/PromptCard";
 import { useAppContext } from "../context/AppContext";
 import { usePromptListing } from "../hooks/usePromptListing";
+import { getTagLanding } from "../lib/content";
 import Seo from "../seo/Seo";
 import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
@@ -40,41 +41,68 @@ function Prompts() {
     clearFilters
   } = usePromptListing(prompts, copyCounts);
 
-  const breadcrumbs = [
-    { label: "Home", to: "/" },
-    { label: "Prompts", to: "/prompts" }
-  ];
+  const isTagLanding =
+    Boolean(tag) &&
+    !searchQuery.trim() &&
+    category === "all" &&
+    model === "all" &&
+    ratio === "all" &&
+    sortBy === "latest";
+  const tagLanding = isTagLanding ? getTagLanding(prompts, tag) : null;
+  const isIndexableTagLanding = Boolean(tagLanding) && currentPage === 1;
+  const breadcrumbs = tagLanding
+    ? [
+        { label: "Home", to: "/" },
+        { label: "Prompts", to: "/prompts" },
+        { label: tagLanding.label, to: tagLanding.href }
+      ]
+    : [
+        { label: "Home", to: "/" },
+        { label: "Prompts", to: "/prompts" }
+      ];
+  const pageTitle = tagLanding ? `${tagLanding.label} AI Photo Prompts` : "AI Photo Prompts Gallery";
+  const pageDescription = tagLanding
+    ? `${tagLanding.description} Browse the latest matching prompts, then jump to related categories for wider discovery.`
+    : "Browse AI photo prompts by category, model, aspect ratio, and tag. Discover the latest photo prompts for Midjourney, DALL·E, Flux, and Stable Diffusion.";
+  const pagePath = tagLanding ? tagLanding.href : "/prompts";
   const schema = [
     buildWebPageSchema({
-      title: "AI Photo Prompts Gallery",
-      description:
-        "Browse the main AI photo prompt archive by category, model, aspect ratio, and tag on PhotoPromptsHub.",
-      path: "/prompts"
+      title: pageTitle,
+      description: pageDescription,
+      path: pagePath
     }),
     buildBreadcrumbSchema(breadcrumbs),
-    ...(hasActiveFilters ? [] : [buildItemListSchema(filteredPrompts.slice(0, 12))])
+    ...(!hasActiveFilters || isIndexableTagLanding ? [buildItemListSchema(filteredPrompts.slice(0, 12))] : [])
   ];
 
   return (
     <>
       <Seo
-        title="AI Photo Prompts Gallery"
-        description="Browse AI photo prompts by category, model, aspect ratio, and tag. Discover the latest photo prompts for Midjourney, DALL·E, Flux, and Stable Diffusion."
-        path="/prompts"
-        noindex={hasActiveFilters}
+        title={pageTitle}
+        description={pageDescription}
+        path={pagePath}
+        noindex={hasActiveFilters && !isIndexableTagLanding}
         schema={schema}
       />
 
       <section className="space-y-8">
         <Breadcrumbs items={breadcrumbs} />
         <PageHeader
-          eyebrow="Prompt Gallery"
-          title="Browse prompts with guided filters"
-          description="Pick a primary category first, then narrow the archive by model, aspect ratio, and secondary style tags."
-          meta={[`${prompts.length} total prompts`, `${filteredPrompts.length} matching prompts`]}
+          eyebrow={tagLanding ? "Tag Page" : "Prompt Gallery"}
+          title={tagLanding ? `${tagLanding.label} AI photo prompts` : "Browse prompts with guided filters"}
+          description={
+            tagLanding
+              ? tagLanding.intro
+              : "Pick a primary category first, then narrow the archive by model, aspect ratio, and secondary style tags."
+          }
+          meta={
+            tagLanding
+              ? [`${tagLanding.count} prompts`, `${tagLanding.relatedCategories.length} related categories`]
+              : [`${prompts.length} total prompts`, `${filteredPrompts.length} matching prompts`]
+          }
           actions={[
-            <Link key="latest" to="/latest" className="ui-button-secondary">
-              Latest prompts
+            <Link key="latest" to={tagLanding ? "/prompts" : "/latest"} className="ui-button-secondary">
+              {tagLanding ? "Full archive" : "Latest prompts"}
             </Link>,
             <Link key="categories" to="/categories" className="ui-button-secondary">
               Browse categories
@@ -100,6 +128,38 @@ function Prompts() {
           onSortChange={setSortBy}
           onClear={clearFilters}
         />
+
+        {tagLanding ? (
+          <section className="section-shell surface-subtle p-5 sm:p-6">
+            <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+              <div>
+                <p className="section-kicker text-brand-accent">Tag Intro</p>
+                <h2 className="mt-3 font-heading text-[1.7rem] font-semibold tracking-tight text-brand-ink sm:text-[2rem]">
+                  How to browse the {tagLanding.label.toLowerCase()} tag
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-slate-700">
+                  Start here when {tagLanding.label.toLowerCase()} is the secondary look, festival, mood, or styling cue you care about. If you need a broader path, jump into one of the related categories below and keep the tag as a refinement.
+                </p>
+              </div>
+
+              <div className="ui-card p-5">
+                <p className="ui-meta">Related categories</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {tagLanding.relatedCategories.map((relatedCategory) => (
+                    <Link
+                      key={relatedCategory.name}
+                      to={relatedCategory.href}
+                      className="ui-tag"
+                    >
+                      {relatedCategory.name}
+                      <span className="opacity-70">({relatedCategory.count})</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.75fr)]">
           <div className="ui-panel p-5 sm:p-6">

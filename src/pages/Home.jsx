@@ -8,9 +8,12 @@ import PromptShelf from "../components/PromptShelf";
 import { HOME_FAQS, SUPPORT_EMAIL } from "../config";
 import { useAppContext } from "../context/AppContext";
 import {
+  buildPromptsPathWithTag,
   getCategories,
   getCollectionHighlights,
+  getLatestPrompts,
   getPopularCategories,
+  getTopTags,
   getTrendingPrompts
 } from "../lib/content";
 import Seo from "../seo/Seo";
@@ -28,7 +31,14 @@ function Home() {
   const categories = useMemo(() => getCategories(prompts), [prompts]);
   const popularCategories = useMemo(() => getPopularCategories(prompts, 6), [prompts]);
   const trendingPrompts = useMemo(() => getTrendingPrompts(prompts, 6), [prompts]);
+  const latestPrompts = useMemo(() => {
+    const trendingIds = new Set(trendingPrompts.map((prompt) => prompt.id));
+    return getLatestPrompts(prompts)
+      .filter((prompt) => !trendingIds.has(prompt.id))
+      .slice(0, 6);
+  }, [prompts, trendingPrompts]);
   const collections = useMemo(() => getCollectionHighlights(prompts, 4), [prompts]);
+  const styleTags = useMemo(() => getTopTags(prompts, 14), [prompts]);
 
   const trustLinks = [
     { label: "About Us", to: "/about" },
@@ -128,6 +138,15 @@ function Home() {
               linkLabel="Browse trending prompts"
             />
 
+            <PromptShelf
+              eyebrow="Latest Prompts"
+              title="Newest prompts added to the library"
+              description="The latest section stays strictly tied to createdAt so visitors can quickly see the freshest prompt pages without browsing the full archive."
+              prompts={latestPrompts}
+              linkTo="/latest"
+              linkLabel="Browse latest prompts"
+            />
+
             <section className="space-y-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div className="max-w-2xl">
@@ -154,6 +173,34 @@ function Home() {
                     <p className="mt-3 text-sm leading-7 text-slate-700">{collection.description}</p>
                   </Link>
                 ))}
+              </div>
+            </section>
+
+            <section className="space-y-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div className="max-w-2xl">
+                  <span className="section-kicker text-brand-accent">Browse By Style</span>
+                  <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.35rem]">
+                    Use tags as secondary refinements
+                  </h2>
+                  <p className="mt-3 text-[0.98rem] leading-7 text-slate-700 sm:text-[1.02rem]">
+                    Style tags work best after category. Use them to narrow the mood, festival, lighting, wardrobe, or location without replacing the main browsing path.
+                  </p>
+                </div>
+                <Link to="/prompts" className="ui-button-secondary">
+                  Open all tags
+                </Link>
+              </div>
+
+              <div className="section-shell surface-subtle p-5 sm:p-6">
+                <div className="flex flex-wrap gap-2.5">
+                  {styleTags.map((tag) => (
+                    <Link key={tag.slug} to={buildPromptsPathWithTag(tag.name)} className="ui-tag text-sm">
+                      {tag.label}
+                      <span className="opacity-70">({tag.count})</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </section>
 

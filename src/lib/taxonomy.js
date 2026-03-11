@@ -4,6 +4,7 @@ export const PRIMARY_CATEGORY_ORDER = [
   "Portrait",
   "Kids",
   "Fashion",
+  "Ramadan & Eid",
   "Wedding",
   "Sports",
   "Cinematic",
@@ -15,16 +16,6 @@ const CATEGORY_TAG_SLUGS = new Set(PRIMARY_CATEGORY_ORDER.map((name) => slugify(
 
 const SUBJECT_TAG_SLUGS = new Set(["women", "men", "girls", "boys", "kids"]);
 const KIDS_SUBJECT_TAG_SLUGS = new Set(["boys", "girls", "kids"]);
-
-const KIDS_SUBJECT_TAGS = new Set([
-  "boys",
-  "cousins",
-  "family",
-  "girls",
-  "kids",
-  "newborn",
-  "siblings"
-]);
 
 const NON_DISCOVERY_TAG_SLUGS = new Set([
   "boys",
@@ -65,6 +56,12 @@ const CATEGORY_COPY = {
       "Kids photo prompts help generate joyful and playful AI images of children in natural, festive, family, or studio settings.",
     intro:
       "Kids prompts are grouped around children as the main subject so child-focused scenes do not get buried inside broader fashion or family browsing paths."
+  },
+  "Ramadan & Eid": {
+    description:
+      "Ramadan and Eid prompts collect festive portraits, family moments, modest fashion, prayer scenes, and celebration-focused AI photo ideas.",
+    intro:
+      "Use Ramadan and Eid prompts when the festive season, celebration setting, or religious and cultural context is the main reason to browse the image idea."
   },
   Portrait: {
     description:
@@ -127,14 +124,7 @@ export const getCategoryMeta = (value = "") => {
 };
 
 export const derivePrimaryCategory = ({ category, tags = [] }) => {
-  const normalizedTags = dedupeBySlug(tags).map((tag) => slugify(tag));
-  const normalizedCategory = getCategoryMeta(category).name;
-
-  if (normalizedCategory !== "Kids" && normalizedTags.some((tag) => KIDS_SUBJECT_TAGS.has(tag))) {
-    return "Kids";
-  }
-
-  return normalizedCategory;
+  return getCategoryMeta(category).name;
 };
 
 export const getDiscoveryTags = (tags = []) =>

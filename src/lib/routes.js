@@ -1,4 +1,11 @@
-import { getCollections, getLatestPrompts, getCategories } from "./content.js";
+import {
+  buildPromptsPathWithTag,
+  getCategories,
+  getCollections,
+  getLatestPrompts,
+  getLatestPromptsByTag,
+  getTopTags
+} from "./content.js";
 
 export const STATIC_INDEXABLE_ROUTES = [
   { path: "/", priority: "1.0", changefreq: "daily" },
@@ -31,6 +38,18 @@ const clampLastmod = (value, fallback = todayIsoDate()) => {
 export const getIndexableEntries = (prompts) => {
   const latestPrompt = getLatestPrompts(prompts, 1)[0];
   const baseLastMod = clampLastmod(latestPrompt?.createdAt);
+  const tagEntries = getTopTags(prompts, 18)
+    .filter((tag) => tag.count >= 3)
+    .map((tag) => {
+      const latestTagPrompt = getLatestPromptsByTag(prompts, tag.name, 1)[0];
+
+      return {
+        path: buildPromptsPathWithTag(tag.name),
+        priority: "0.68",
+        changefreq: "weekly",
+        lastmod: clampLastmod(latestTagPrompt?.createdAt, baseLastMod)
+      };
+    });
 
   return [
     ...STATIC_INDEXABLE_ROUTES.map((route) => ({
@@ -49,6 +68,7 @@ export const getIndexableEntries = (prompts) => {
       changefreq: "weekly",
       lastmod: clampLastmod(collection.prompts[0]?.createdAt, baseLastMod)
     })),
+    ...tagEntries,
     ...prompts.map((prompt) => ({
       path: prompt.url,
       priority: "0.7",
@@ -58,4 +78,7 @@ export const getIndexableEntries = (prompts) => {
   ];
 };
 
-export const getPrerenderRoutes = (prompts) => getIndexableEntries(prompts).map((entry) => entry.path);
+export const getPrerenderRoutes = (prompts) =>
+  getIndexableEntries(prompts)
+    .filter((entry) => !entry.path.includes("?"))
+    .map((entry) => entry.path);
