@@ -17,7 +17,37 @@ import {
 } from "../lib/content";
 import { sharePromptLink } from "../lib/share";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import {
+  buildArticleSchema,
+  buildBreadcrumbSchema,
+  buildItemListSchema,
+  buildWebPageSchema
+} from "../seo/schema";
+
+const formatHumanList = (items = []) => {
+  const values = items.filter(Boolean);
+
+  if (!values.length) return "";
+  if (values.length === 1) return values[0];
+  if (values.length === 2) return `${values[0]} and ${values[1]}`;
+
+  return `${values.slice(0, -1).join(", ")}, and ${values[values.length - 1]}`;
+};
+
+const getPromptDescriptionParagraphs = (prompt) => {
+  if (!prompt) return [];
+
+  const tagSummary = formatHumanList(prompt.tags.slice(0, 4));
+  const bestForSummary = formatHumanList(prompt.bestFor.slice(0, 4).map((item) => item.label));
+  const negativePromptSummary = prompt.negativePrompt
+    ? "Adding the included negative prompt can help reduce distracting artifacts and keep the final image cleaner."
+    : "If you need tighter control, add a custom negative prompt to reduce unwanted artifacts or extra visual noise.";
+
+  return [
+    `${prompt.title} is a ${prompt.category.toLowerCase()} AI photo prompt built for ${prompt.modelLabel}. The wording is designed to guide the model toward ${tagSummary || "a clear visual direction"} while keeping the output suited to a ${prompt.aspectRatio} composition. This gives creators a stronger starting point than a short generic prompt and helps keep the image generation process more consistent.`,
+    `This prompt works especially well for creators exploring ${bestForSummary || `${prompt.category.toLowerCase()} image generation`}. Start with the base wording, then refine subject details, environment cues, wardrobe, color tone, or lighting based on your project. ${negativePromptSummary}`
+  ];
+};
 
 function InfoCard({ label, value }) {
   return (
@@ -33,7 +63,7 @@ function PromptBlock({ title, value, onCopy, emphasis = false, description }) {
     <section className={`ui-card p-5 sm:p-6 ${emphasis ? "border-indigo-100 bg-indigo-50/70" : ""}`}>
       <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="font-heading text-[1.65rem] font-semibold tracking-tight text-brand-ink">
+          <h2 className="font-heading text-[1.45rem] font-semibold tracking-tight text-brand-ink sm:text-[1.65rem]">
             {title}
           </h2>
           {description ? (
@@ -104,6 +134,9 @@ function PromptDetails() {
 
   const isSaved = savedPrompts.includes(prompt.id);
   const negativePromptText = prompt.negativePrompt || "";
+  const bestForSummary = formatHumanList(prompt.bestFor.map((item) => item.label));
+  const promptDescriptionParagraphs = getPromptDescriptionParagraphs(prompt);
+  const seoDescription = `${prompt.title} is a ${prompt.category.toLowerCase()} AI photo prompt for ${prompt.modelLabel}. Copy the main prompt${negativePromptText ? ", use the included negative prompt," : ""} and explore related ${prompt.category.toLowerCase()} ideas on PhotoPromptsHub.`;
   const breadcrumbs = [
     { label: "Home", to: "/" },
     { label: "Prompts", to: "/prompts" },
@@ -115,11 +148,25 @@ function PromptDetails() {
     <>
       <Seo
         title={prompt.title}
-        description={prompt.shortDescription}
+        description={seoDescription}
         path={prompt.url}
         image={prompt.previewImage}
         type="article"
         schema={[
+          buildWebPageSchema({
+            title: prompt.title,
+            description: seoDescription,
+            path: prompt.url,
+            type: "WebPage"
+          }),
+          buildArticleSchema({
+            title: prompt.title,
+            description: seoDescription,
+            path: prompt.url,
+            image: prompt.previewImage,
+            datePublished: prompt.createdAt,
+            keywords: [prompt.category, prompt.modelLabel, ...prompt.tags.slice(0, 6)]
+          }),
           buildBreadcrumbSchema(breadcrumbs),
           buildItemListSchema(relatedPrompts)
         ]}
@@ -155,7 +202,7 @@ function PromptDetails() {
                 <span className="section-kicker text-brand-accent">
                   Prompt Detail
                 </span>
-                <h1 className="mt-3 text-balance font-heading text-[2.35rem] font-semibold tracking-tight text-brand-ink sm:text-[3rem]">
+                <h1 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[3rem]">
                   {prompt.title}
                 </h1>
                 <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">{prompt.seoIntro}</p>
@@ -189,6 +236,9 @@ function PromptDetails() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="ui-card p-5">
                   <h2 className="font-heading text-2xl font-semibold tracking-tight text-brand-ink">Best for</h2>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    This prompt is a strong fit for {bestForSummary || "creative image generation"} and works well when you want a clearer starting point before building prompt variations.
+                  </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {prompt.bestFor.map((item) => (
                       <span key={item.id} className="ui-pill-accent">
@@ -200,12 +250,54 @@ function PromptDetails() {
 
                 <div className="ui-card p-5">
                   <h2 className="font-heading text-2xl font-semibold tracking-tight text-brand-ink">How to use this prompt</h2>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    Keep the main subject, styling direction, and framing cues intact on the first pass. Once the base image looks strong, refine the details in smaller edits.
+                  </p>
                   <ol className="mt-4 space-y-3 text-sm leading-7 text-slate-600">
-                    <li>1. Copy the main prompt into your preferred AI image model.</li>
-                    <li>2. Adjust styling, subject details, or lens cues to match your creative brief.</li>
-                    <li>3. Add the negative prompt when available to reduce unwanted artifacts.</li>
+                    <li>1. Copy the main prompt into your preferred AI image model or compatible workflow.</li>
+                    <li>2. Adjust styling, subject details, environment cues, or lens references to match your creative brief.</li>
+                    <li>
+                      3. {negativePromptText
+                        ? "Add the negative prompt to reduce unwanted artifacts and keep the output cleaner."
+                        : "Add a custom negative prompt if you need tighter control over unwanted artifacts."}
+                    </li>
                   </ol>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-shell surface-subtle p-6 sm:p-8">
+          <div className="grid gap-6 xl:grid-cols-[minmax(0,1.12fr)_minmax(320px,0.88fr)]">
+            <div>
+              <span className="section-kicker text-brand-accent">Prompt Description</span>
+              <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.35rem]">
+                What this prompt helps you create
+              </h2>
+              <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600 sm:text-base">
+                {promptDescriptionParagraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            <div className="ui-card p-5 sm:p-6">
+              <p className="ui-meta">Prompt snapshot</p>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                Built for <span className="font-semibold text-slate-700">{prompt.modelLabel}</span>, organized under{" "}
+                <span className="font-semibold text-slate-700">{prompt.category}</span>, and formatted for a{" "}
+                <span className="font-semibold text-slate-700">{prompt.aspectRatio}</span> composition.
+              </p>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                Use this page as a reference when you want a copy-ready prompt, a negative prompt, and related ideas for the same visual direction.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {prompt.tags.slice(0, 6).map((tag) => (
+                  <Link key={`snapshot-${tag}`} to={buildPromptsPathWithTag(tag)} className="ui-tag">
+                    {tag}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

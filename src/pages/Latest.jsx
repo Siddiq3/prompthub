@@ -9,7 +9,7 @@ import PromptCard from "../components/PromptCard";
 import { useAppContext } from "../context/AppContext";
 import { getLatestPrompts } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function Latest() {
   const { prompts, loading, error, retryFetch } = useAppContext();
@@ -29,7 +29,17 @@ function Latest() {
         title="Latest AI Photo Prompts"
         description="Discover the latest photo prompts added to PhotoPromptsHub, sorted by dataset date for creators researching fresh AI image generation ideas."
         path="/latest"
-        schema={[buildBreadcrumbSchema(breadcrumbs), buildItemListSchema(items.slice(0, 12))]}
+        image={items[0]?.previewImage}
+        schema={[
+          buildWebPageSchema({
+            title: "Latest AI Photo Prompts",
+            description:
+              "Discover the latest photo prompts added to PhotoPromptsHub, sorted by dataset date for creators researching fresh AI image generation ideas.",
+            path: "/latest"
+          }),
+          buildBreadcrumbSchema(breadcrumbs),
+          buildItemListSchema(items.slice(0, 12))
+        ]}
       />
 
       <section className="space-y-6">
@@ -37,7 +47,7 @@ function Latest() {
         <PageHeader
           eyebrow="Latest Prompts"
           title="Recently added AI photo prompts"
-          description="This landing page highlights the newest prompts in the current dataset so users can quickly see recent additions across categories and models."
+          description="Browse the newest prompt pages added to PhotoPromptsHub to find fresh ideas across portrait, fashion, cinematic, wedding, sports, and other AI image styles."
           meta={[`${items.length} prompts`, "Sorted by newest dataset date"]}
         />
 

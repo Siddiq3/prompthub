@@ -18,7 +18,18 @@ import {
   getTrendingPrompts
 } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildFaqSchema, buildItemListSchema, buildWebSiteSchema } from "../seo/schema";
+import {
+  buildFaqSchema,
+  buildItemListSchema,
+  buildWebPageSchema,
+  buildWebSiteSchema
+} from "../seo/schema";
+
+const aiPhotoPromptExplainer = [
+  "AI photo prompts are text instructions used in image generation tools to create realistic or artistic images. A prompt can describe the subject, location, lighting, camera angle, lens style, wardrobe, mood, and visual finish. Platforms like Midjourney, Stable Diffusion, DALL·E, and Flux rely on these details to understand what kind of image you want to generate.",
+  "A strong prompt usually combines creative direction with practical production cues. Instead of using only a short phrase, creators often include references such as cinematic lighting, shallow depth of field, rainy reflections, editorial styling, natural skin texture, and a target aspect ratio like 4:5 or 16:9. Those additions help AI image models produce more consistent, more usable outputs.",
+  "PhotoPromptsHub helps creators discover curated prompts for cinematic portraits, fashion photography, wedding scenes, sports action, travel-style visuals, and other image concepts without digging through unstructured feeds. The library is organized into categories, collections, trending picks, latest additions, and prompt detail pages so users can browse, copy, and refine prompts with less friction."
+];
 
 function Home() {
   const navigate = useNavigate();
@@ -71,10 +82,16 @@ function Home() {
   return (
     <>
       <Seo
-        title="Latest AI Photo Prompts"
-        description="Discover AI photo prompts for realistic portraits, cinematic scenes, fashion editorials, weddings, and more. Browse latest prompts, trending ideas, categories, and collections on PhotoPromptsHub."
+        title="AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion"
+        description="Discover curated AI photo prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Browse realistic portraits, cinematic scenes, fashion editorials, wedding prompts, categories, collections, and prompt detail pages on PhotoPromptsHub."
         path="/"
         schema={[
+          buildWebPageSchema({
+            title: "AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
+            description:
+              "Discover curated AI photo prompts for portraits, cinematic scenes, fashion editorials, weddings, and other creative categories.",
+            path: "/"
+          }),
           buildWebSiteSchema(),
           buildFaqSchema(HOME_FAQS),
           buildItemListSchema(trendingPrompts)
@@ -91,6 +108,37 @@ function Home() {
           modelsCount={[...new Set(prompts.map((prompt) => prompt.model))].filter(Boolean).length}
           popularCategories={popularCategories}
         />
+
+        <section className="section-shell surface-subtle p-6 sm:p-8 lg:p-10">
+          <div className="grid gap-8 xl:grid-cols-[minmax(0,1.15fr)_minmax(300px,0.85fr)]">
+            <div>
+              <span className="section-kicker text-brand-accent">AI Prompt Basics</span>
+              <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.45rem]">
+                What are AI photo prompts?
+              </h2>
+              <div className="mt-4 space-y-4 text-[0.98rem] leading-7 text-slate-600 sm:text-[1.02rem]">
+                {aiPhotoPromptExplainer.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+
+            <div className="ui-card p-6 sm:p-7">
+              <p className="ui-meta">How creators use prompts better</p>
+              <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600">
+                <p>
+                  Start with a strong base prompt, then refine the subject, environment, lighting, styling, and framing one layer at a time instead of rewriting everything.
+                </p>
+                <p>
+                  Lens references, aspect ratio, and negative prompts can improve consistency when you want cleaner outputs and fewer unwanted details from the model.
+                </p>
+                <p>
+                  PhotoPromptsHub is built to help you move from discovery to usable prompt drafting quickly, with clear legal pages and visible contact details for added trust.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <AdSlot
           label="Reserved for a balanced homepage display ad below the hero"

@@ -6,7 +6,7 @@ import PageHeader from "../components/PageHeader";
 import { useAppContext } from "../context/AppContext";
 import { getCategories } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function Categories() {
   const { prompts, loading, error, retryFetch } = useAppContext();
@@ -23,6 +23,12 @@ function Categories() {
         description="Browse AI photo prompt categories including portrait, fashion, cinematic, wedding, kids, sports, street, and beauty image ideas."
         path="/categories"
         schema={[
+          buildWebPageSchema({
+            title: "AI Prompt Categories",
+            description:
+              "Browse AI photo prompt categories including portrait, fashion, cinematic, wedding, kids, sports, street, and beauty image ideas.",
+            path: "/categories"
+          }),
           buildBreadcrumbSchema(breadcrumbs),
           buildItemListSchema(categories.map((category) => ({ title: category.name, url: category.href })))
         ]}
@@ -46,20 +52,37 @@ function Categories() {
               <Link
                 key={category.slug}
                 to={category.href}
-                className="rounded-[1.9rem] border border-slate-200 bg-white/95 p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+                className="group ui-card ui-card-hover flex h-full flex-col p-5 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <h2 className="font-heading text-2xl font-semibold text-brand-ink">{category.name}</h2>
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="ui-meta text-brand-accent">Category</p>
+                    <h2 className="mt-3 font-heading text-[1.55rem] font-semibold tracking-tight text-brand-ink">
+                      {category.name}
+                    </h2>
+                  </div>
+                  <span className="ui-pill">
                     {category.count} prompts
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{category.description}</p>
+                <div className="soft-divider mt-5" />
                 {category.latestPrompt ? (
-                  <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-brand-accent">
-                    Latest: {category.latestPrompt.title}
-                  </p>
-                ) : null}
+                  <div className="mt-4 flex items-center justify-between gap-3">
+                    <p className="text-sm leading-6 text-slate-500">
+                      Latest: <span className="font-medium text-slate-700">{category.latestPrompt.title}</span>
+                    </p>
+                    <span className="text-sm font-semibold text-brand-accent transition-colors duration-180 ease-smooth group-hover:text-primary-dark">
+                      Browse
+                    </span>
+                  </div>
+                ) : (
+                  <div className="mt-4 flex justify-end">
+                    <span className="text-sm font-semibold text-brand-accent transition-colors duration-180 ease-smooth group-hover:text-primary-dark">
+                      Browse
+                    </span>
+                  </div>
+                )}
               </Link>
             ))}
           </div>

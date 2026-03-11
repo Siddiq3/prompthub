@@ -15,9 +15,22 @@ export const STATIC_INDEXABLE_ROUTES = [
   { path: "/dmca", priority: "0.4", changefreq: "monthly" }
 ];
 
+const todayIsoDate = () => new Date().toISOString().slice(0, 10);
+
+const clampLastmod = (value, fallback = todayIsoDate()) => {
+  const next = String(value || fallback).slice(0, 10);
+  const parsed = new Date(next);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return fallback;
+  }
+
+  return next > fallback ? fallback : next;
+};
+
 export const getIndexableEntries = (prompts) => {
   const latestPrompt = getLatestPrompts(prompts, 1)[0];
-  const baseLastMod = latestPrompt?.createdAt || new Date().toISOString().slice(0, 10);
+  const baseLastMod = clampLastmod(latestPrompt?.createdAt);
 
   return [
     ...STATIC_INDEXABLE_ROUTES.map((route) => ({
@@ -28,19 +41,19 @@ export const getIndexableEntries = (prompts) => {
       path: category.href,
       priority: "0.8",
       changefreq: "weekly",
-      lastmod: category.latestPrompt?.createdAt || baseLastMod
+      lastmod: clampLastmod(category.latestPrompt?.createdAt, baseLastMod)
     })),
     ...getCollections(prompts).map((collection) => ({
       path: collection.href,
       priority: "0.75",
       changefreq: "weekly",
-      lastmod: collection.prompts[0]?.createdAt || baseLastMod
+      lastmod: clampLastmod(collection.prompts[0]?.createdAt, baseLastMod)
     })),
     ...prompts.map((prompt) => ({
       path: prompt.url,
       priority: "0.7",
       changefreq: "weekly",
-      lastmod: prompt.createdAt || baseLastMod
+      lastmod: clampLastmod(prompt.createdAt, baseLastMod)
     }))
   ];
 };

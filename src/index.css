@@ -124,18 +124,18 @@
   .section-shell {
     position: relative;
     overflow: hidden;
-    border-radius: 1.75rem;
-    border: 1px solid rgba(229, 231, 235, 0.92);
-    background: rgba(255, 255, 255, 0.94);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     box-shadow:
       0 1px 2px rgba(15, 23, 42, 0.03),
-      0 18px 40px -30px rgba(15, 23, 42, 0.12);
+      0 16px 36px -30px rgba(15, 23, 42, 0.11);
   }
 
   .surface-subtle {
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94)),
-      rgba(255, 255, 255, 0.94);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.9)),
+      rgba(255, 255, 255, 0.92);
   }
 
   .editorial-grid {
@@ -143,35 +143,85 @@
   }
 
   .ui-card {
-    @apply rounded-[1.75rem] border border-slate-200/95 bg-white shadow-soft;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.03),
+      0 14px 32px -28px rgba(15, 23, 42, 0.12);
   }
 
   .ui-card-hover {
-    @apply transition-all duration-180 ease-smooth hover:-translate-y-1 hover:border-brand-accent/25 hover:shadow-lift;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .ui-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.16);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.03),
+      0 20px 44px -30px rgba(79, 70, 229, 0.17);
   }
 
   .ui-panel {
-    @apply rounded-[1.75rem] border border-slate-200/95 bg-slate-50/70 shadow-soft;
+    border-radius: 1.35rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: rgba(248, 250, 252, 0.82);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.02),
+      0 10px 24px -24px rgba(15, 23, 42, 0.09);
   }
 
   .ui-button-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-pill bg-brand-accent px-5 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-180 ease-smooth hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-pill bg-brand-accent px-5 py-3 text-sm font-semibold text-white transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+    box-shadow: 0 12px 24px -18px rgba(79, 70, 229, 0.45);
+  }
+
+  .ui-button-primary:hover {
+    transform: translateY(-1px);
+    background: rgba(67, 56, 202, 1);
+    box-shadow: 0 16px 30px -18px rgba(79, 70, 229, 0.4);
   }
 
   .ui-button-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-pill border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:-translate-y-0.5 hover:border-brand-accent/40 hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-pill border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-semibold text-brand-ink transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+  }
+
+  .ui-button-secondary:hover {
+    transform: translateY(-1px);
+    border-color: rgba(99, 102, 241, 0.28);
+    background: rgba(255, 255, 255, 0.98);
+    color: rgba(99, 102, 241, 1);
   }
 
   .ui-button-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-pill border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-600 transition-all duration-180 ease-smooth hover:-translate-y-0.5 hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-pill border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-600 transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+  }
+
+  .ui-button-ghost:hover {
+    transform: translateY(-1px);
+    border-color: rgba(99, 102, 241, 0.24);
+    background: rgba(255, 255, 255, 0.98);
+    color: rgba(99, 102, 241, 1);
   }
 
   .ui-icon-button {
-    @apply inline-flex h-11 w-11 items-center justify-center rounded-pill border border-slate-200 bg-white text-slate-600 transition-all duration-180 ease-smooth hover:-translate-y-0.5 hover:border-brand-accent/35 hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-pill border border-slate-200 bg-slate-50 text-slate-600 transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2;
+  }
+
+  .ui-icon-button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(99, 102, 241, 0.24);
+    background: rgba(255, 255, 255, 0.98);
+    color: rgba(99, 102, 241, 1);
   }
 
   .ui-pill {
-    @apply inline-flex items-center gap-1 rounded-pill border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600;
+    @apply inline-flex items-center gap-1 rounded-pill border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600;
   }
 
   .ui-pill-accent {
@@ -179,15 +229,22 @@
   }
 
   .ui-tag {
-    @apply inline-flex items-center gap-1 rounded-pill border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 transition-all duration-180 ease-smooth hover:border-brand-accent/30 hover:bg-white hover:text-brand-accent;
+    @apply inline-flex items-center gap-1 rounded-pill border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 transition-all duration-180 ease-smooth;
+  }
+
+  .ui-tag:hover {
+    border-color: rgba(99, 102, 241, 0.22);
+    background: rgba(255, 255, 255, 0.98);
+    color: rgba(99, 102, 241, 1);
   }
 
   .ui-select {
-    @apply h-12 rounded-[1rem] border border-slate-200 bg-white px-4 text-sm text-slate-700 shadow-sm outline-none transition-all duration-180 ease-smooth focus-visible:border-brand-accent/40 focus-visible:ring-2 focus-visible:ring-brand-accent/20;
+    @apply h-11 rounded-[1rem] border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition-all duration-180 ease-smooth focus-visible:border-brand-accent/40 focus-visible:ring-2 focus-visible:ring-brand-accent/20;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
   }
 
   .ui-code-block {
-    @apply overflow-x-auto whitespace-pre-wrap break-words rounded-[1.4rem] border border-slate-200 bg-slate-50/90 p-4 font-mono text-sm leading-7 text-slate-700;
+    @apply overflow-x-auto whitespace-pre-wrap break-words rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4 font-mono text-sm leading-7 text-slate-700;
   }
 
   .ui-meta {
@@ -204,6 +261,17 @@
 
   .footer-note {
     @apply text-sm leading-7 text-slate-500;
+  }
+
+  .ui-list-link {
+    @apply flex items-center justify-between gap-3 rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-brand-ink transition-all duration-180 ease-smooth;
+  }
+
+  .ui-list-link:hover {
+    transform: translateY(-1px);
+    border-color: rgba(99, 102, 241, 0.22);
+    background: rgba(255, 255, 255, 0.98);
+    color: rgba(99, 102, 241, 1);
   }
 }
 
@@ -224,7 +292,7 @@
   .soft-divider {
     height: 1px;
     width: 100%;
-    background: linear-gradient(90deg, rgba(148, 163, 184, 0.34), rgba(148, 163, 184, 0));
+    background: linear-gradient(90deg, rgba(148, 163, 184, 0.28), rgba(148, 163, 184, 0));
   }
 
   .skeleton-shimmer {

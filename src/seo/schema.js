@@ -87,6 +87,36 @@ export const buildWebPageSchema = ({
   inLanguage: "en"
 });
 
+export const buildArticleSchema = ({
+  title,
+  description,
+  path = "/",
+  image,
+  datePublished,
+  dateModified,
+  keywords = []
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  mainEntityOfPage: absoluteUrl(path),
+  ...(image ? { image: [absoluteUrl(image)] } : {}),
+  ...(datePublished ? { datePublished } : {}),
+  ...(dateModified || datePublished ? { dateModified: dateModified || datePublished } : {}),
+  ...(keywords.length ? { keywords: keywords.join(", ") } : {}),
+  author: {
+    "@type": "Person",
+    name: OWNER_NAME
+  },
+  publisher: {
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL
+  },
+  inLanguage: "en"
+});
+
 export const buildFaqSchema = (items = []) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",

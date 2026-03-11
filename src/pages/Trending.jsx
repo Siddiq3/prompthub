@@ -9,7 +9,7 @@ import PromptCard from "../components/PromptCard";
 import { useAppContext } from "../context/AppContext";
 import { getTrendingPrompts } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function Trending() {
   const { prompts, loading, error, retryFetch } = useAppContext();
@@ -29,7 +29,17 @@ function Trending() {
         title="Trending AI Photo Prompts"
         description="Browse trending AI photo prompts featured by PhotoPromptsHub for high-interest categories, standout visuals, and curated image generation ideas."
         path="/trending"
-        schema={[buildBreadcrumbSchema(breadcrumbs), buildItemListSchema(items.slice(0, 12))]}
+        image={items[0]?.previewImage}
+        schema={[
+          buildWebPageSchema({
+            title: "Trending AI Photo Prompts",
+            description:
+              "Browse trending AI photo prompts featured by PhotoPromptsHub for high-interest categories, standout visuals, and curated image generation ideas.",
+            path: "/trending"
+          }),
+          buildBreadcrumbSchema(breadcrumbs),
+          buildItemListSchema(items.slice(0, 12))
+        ]}
       />
 
       <section className="space-y-6">
@@ -37,7 +47,7 @@ function Trending() {
         <PageHeader
           eyebrow="Trending Prompts"
           title="Trending prompt ideas and featured discoveries"
-          description="Trending prompts combine curated featured entries with fresh additions to surface high-interest content for creators and SEO landing pages."
+          description="Explore featured and high-interest prompt pages that give creators a faster starting point when they want proven visual directions instead of browsing the full archive first."
           meta={[`${items.length} prompts`, "Featured + recent mix"]}
         />
 

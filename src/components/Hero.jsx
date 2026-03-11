@@ -84,31 +84,31 @@ function Hero({
             </p>
             <div className="mt-4 grid gap-2 text-sm">
               <Link
-                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                className="ui-list-link"
                 to="/prompts"
               >
                 Prompt archive
               </Link>
               <Link
-                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                className="ui-list-link"
                 to="/latest"
               >
                 Latest prompts
               </Link>
               <Link
-                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                className="ui-list-link"
                 to="/trending"
               >
                 Trending prompts
               </Link>
               <Link
-                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                className="ui-list-link"
                 to="/categories"
               >
                 Browse categories
               </Link>
               <Link
-                className="flex items-center rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-brand-ink transition-all duration-180 ease-smooth hover:border-brand-accent/35 hover:bg-white hover:text-brand-accent"
+                className="ui-list-link"
                 to="/collections"
               >
                 Explore collections

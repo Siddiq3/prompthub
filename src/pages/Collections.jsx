@@ -6,7 +6,7 @@ import PageHeader from "../components/PageHeader";
 import { useAppContext } from "../context/AppContext";
 import { getCollections } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function Collections() {
   const { prompts, loading, error, retryFetch } = useAppContext();
@@ -23,6 +23,12 @@ function Collections() {
         description="Browse curated prompt collections grouped by model, style, and creative theme, including Flux, Midjourney, romantic, candid, cinematic, and fashion prompts."
         path="/collections"
         schema={[
+          buildWebPageSchema({
+            title: "Prompt Collections",
+            description:
+              "Browse curated prompt collections grouped by model, style, and creative theme, including Flux, Midjourney, romantic, candid, cinematic, and fashion prompts.",
+            path: "/collections"
+          }),
           buildBreadcrumbSchema(breadcrumbs),
           buildItemListSchema(collections.map((item) => ({ title: item.title, url: item.href })))
         ]}
@@ -46,18 +52,27 @@ function Collections() {
               <Link
                 key={collection.slug}
                 to={collection.href}
-                className="rounded-[1.9rem] border border-slate-200 bg-white/95 p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40"
+                className="group ui-card ui-card-hover flex h-full flex-col p-5 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <h2 className="font-heading text-2xl font-semibold text-brand-ink">{collection.title}</h2>
-                  <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="ui-meta text-brand-accent">Collection</p>
+                    <h2 className="mt-3 font-heading text-[1.55rem] font-semibold tracking-tight text-brand-ink">
+                      {collection.title}
+                    </h2>
+                  </div>
+                  <span className="ui-pill">
                     {collection.count} prompts
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{collection.description}</p>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-brand-accent">
-                  {collection.intro}
-                </p>
+                <div className="soft-divider mt-5" />
+                <div className="mt-4 flex items-center justify-between gap-3">
+                  <p className="text-sm leading-6 text-slate-500">{collection.intro}</p>
+                  <span className="text-sm font-semibold text-brand-accent transition-colors duration-180 ease-smooth group-hover:text-primary-dark">
+                    Open
+                  </span>
+                </div>
               </Link>
             ))}
           </div>

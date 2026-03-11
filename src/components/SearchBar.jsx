@@ -24,11 +24,11 @@ function SearchBar({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`group flex w-full items-center gap-3 rounded-[1.35rem] border border-slate-200 bg-white px-4 py-3 shadow-soft transition-all duration-180 ease-smooth focus-within:border-brand-accent/35 focus-within:shadow-panel focus-within:ring-2 focus-within:ring-brand-accent/20 ${className}`}
+      className={`group flex w-full items-center gap-3 rounded-[1.2rem] border border-slate-200/90 bg-white/94 px-3.5 py-2.5 shadow-[0_1px_2px_rgba(15,23,42,0.03),0_12px_28px_-26px_rgba(15,23,42,0.14)] transition-all duration-180 ease-smooth focus-within:border-brand-accent/30 focus-within:bg-white focus-within:ring-2 focus-within:ring-brand-accent/18 ${className}`}
       role="search"
     >
       <span
-        className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition duration-180 ease-smooth group-focus-within:bg-indigo-50 group-focus-within:text-brand-accent ${iconClassName}`}
+        className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100/90 text-slate-400 transition duration-180 ease-smooth group-focus-within:bg-indigo-50 group-focus-within:text-brand-accent ${iconClassName}`}
       >
         <FaSearch />
       </span>
@@ -41,12 +41,12 @@ function SearchBar({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className={`min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 sm:text-[0.98rem] ${inputClassName}`}
+        className={`min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 sm:text-[0.96rem] ${inputClassName}`}
       />
       {showButton ? (
         <button
           type="submit"
-          className={`ui-button-primary h-11 shrink-0 whitespace-nowrap px-5 ${buttonClassName}`}
+          className={`ui-button-primary h-10 shrink-0 whitespace-nowrap px-4 ${buttonClassName}`}
         >
           {buttonLabel}
         </button>

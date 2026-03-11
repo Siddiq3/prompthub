@@ -11,7 +11,7 @@ import PromptCard from "../components/PromptCard";
 import { useAppContext } from "../context/AppContext";
 import { usePromptListing } from "../hooks/usePromptListing";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function Prompts() {
   const { prompts, loading, error, retryFetch, copyCounts } = useAppContext();
@@ -43,6 +43,16 @@ function Prompts() {
     { label: "Home", to: "/" },
     { label: "Prompts", to: "/prompts" }
   ];
+  const schema = [
+    buildWebPageSchema({
+      title: "AI Photo Prompts Gallery",
+      description:
+        "Browse the main AI photo prompt archive by category, model, aspect ratio, and tag on PhotoPromptsHub.",
+      path: "/prompts"
+    }),
+    buildBreadcrumbSchema(breadcrumbs),
+    ...(hasActiveFilters ? [] : [buildItemListSchema(filteredPrompts.slice(0, 12))])
+  ];
 
   return (
     <>
@@ -51,10 +61,7 @@ function Prompts() {
         description="Browse AI photo prompts by category, model, aspect ratio, and tag. Discover the latest photo prompts for Midjourney, DALL·E, Flux, and Stable Diffusion."
         path="/prompts"
         noindex={hasActiveFilters}
-        schema={[
-          buildBreadcrumbSchema(breadcrumbs),
-          buildItemListSchema(filteredPrompts.slice(0, 12))
-        ]}
+        schema={schema}
       />
 
       <section className="space-y-8">

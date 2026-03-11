@@ -10,7 +10,7 @@ import MasonryGrid from "../components/MasonryGrid";
 import { useAppContext } from "../context/AppContext";
 import { getCategories, getCategoryBySlug, getCollections } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function CategoryPage() {
   const { slug } = useParams();
@@ -63,7 +63,16 @@ function CategoryPage() {
         title={`${category.name} AI Photo Prompts`}
         description={category.description}
         path={category.href}
-        schema={[buildBreadcrumbSchema(breadcrumbs), buildItemListSchema(category.prompts.slice(0, 12))]}
+        image={category.latestPrompt?.previewImage}
+        schema={[
+          buildWebPageSchema({
+            title: `${category.name} AI Photo Prompts`,
+            description: category.description,
+            path: category.href
+          }),
+          buildBreadcrumbSchema(breadcrumbs),
+          buildItemListSchema(category.prompts.slice(0, 12))
+        ]}
       />
       <section className="space-y-6">
         <Breadcrumbs items={breadcrumbs} />

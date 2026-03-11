@@ -10,6 +10,8 @@ function PromptCard({ prompt, priority = false }) {
   const { copyCounts, savedPrompts, toggleSaved, copyPrompt, notify } = useAppContext();
   const isSaved = savedPrompts.includes(prompt.id);
   const copyCount = copyCounts[prompt.id] || 0;
+  const visibleTags = prompt.tags.slice(0, 2);
+  const hiddenTagCount = Math.max(0, prompt.tags.length - visibleTags.length);
 
   const handleCopy = async () => {
     const success = await copyPrompt(prompt);
@@ -21,46 +23,48 @@ function PromptCard({ prompt, priority = false }) {
 
   return (
     <article className="group ui-card ui-card-hover flex h-full flex-col overflow-hidden">
-      <Link to={prompt.url} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40">
+      <Link to={prompt.url} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35">
         <SmartImage
           src={prompt.previewImage}
           alt={prompt.title}
           title={prompt.title}
           priority={priority}
-          imageClassName="group-hover:scale-[1.025] group-hover:brightness-[1.03]"
+          className="rounded-none"
+          imageClassName="group-hover:scale-[1.02]"
         >
-          <div className="absolute left-4 right-4 top-4 flex items-center justify-between gap-3">
-            <span className="rounded-pill border border-white/80 bg-white/92 px-3 py-1.5 text-[0.72rem] font-semibold text-brand-ink shadow-sm backdrop-blur">
+          <div className="absolute left-4 top-4">
+            <span className="rounded-pill border border-white/70 bg-white/90 px-3 py-1.5 text-[0.72rem] font-semibold text-brand-ink shadow-sm backdrop-blur">
               {prompt.category}
-            </span>
-            <span className="rounded-pill border border-white/70 bg-white/88 px-3 py-1.5 text-[0.72rem] font-medium text-slate-600 shadow-sm backdrop-blur">
-              {copyCount} copies
             </span>
           </div>
         </SmartImage>
       </Link>
 
-      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
-        <div className="flex flex-wrap gap-2">
-          <span className="ui-pill">{prompt.modelLabel}</span>
-          <span className="ui-pill">{prompt.aspectRatio}</span>
+      <div className="flex flex-1 flex-col gap-4 p-5 sm:p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2">
+            <span className="ui-pill">{prompt.modelLabel}</span>
+            <span className="ui-pill">{prompt.aspectRatio}</span>
+          </div>
+          <p className="text-xs font-medium text-slate-500">{copyCount} copies</p>
         </div>
 
-        <div className="space-y-3">
-          <Link to={prompt.url} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40">
-            <h3 className="text-balance font-heading text-[1.35rem] font-semibold leading-tight tracking-tight text-brand-ink transition-colors duration-180 ease-smooth group-hover:text-brand-accent sm:text-[1.5rem]">
+        <div className="space-y-2.5">
+          <Link to={prompt.url} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/35">
+            <h3 className="text-balance font-heading text-[1.28rem] font-semibold leading-tight tracking-tight text-brand-ink transition-colors duration-180 ease-smooth group-hover:text-brand-accent sm:text-[1.4rem]">
               {prompt.title}
             </h3>
           </Link>
-          <p className="text-sm leading-7 text-slate-600">{prompt.shortDescription}</p>
+          <p className="min-h-[4.6rem] text-sm leading-6 text-slate-600">{prompt.shortDescription}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {prompt.tags.slice(0, 3).map((tag) => (
+          {visibleTags.map((tag) => (
             <span key={`${prompt.id}-${tag}`} className="ui-tag">
               {tag}
             </span>
           ))}
+          {hiddenTagCount ? <span className="ui-tag">+{hiddenTagCount} more</span> : null}
         </div>
 
         <div className="soft-divider mt-auto" />
@@ -69,20 +73,15 @@ function PromptCard({ prompt, priority = false }) {
           <button
             type="button"
             onClick={handleCopy}
-            className={`inline-flex h-11 items-center justify-center gap-2 rounded-pill px-4 text-sm font-semibold text-white transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2 ${
-              copied
-                ? "bg-emerald-600 hover:bg-emerald-600"
-                : "bg-brand-accent hover:-translate-y-0.5 hover:bg-primary-dark"
+            className={`inline-flex h-10 items-center justify-center gap-2 rounded-pill px-4 text-sm font-semibold text-white transition-all duration-180 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 focus-visible:ring-offset-2 ${
+              copied ? "bg-emerald-600 hover:bg-emerald-600" : "bg-brand-accent hover:bg-primary-dark"
             }`}
           >
             {copied ? <FaCheck className="text-emerald-100" /> : <FaCopy />}
-            {copied ? "Copied" : "Copy prompt"}
+            {copied ? "Copied" : "Copy"}
           </button>
-          <Link
-            to={prompt.url}
-            className="ui-button-secondary h-11 px-4"
-          >
-            View
+          <Link to={prompt.url} className="ui-button-secondary h-10 px-4">
+            Open
           </Link>
           <button
             type="button"

@@ -10,7 +10,7 @@ import MasonryGrid from "../components/MasonryGrid";
 import { useAppContext } from "../context/AppContext";
 import { getCollectionBySlug } from "../lib/content";
 import Seo from "../seo/Seo";
-import { buildBreadcrumbSchema, buildItemListSchema } from "../seo/schema";
+import { buildBreadcrumbSchema, buildItemListSchema, buildWebPageSchema } from "../seo/schema";
 
 function CollectionPage() {
   const { slug } = useParams();
@@ -56,7 +56,16 @@ function CollectionPage() {
         title={collection.title}
         description={collection.description}
         path={collection.href}
-        schema={[buildBreadcrumbSchema(breadcrumbs), buildItemListSchema(collection.prompts.slice(0, 12))]}
+        image={collection.prompts[0]?.previewImage}
+        schema={[
+          buildWebPageSchema({
+            title: collection.title,
+            description: collection.description,
+            path: collection.href
+          }),
+          buildBreadcrumbSchema(breadcrumbs),
+          buildItemListSchema(collection.prompts.slice(0, 12))
+        ]}
       />
       <section className="space-y-6">
         <Breadcrumbs items={breadcrumbs} />
