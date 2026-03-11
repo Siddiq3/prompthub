@@ -24,13 +24,14 @@ const prerenderExecutablePath = chromeCandidates.find((candidate) => {
     return false;
   }
 });
+const shouldPrerender = Boolean(prerenderExecutablePath) && process.env.VERCEL !== "1" && process.env.CI !== "true";
 
 export default defineConfig(async () => {
   const routes = await getSeoRoutes();
+  const plugins = [react()];
 
-  return {
-    plugins: [
-      react(),
+  if (shouldPrerender) {
+    plugins.push(
       vitePrerender({
         staticDir: path.join(__dirname, "dist"),
         routes,
@@ -47,6 +48,12 @@ export default defineConfig(async () => {
           executablePath: prerenderExecutablePath
         })
       })
-    ]
+    );
+  } else {
+    console.warn("[vite-config] Skipping Puppeteer prerender because no compatible Chrome is available in this build environment.");
+  }
+
+  return {
+    plugins
   };
 });
