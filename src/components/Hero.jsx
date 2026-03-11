@@ -17,10 +17,10 @@ function Hero({
         <div className="max-w-3xl">
           <span className="section-kicker text-brand-accent">AI Prompt Discovery</span>
           <h1 className="hero-fluid-title text-balance mt-4 font-heading text-brand-ink">
-            Browse AI photo prompts without a cluttered feed
+            Find photo prompts without digging through a cluttered feed
           </h1>
           <p className="mt-5 max-w-2xl text-[1rem] leading-8 text-slate-700 sm:text-[1.08rem]">
-            Start with a clear category, refine with search or tags only when you need them, and move into copy-ready prompt pages with less guesswork.
+            Start with a category, narrow things down only when you need to, and open full prompt pages when you are ready to copy, save, or keep browsing.
           </p>
 
           <div className="mt-8 max-w-2xl">
@@ -61,9 +61,9 @@ function Hero({
           <div className="ui-card p-5 sm:p-6">
             <p className="section-kicker text-brand-accent">How To Browse</p>
             <ol className="mt-4 space-y-3 text-sm leading-7 text-slate-700">
-              <li>1. Choose a category for the main subject or theme.</li>
-              <li>2. Use search, model, aspect ratio, or tag filters to refine the look.</li>
-              <li>3. Open a prompt page when you want the full prompt, copy actions, and related ideas.</li>
+              <li>1. Pick the category that best matches the subject or mood you want.</li>
+              <li>2. Use search, model, aspect ratio, or tags to narrow the results if needed.</li>
+              <li>3. Open any prompt page for the full text, copy tools, and more ideas in the same direction.</li>
             </ol>
           </div>
 
@@ -71,17 +71,17 @@ function Hero({
             <div className="ui-panel p-4">
               <p className="ui-meta">Prompts</p>
               <p className="mt-2 font-heading text-3xl text-brand-ink">{totalPrompts}</p>
-              <p className="mt-2 text-sm text-slate-600">Indexed prompt pages</p>
+              <p className="mt-2 text-sm text-slate-600">Prompt pages ready to browse</p>
             </div>
             <div className="ui-panel p-4">
               <p className="ui-meta">Categories</p>
               <p className="mt-2 font-heading text-3xl text-brand-ink">{categoriesCount}</p>
-              <p className="mt-2 text-sm text-slate-600">Primary browse paths</p>
+              <p className="mt-2 text-sm text-slate-600">Clear starting points</p>
             </div>
             <div className="ui-panel p-4">
               <p className="ui-meta">Models</p>
               <p className="mt-2 font-heading text-3xl text-brand-ink">{modelsCount}</p>
-              <p className="mt-2 text-sm text-slate-600">Current tool coverage</p>
+              <p className="mt-2 text-sm text-slate-600">Model collections available</p>
             </div>
           </div>
         </div>

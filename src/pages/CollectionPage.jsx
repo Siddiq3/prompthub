@@ -73,7 +73,7 @@ function CollectionPage() {
           eyebrow="Collection Page"
           title={collection.title}
           description={collection.intro}
-          meta={[`${collection.count} prompts`, "Curated landing page"]}
+          meta={[`${collection.count} prompts`, "Collection page"]}
           actions={
             <Link
               to="/collections"

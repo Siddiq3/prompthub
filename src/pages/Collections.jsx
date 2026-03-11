@@ -20,13 +20,13 @@ function Collections() {
     <>
       <Seo
         title="Prompt Collections"
-        description="Browse curated prompt collections grouped by model, style, and creative theme, including Flux, Midjourney, romantic, candid, cinematic, and fashion prompts."
+        description="Browse prompt collections grouped by model, style, and recurring creative themes."
         path="/collections"
         schema={[
           buildWebPageSchema({
             title: "Prompt Collections",
             description:
-              "Browse curated prompt collections grouped by model, style, and creative theme, including Flux, Midjourney, romantic, candid, cinematic, and fashion prompts.",
+              "Browse prompt collections grouped by model, style, and recurring creative themes.",
             path: "/collections"
           }),
           buildBreadcrumbSchema(breadcrumbs),
@@ -39,7 +39,7 @@ function Collections() {
         <PageHeader
           eyebrow="Collections"
           title="Explore prompt collections"
-          description="Collections group prompts into stronger discovery paths for users and search engines. Browse by model, editorial angle, or recurring creative theme."
+          description="Collections group prompts by model or creative angle, giving you another way to browse once you know the direction you want."
           meta={[`${collections.length} collections`, `${prompts.length} prompts`]}
         />
 

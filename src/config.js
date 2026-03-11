@@ -4,8 +4,8 @@ export const SITE_NAME = "PhotoPromptsHub";
 export const SITE_DOMAIN = "photopromptshub.in";
 export const SITE_URL = `https://${SITE_DOMAIN}`;
 export const SITE_DESCRIPTION =
-  "PhotoPromptsHub curates AI-generated photo prompts, example images, and creative inspiration for Midjourney, DALL·E, Flux, Stable Diffusion, and modern image generation workflows.";
-export const SITE_TAGLINE = "Discover the latest AI photo prompts";
+  "PhotoPromptsHub is a hand-organized library of AI photo prompts, example images, and practical ideas for creators using Midjourney, DALL·E, Flux, Stable Diffusion, and similar tools.";
+export const SITE_TAGLINE = "Find AI photo prompts worth trying";
 export const OWNER_NAME = "Siddiq Kolimi";
 export const COMPANY_NAME = "PhotoPromptsHub (Independent Project)";
 export const SUPPORT_EMAIL = "photopromptshub@gmail.com";
@@ -17,32 +17,32 @@ export const HOME_FAQS = [
   {
     question: "What is PhotoPromptsHub?",
     answer:
-      "PhotoPromptsHub is a curated AI photo prompt discovery platform with prompt detail pages, example images, category landing pages, and collection pages built to help creators find better starting points faster."
+      "PhotoPromptsHub is a prompt library for people who want a clearer way to browse visual ideas. Instead of scrolling through a messy feed, you can open prompt pages, compare categories, and copy prompts that already have useful context around them."
   },
   {
     question: "Which AI image tools are covered?",
     answer:
-      "The current library includes prompts labeled for Midjourney, DALL·E, Flux, and Stable Diffusion. First-time visitors can browse by model, category, latest additions, or trending picks from the homepage."
+      "The library currently includes prompts labeled for Midjourney, DALL·E, Flux, and Stable Diffusion. You can browse by model if you already know your tool, or start with categories if you are still exploring ideas."
   },
   {
     question: "How do I find the latest or trending AI photo prompts?",
     answer:
-      "Use the homepage latest and trending sections, or open the dedicated /latest and /trending pages. Category pages and collections also help you move into more specific prompt themes without relying on search alone."
+      "The homepage highlights both trending picks and the newest additions, and the `/latest` and `/trending` pages give you those lists directly. If you want something more specific, category pages and collections are the quickest next step."
   },
   {
     question: "Can I browse prompts by category, style, or model?",
     answer:
-      "Yes. The site is organized around category pages, collection pages, prompt detail pages, and homepage style tags so you can explore realistic, cinematic, portrait, fashion, wedding, and other prompt types more naturally."
+      "Yes. Categories help you start with the main subject, tags help you narrow the look, and model collections help when you want prompts grouped around a specific tool or creative angle."
   },
   {
     question: "Are the prompts free to browse and copy?",
     answer:
-      "Yes. You can browse the prompt library freely, open detail pages, and copy prompts directly from the site. You should still adapt prompts for your own model settings, subject matter, and final use case."
+      "Yes. You can browse the library freely, open the detail pages, and copy prompt text directly from the site. Most people will still want to adjust the wording a little to match their subject, styling, or model settings."
   },
   {
     question: "Why does the site include contact, privacy, terms, and DMCA pages?",
     answer:
-      "PhotoPromptsHub is structured as a professional content platform, so clear trust pages, contact information, and policy links are included to help users, search engines, and advertising reviewers understand how the site operates."
+      "Those pages make the site easier to trust. They explain who runs PhotoPromptsHub, how to get in touch, and what to do if you have a privacy, policy, or content-removal question."
   }
 ];
 export const WHATSAPP_CHANNEL_URL =

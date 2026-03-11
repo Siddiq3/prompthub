@@ -62,8 +62,8 @@ function Prompts() {
       ];
   const pageTitle = tagLanding ? `${tagLanding.label} AI Photo Prompts` : "AI Photo Prompts Gallery";
   const pageDescription = tagLanding
-    ? `${tagLanding.description} Browse the latest matching prompts, then jump to related categories for wider discovery.`
-    : "Browse AI photo prompts by category, model, aspect ratio, and tag. Discover the latest photo prompts for Midjourney, DALL·E, Flux, and Stable Diffusion.";
+    ? `${tagLanding.description} Browse the latest matching prompts, then jump into related categories if you want a wider view.`
+    : "Browse AI photo prompts by category, model, aspect ratio, and tag, then open any prompt page for the full text and related ideas.";
   const pagePath = tagLanding ? tagLanding.href : "/prompts";
   const schema = [
     buildWebPageSchema({
@@ -93,7 +93,7 @@ function Prompts() {
           description={
             tagLanding
               ? tagLanding.intro
-              : "Pick a primary category first, then narrow the archive by model, aspect ratio, and secondary style tags."
+              : "Start with a category, then narrow the archive by model, aspect ratio, and tags when you want a more specific result."
           }
           meta={
             tagLanding
@@ -138,7 +138,7 @@ function Prompts() {
                   How to browse the {tagLanding.label.toLowerCase()} tag
                 </h2>
                 <p className="mt-3 text-sm leading-7 text-slate-700">
-                  Start here when {tagLanding.label.toLowerCase()} is the secondary look, festival, mood, or styling cue you care about. If you need a broader path, jump into one of the related categories below and keep the tag as a refinement.
+                  Start here when {tagLanding.label.toLowerCase()} is part of the look, season, mood, or styling detail you care about. If you want a broader path, open one of the related categories below and keep this tag as a refinement.
                 </p>
               </div>
 
@@ -168,7 +168,7 @@ function Prompts() {
               {filteredPrompts.length} prompts ready to browse
             </h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              The archive keeps category as the main browse path while tags work as secondary refinements. Open any card for the full prompt, copy actions, and related prompts.
+              The archive is easiest to use when you treat category as the main path and tags as refinements. Open any card for the full prompt text, copy tools, and related ideas.
             </p>
           </div>
           <AdSlot label="Responsive banner placeholder below discovery filters" variant="banner" className="h-full" />
@@ -209,7 +209,7 @@ function Prompts() {
                 Explore categories and collections
               </h2>
               <p className="mt-3 text-sm leading-7 text-slate-600">
-                For more crawlable prompt discovery paths, browse the category directory or jump into curated collections grouped by style and model.
+                If you would rather browse than search, open the category directory or jump into a collection grouped by model or creative angle.
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link to="/categories" className="ui-button-primary">

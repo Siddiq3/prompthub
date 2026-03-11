@@ -145,7 +145,7 @@ export const enrichPrompts = (prompts) => {
     const categoryMeta = getCategoryMeta(category);
     const shortDescription =
       clampText(prompt.prompt, 124) ||
-      `${prompt.title} is a ${category.toLowerCase()} AI photo prompt designed for ${modelLabel}.`;
+      `${prompt.title} is a ${category.toLowerCase()} prompt prepared for ${modelLabel}.`;
 
     return {
       ...prompt,
@@ -166,9 +166,9 @@ export const enrichPrompts = (prompts) => {
       formattedDate: formatDate(prompt.createdAt),
       tagSlugs: rawTags.map((tag) => slugify(tag)),
       shortDescription,
-      seoIntro: `${prompt.title} is a ${category.toLowerCase()} AI photo prompt built for ${modelLabel}. It works especially well for ${formatHumanList(
+      seoIntro: `${prompt.title} is a ${category.toLowerCase()} prompt for ${modelLabel}. It works well for ${formatHumanList(
         displayTags.slice(0, 3).map((tag) => formatTagLabel(tag))
-      ) || `${category.toLowerCase()} image generation`} with a ${prompt.aspectRatio} composition.`,
+      ) || `${category.toLowerCase()} scenes`} and is framed for a ${prompt.aspectRatio} composition.`,
       bestFor: dedupeById(
         [
           { id: `${prompt.id}-category`, label: category },
@@ -253,8 +253,8 @@ export const getTagLanding = (prompts, value) => {
     prompts: items,
     latestPrompt: items[0] || null,
     relatedCategories,
-    intro: `${label} prompts use ${label.toLowerCase()} as a secondary style, festival, mood, location, or visual modifier across ${categorySummary || "multiple categories"}.`,
-    description: `Browse ${label.toLowerCase()} AI photo prompts across ${categorySummary || "multiple categories"} on PhotoPromptsHub.`
+    intro: `Use the ${label.toLowerCase()} tag when ${label.toLowerCase()} is part of the look or mood you want, while the main subject still comes from a broader category such as ${categorySummary || "the rest of the library"}.`,
+    description: `Browse ${label.toLowerCase()} prompts across ${categorySummary || "multiple categories"} on PhotoPromptsHub.`
   };
 };
 

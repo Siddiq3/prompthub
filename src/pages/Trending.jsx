@@ -27,14 +27,14 @@ function Trending() {
     <>
       <Seo
         title="Trending AI Photo Prompts"
-        description="Browse trending AI photo prompts featured by PhotoPromptsHub for high-interest categories, standout visuals, and curated image generation ideas."
+        description="Browse the prompt pages currently surfaced as standout picks on PhotoPromptsHub."
         path="/trending"
         image={items[0]?.previewImage}
         schema={[
           buildWebPageSchema({
             title: "Trending AI Photo Prompts",
             description:
-              "Browse trending AI photo prompts featured by PhotoPromptsHub for high-interest categories, standout visuals, and curated image generation ideas.",
+              "Browse the prompt pages currently surfaced as standout picks on PhotoPromptsHub.",
             path: "/trending"
           }),
           buildBreadcrumbSchema(breadcrumbs),
@@ -46,8 +46,8 @@ function Trending() {
         <Breadcrumbs items={breadcrumbs} />
         <PageHeader
           eyebrow="Trending Prompts"
-          title="Trending prompt ideas and featured discoveries"
-          description="Explore featured and high-interest prompt pages that give creators a faster starting point when they want proven visual directions instead of browsing the full archive first."
+          title="Trending prompts and standout picks"
+          description="This page brings together the prompts currently surfaced as stronger recent picks, so you can start with a shorter, more selective list."
           meta={[`${items.length} prompts`, "Sorted by newest dataset date"]}
         />
 

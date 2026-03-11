@@ -46,7 +46,7 @@ function Footer() {
               {SITE_NAME}
             </p>
             <p className="mt-4 text-sm leading-7 text-slate-200">
-              Curated prompt discovery for creators who want cleaner browsing, copy-ready prompt pages, and clear support information.
+              A straightforward prompt library for creators who want clear browsing, useful prompt pages, and simple ways to keep exploring.
             </p>
             <a
               className="mt-5 inline-flex w-fit items-center rounded-[1rem] border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition-colors duration-180 ease-smooth hover:bg-white/[0.14]"
@@ -59,7 +59,7 @@ function Footer() {
                 Trust signals
               </p>
               <p className="mt-3 text-sm leading-7 text-slate-200">
-                Questions, corrections, privacy requests, and DMCA matters can be sent directly to support. Contact, privacy, terms, disclaimer, and DMCA pages are published sitewide for clarity.
+                Questions, corrections, privacy requests, and DMCA matters can all be sent directly to support. The site also keeps its contact and policy pages easy to find.
               </p>
               <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
                 {SITE_DOMAIN}
@@ -116,7 +116,7 @@ function Footer() {
           <div>
             <p className="text-sm font-semibold tracking-tight text-white">Trust & Legal</p>
             <p className="mt-4 text-sm leading-7 text-slate-300">
-              Clear policy links and support details help the product feel trustworthy without getting in the way of browsing.
+              If you need policy details or a direct way to get in touch, the important pages are linked here without making the rest of the site harder to browse.
             </p>
             <nav className="mt-4 grid gap-3">
               {trustLinks.map((link) => (

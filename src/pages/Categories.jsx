@@ -20,13 +20,13 @@ function Categories() {
     <>
       <Seo
         title="AI Prompt Categories"
-        description="Browse AI photo prompt categories including portrait, fashion, cinematic, wedding, kids, sports, street, and beauty image ideas."
+        description="Browse prompt categories such as portrait, fashion, kids, cinematic, wedding, sports, street, and beauty."
         path="/categories"
         schema={[
           buildWebPageSchema({
             title: "AI Prompt Categories",
             description:
-              "Browse AI photo prompt categories including portrait, fashion, cinematic, wedding, kids, sports, street, and beauty image ideas.",
+              "Browse prompt categories such as portrait, fashion, kids, cinematic, wedding, sports, street, and beauty.",
             path: "/categories"
           }),
           buildBreadcrumbSchema(breadcrumbs),
@@ -39,7 +39,7 @@ function Categories() {
         <PageHeader
           eyebrow="Categories"
           title="Browse prompts by category"
-          description="Categories represent the primary subject or theme. Start here when you want the clearest browsing path before applying secondary filters."
+          description="Categories represent the main subject or theme. Start here when you want the simplest way to move through the library."
           meta={[`${categories.length} categories`, `${prompts.length} prompts`]}
         />
 

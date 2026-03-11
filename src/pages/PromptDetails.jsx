@@ -41,12 +41,12 @@ const getPromptDescriptionParagraphs = (prompt) => {
   const tagSummary = formatHumanList(prompt.displayTags.slice(0, 4).map((tag) => formatTagLabel(tag)));
   const bestForSummary = formatHumanList(prompt.bestFor.slice(0, 4).map((item) => item.label));
   const negativePromptSummary = prompt.negativePrompt
-    ? "Adding the included negative prompt can help reduce distracting artifacts and keep the final image cleaner."
-    : "If you need tighter control, add a custom negative prompt to reduce unwanted artifacts or extra visual noise.";
+    ? "The included negative prompt can help reduce distractions and keep the result cleaner."
+    : "If you need more control, add your own negative prompt to cut down on unwanted artifacts or extra noise.";
 
   return [
-    `${prompt.title} is a ${prompt.category.toLowerCase()} AI photo prompt built for ${prompt.modelLabel}. The wording is designed to guide the model toward ${tagSummary || "a clear visual direction"} while keeping the output suited to a ${prompt.aspectRatio} composition. This gives creators a stronger starting point than a short generic prompt and helps keep the image generation process more consistent.`,
-    `This prompt works especially well for creators exploring ${bestForSummary || `${prompt.category.toLowerCase()} image generation`}. Start with the base wording, then refine subject details, environment cues, wardrobe, color tone, or lighting based on your project. ${negativePromptSummary}`
+    `${prompt.title} is a ${prompt.category.toLowerCase()} prompt for ${prompt.modelLabel} with a ${prompt.aspectRatio} frame in mind. It points the image toward ${tagSummary || "a clear visual direction"} and gives you something more useful than a short one-line idea.`,
+    `This prompt is especially useful for ${bestForSummary || `${prompt.category.toLowerCase()} work`}. Start with the base wording, then adjust the subject, setting, wardrobe, color, or lighting to match your own project. ${negativePromptSummary}`
   ];
 };
 
@@ -137,7 +137,7 @@ function PromptDetails() {
   const negativePromptText = prompt.negativePrompt || "";
   const bestForSummary = formatHumanList(prompt.bestFor.map((item) => item.label));
   const promptDescriptionParagraphs = getPromptDescriptionParagraphs(prompt);
-  const seoDescription = `${prompt.title} is a ${prompt.category.toLowerCase()} AI photo prompt for ${prompt.modelLabel}. Copy the main prompt${negativePromptText ? ", use the included negative prompt," : ""} and explore related ${prompt.category.toLowerCase()} ideas on PhotoPromptsHub.`;
+  const seoDescription = `${prompt.title} is a ${prompt.category.toLowerCase()} prompt for ${prompt.modelLabel}. Copy the main prompt${negativePromptText ? ", use the included negative prompt," : ""} and browse more ${prompt.category.toLowerCase()} ideas on PhotoPromptsHub.`;
   const breadcrumbs = [
     { label: "Home", to: "/" },
     { label: "Prompts", to: "/prompts" },
@@ -238,7 +238,7 @@ function PromptDetails() {
                 <div className="ui-card p-5">
                   <h2 className="font-heading text-2xl font-semibold tracking-tight text-brand-ink">Best for</h2>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
-                    This prompt is a strong fit for {bestForSummary || "creative image generation"} and works well when you want a clearer starting point before building prompt variations.
+                    This prompt is a good fit for {bestForSummary || "creative image work"} and gives you a solid base before you start making your own variations.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {prompt.bestFor.map((item) => (
@@ -252,15 +252,15 @@ function PromptDetails() {
                 <div className="ui-card p-5">
                   <h2 className="font-heading text-2xl font-semibold tracking-tight text-brand-ink">How to use this prompt</h2>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
-                    Keep the main subject, styling direction, and framing cues intact on the first pass. Once the base image looks strong, refine the details in smaller edits.
+                    Keep the core subject, style cues, and framing on the first pass. Once the base image feels right, make smaller edits to shape the final result.
                   </p>
                   <ol className="mt-4 space-y-3 text-sm leading-7 text-slate-600">
-                    <li>1. Copy the main prompt into your preferred AI image model or compatible workflow.</li>
-                    <li>2. Adjust styling, subject details, environment cues, or lens references to match your creative brief.</li>
+                    <li>1. Copy the main prompt into your preferred image model or workflow.</li>
+                    <li>2. Adjust styling, subject details, environment notes, or lens references to suit your brief.</li>
                     <li>
                       3. {negativePromptText
-                        ? "Add the negative prompt to reduce unwanted artifacts and keep the output cleaner."
-                        : "Add a custom negative prompt if you need tighter control over unwanted artifacts."}
+                        ? "Add the negative prompt if you want a cleaner result with fewer unwanted artifacts."
+                        : "Add a custom negative prompt if you want tighter control over unwanted artifacts."}
                     </li>
                   </ol>
                 </div>
@@ -286,12 +286,12 @@ function PromptDetails() {
             <div className="ui-card p-5 sm:p-6">
               <p className="ui-meta">Prompt snapshot</p>
               <p className="mt-3 text-sm leading-7 text-slate-600">
-                Built for <span className="font-semibold text-slate-700">{prompt.modelLabel}</span>, organized under{" "}
+                Made for <span className="font-semibold text-slate-700">{prompt.modelLabel}</span>, filed under{" "}
                 <span className="font-semibold text-slate-700">{prompt.category}</span>, and formatted for a{" "}
                 <span className="font-semibold text-slate-700">{prompt.aspectRatio}</span> composition.
               </p>
               <p className="mt-3 text-sm leading-7 text-slate-600">
-                Use this page as a reference when you want a copy-ready prompt, a negative prompt, and related ideas for the same visual direction.
+                Use this page when you want the full prompt text, the supporting negative prompt, and a few nearby ideas to keep the same visual direction going.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {prompt.displayTags.slice(0, 6).map((tag) => (
@@ -308,7 +308,7 @@ function PromptDetails() {
           <PromptBlock
             title={copyState === "prompt" ? "Prompt copied" : "Main prompt"}
             value={prompt.prompt}
-            description="Use this as the core instruction set for the image model, then customize specific details to match your use case."
+            description="Use this as your base prompt, then rewrite the small details to fit your subject, setting, or visual style."
             onCopy={async () => {
               const copied = await copyPrompt(prompt);
               if (copied) flashCopy("prompt");
@@ -318,7 +318,7 @@ function PromptDetails() {
           <PromptBlock
             title={copyState === "negative" ? "Negative prompt copied" : "Negative prompt"}
             value={negativePromptText}
-            description="Add this when you want tighter control over visual noise, artifacts, or unwanted styling."
+            description="Use this when you want to reduce noise, strange details, or styling choices that do not fit the image."
             onCopy={async () => {
               const copied = await copyNegativePrompt(prompt);
               if (copied) flashCopy("negative");
@@ -329,7 +329,7 @@ function PromptDetails() {
         <PromptBlock
           title={copyState === "full" ? "Full prompt copied" : "Full prompt package"}
           value={`Prompt:\n${prompt.prompt}\n\nNegative Prompt:\n${negativePromptText || "No negative prompt provided."}`}
-          description="Copy the full package when you want the fastest starting point, including the main prompt and the negative prompt together."
+          description="Copy everything together when you want the quickest starting point with both the main prompt and the supporting negative prompt."
           onCopy={async () => {
             const copied = await copyFullPrompt(prompt);
             if (copied) flashCopy("full");
@@ -376,13 +376,13 @@ function PromptDetails() {
 
         <PromptShelf
           title="Related prompts"
-          description="These prompts share category, model, aspect ratio, or tag overlap with the current prompt."
+          description="These prompts share the same category, model, tags, or general visual direction."
           prompts={relatedPrompts}
         />
 
         <PromptShelf
           title={`More ${prompt.category.toLowerCase()} prompts`}
-          description={`Continue browsing ${prompt.category.toLowerCase()} prompt ideas from the same category landing page.`}
+          description={`Keep exploring more ${prompt.category.toLowerCase()} prompts from the same category page.`}
           prompts={similarPrompts}
           linkTo={buildCategoryPath(prompt.category)}
           linkLabel={`More ${prompt.category}`}

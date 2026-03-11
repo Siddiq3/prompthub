@@ -35,63 +35,63 @@ const NON_DISCOVERY_TAG_SLUGS = new Set([
 const CATEGORY_COPY = {
   Beauty: {
     description:
-      "Beauty prompts center on close-up makeup, skin detail, premium styling, and polished cosmetic photography ideas.",
+      "Beauty prompts focus on close framing, makeup detail, polished styling, and the kind of portrait work where face and finish matter most.",
     intro:
-      "Beauty is the right category when the face, makeup, and close framing matter more than the wider environment or wardrobe."
+      "Choose Beauty when the image is really about makeup, skin detail, and a polished close-up rather than the wider setting or wardrobe."
   },
   Cinematic: {
     description:
-      "Cinematic prompts focus on mood, narrative framing, dramatic lighting, and film-inspired visual storytelling.",
+      "Cinematic prompts lean into mood, story, dramatic light, and frames that feel closer to a film still than a simple portrait.",
     intro:
-      "Use cinematic prompts when atmosphere and story lead the image, even if the scene also includes portrait or fashion cues."
+      "Use Cinematic when atmosphere carries the image and the scene needs a sense of story, even if it also borrows from portrait or fashion styling."
   },
   Fashion: {
     description:
-      "Fashion prompts help creators explore editorial styling, wardrobe direction, campaign visuals, and modern lookbook aesthetics.",
+      "Fashion prompts bring together wardrobe, pose, styling, and editorial direction for lookbooks, campaigns, and polished portrait work.",
     intro:
-      "Fashion is the primary category for prompts led by clothing, styling, pose direction, and campaign presentation."
+      "Fashion is the right fit when clothing, styling, and presentation lead the image more than the location or event itself."
   },
   Kids: {
     description:
-      "Kids photo prompts help generate joyful and playful AI images of children in natural, festive, family, or studio settings.",
+      "Kids prompts center on children in playful, festive, family, or studio scenes where their age and energy are the main focus of the image.",
     intro:
-      "Kids prompts are grouped around children as the main subject so child-focused scenes do not get buried inside broader fashion or family browsing paths."
+      "This category keeps child-focused prompts together so parents, photographers, and creators do not have to dig through broader fashion or family sections to find them."
   },
   "Ramadan & Eid": {
     description:
-      "Ramadan and Eid prompts collect festive portraits, family moments, modest fashion, prayer scenes, and celebration-focused AI photo ideas.",
+      "Ramadan and Eid prompts bring together festive portraits, family moments, modest fashion, prayer scenes, and celebration-focused photo ideas.",
     intro:
-      "Use Ramadan and Eid prompts when the festive season, celebration setting, or religious and cultural context is the main reason to browse the image idea."
+      "Choose this category when the season, celebration, or cultural setting is what defines the image, not just the clothing or portrait style."
   },
   Portrait: {
     description:
-      "Portrait prompts help you generate realistic headshots, expressive close-ups, and subject-led portraits with clearer visual focus.",
+      "Portrait prompts are built around expression, framing, and a clear subject focus, from simple headshots to more expressive close-up work.",
     intro:
-      "Portrait prompts are used when a person is the main focus and the goal is expression, framing, and lighting rather than event coverage."
+      "Portrait works best when the person is the main point of attention and the image depends more on expression and framing than on an event or setting."
   },
   Sports: {
     description:
-      "Sports prompts bring motion, intensity, action, and peak-moment storytelling into AI photo generation workflows.",
+      "Sports prompts capture movement, energy, and the feeling of a decisive moment, whether the scene is training, action, or celebration.",
     intro:
-      "Sports prompts are best for dynamic athlete-led images where movement and performance are more important than styling alone."
+      "Use Sports when motion and performance are the real focus and the image needs to feel active rather than simply styled."
   },
   Street: {
     description:
-      "Street prompts emphasize urban atmosphere, documentary-style scenes, candid framing, and location-driven visual character.",
+      "Street prompts highlight city atmosphere, candid framing, and everyday scenes where the location has as much personality as the subject.",
     intro:
-      "Street prompts work best when the environment and urban mood are a major part of the image, not just the styling."
+      "Street is the better choice when the environment shapes the image and the urban setting matters as much as the person or styling."
   },
   Wedding: {
     description:
-      "Wedding prompts collect romantic couple portraits, ceremony details, candid celebrations, and bridal storytelling setups.",
+      "Wedding prompts cover couple portraits, ceremony moments, bridal styling, and the small emotional details that make wedding images feel personal.",
     intro:
-      "Wedding prompts belong here when the ceremony, couple moment, or celebration context is the main reason to browse the image idea."
+      "Choose Wedding when the ceremony, relationship, or celebration is what gives the image its purpose and emotional tone."
   }
 };
 
 const getCategoryFallback = (name) => ({
-  description: `${name} AI photo prompts and creative image generation ideas.`,
-  intro: `Browse ${name.toLowerCase()} prompts when ${name.toLowerCase()} is the primary subject or theme, then use tags as secondary refinements.`
+  description: `${name} prompts collected around a clear subject or visual theme.`,
+  intro: `Browse ${name.toLowerCase()} prompts when that is the main subject or mood you want to start from, then use tags to refine the result.`
 });
 
 const dedupeBySlug = (items = []) => {

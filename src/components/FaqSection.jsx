@@ -10,10 +10,10 @@ function FaqSection({ items = [], supportEmail, trustLinks = [] }) {
           <div className="max-w-2xl">
             <span className="section-kicker text-brand-accent">FAQ</span>
             <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.45rem]">
-              Answers for creators researching AI photo prompts
+              Common questions about browsing the library
             </h2>
             <p className="mt-4 text-[0.98rem] leading-7 text-slate-600 sm:text-[1.02rem]">
-              These quick answers help first-time visitors understand how to browse the library, copy prompts, and move into categories, collections, and detail pages with confidence.
+              These answers are here to help first-time visitors understand how the site is organized and where to go next once they find a prompt they like.
             </p>
           </div>
 
@@ -38,7 +38,7 @@ function FaqSection({ items = [], supportEmail, trustLinks = [] }) {
             <p className="ui-meta">Need help?</p>
             <p className="mt-3 text-lg font-semibold text-brand-ink">{supportEmail}</p>
             <p className="mt-2 text-sm leading-7 text-slate-600">
-              Contact and policy routes are visible so users, search engines, and ad reviewers can understand how the platform operates.
+              If you need help, feedback, or a correction, this is the fastest way to reach the site.
             </p>
           </div>
           <div className="ui-card p-5">
@@ -58,7 +58,7 @@ function FaqSection({ items = [], supportEmail, trustLinks = [] }) {
           <div className="ui-card p-5">
             <p className="ui-meta">Ad Experience</p>
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              Homepage advertising is intentionally limited to reserved placements below key content sections, keeping the page readable and content-led for both visitors and approval reviews.
+              Ad placements are kept in reserved spots so the main content stays readable and the homepage still feels like a real editorial page.
             </p>
           </div>
         </aside>

@@ -27,14 +27,14 @@ function Latest() {
     <>
       <Seo
         title="Latest AI Photo Prompts"
-        description="Discover the latest photo prompts added to PhotoPromptsHub, sorted by dataset date for creators researching fresh AI image generation ideas."
+        description="Browse the newest prompts added to PhotoPromptsHub, sorted by date so the latest work appears first."
         path="/latest"
         image={items[0]?.previewImage}
         schema={[
           buildWebPageSchema({
             title: "Latest AI Photo Prompts",
             description:
-              "Discover the latest photo prompts added to PhotoPromptsHub, sorted by dataset date for creators researching fresh AI image generation ideas.",
+              "Browse the newest prompts added to PhotoPromptsHub, sorted by date so the latest work appears first.",
             path: "/latest"
           }),
           buildBreadcrumbSchema(breadcrumbs),
@@ -46,8 +46,8 @@ function Latest() {
         <Breadcrumbs items={breadcrumbs} />
         <PageHeader
           eyebrow="Latest Prompts"
-          title="Recently added AI photo prompts"
-          description="Browse the newest prompt pages added to PhotoPromptsHub to find fresh ideas across portrait, fashion, cinematic, wedding, sports, and other AI image styles."
+          title="Recently added photo prompts"
+          description="Browse the newest prompt pages in the library to see what was added most recently across portrait, fashion, wedding, cinematic, sports, and more."
           meta={[`${items.length} prompts`, "Sorted by newest dataset date"]}
         />
 

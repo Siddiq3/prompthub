@@ -60,7 +60,7 @@ function Home() {
     <>
       <Seo
         title="AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion"
-        description="Discover AI photo prompts through a cleaner category-first browsing flow on PhotoPromptsHub."
+        description="Browse AI photo prompts through clear categories, helpful tags, and prompt pages that are easy to understand."
         path="/"
         image={defaultOgImage}
         schema={[
@@ -97,10 +97,10 @@ function Home() {
                 <div className="max-w-2xl">
                   <span className="section-kicker text-brand-accent">Browse By Category</span>
                   <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.35rem]">
-                    Start with the primary prompt theme
+                    Start with the kind of image you want to make
                   </h2>
                   <p className="mt-3 text-[0.98rem] leading-7 text-slate-700 sm:text-[1.02rem]">
-                    Categories are the clearest way to browse the library. Choose the main subject first, then refine with filters when you need a narrower style or composition.
+                    Categories are the easiest way to get oriented. Pick the main subject or theme first, then use filters only when you want something more specific.
                   </p>
                 </div>
                 <Link to="/categories" className="ui-button-secondary">
@@ -134,8 +134,8 @@ function Home() {
 
             <PromptShelf
               eyebrow="Trending Prompts"
-              title="One curated section for prompt discovery"
-              description="This section surfaces featured and recent standouts without repeating the same card system across multiple overlapping homepage rows."
+              title="A simple place to start if you just want good picks"
+              description="These are the prompts we surface first when someone wants strong recent work without opening the full archive right away."
               prompts={trendingPrompts}
               linkTo="/trending"
               linkLabel="Browse trending prompts"
@@ -143,8 +143,8 @@ function Home() {
 
             <PromptShelf
               eyebrow="Latest Prompts"
-              title="Newest prompts added to the library"
-              description="The latest section stays strictly tied to createdAt so visitors can quickly see the freshest prompt pages without browsing the full archive."
+              title="The newest prompts added to the library"
+              description="This list follows the latest dataset dates, so you can quickly see what was added most recently."
               prompts={latestPrompts}
               linkTo="/latest"
               linkLabel="Browse latest prompts"
@@ -155,10 +155,10 @@ function Home() {
                 <div className="max-w-2xl">
                   <span className="section-kicker text-brand-accent">Collections</span>
                   <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.35rem]">
-                    Curated landing pages across themes and models
+                    Browse collections when you want a broader angle
                   </h2>
                   <p className="mt-3 text-[0.98rem] leading-7 text-slate-700 sm:text-[1.02rem]">
-                    Collections stay useful as editorial groupings, but they sit behind categories instead of competing with them at every step.
+                    Collections group prompts by model or creative angle. They are useful once you know the direction you want, but they do not replace categories as the main starting point.
                   </p>
                 </div>
                 <Link to="/collections" className="ui-button-secondary">
@@ -184,10 +184,10 @@ function Home() {
                 <div className="max-w-2xl">
                   <span className="section-kicker text-brand-accent">Browse By Style</span>
                   <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.35rem]">
-                    Use tags as secondary refinements
+                    Use tags when you want to narrow the look
                   </h2>
                   <p className="mt-3 text-[0.98rem] leading-7 text-slate-700 sm:text-[1.02rem]">
-                    Style tags work best after category. Use them to narrow the mood, festival, lighting, wardrobe, or location without replacing the main browsing path.
+                    Tags work best after category. They help you narrow the mood, lighting, season, location, or styling without sending you into a separate browsing system.
                   </p>
                 </div>
                 <Link to="/prompts" className="ui-button-secondary">
@@ -212,14 +212,14 @@ function Home() {
                 <div>
                   <span className="section-kicker text-brand-accent">How Discovery Works</span>
                   <h2 className="mt-3 text-balance font-heading text-[2rem] font-semibold tracking-tight text-brand-ink sm:text-[2.35rem]">
-                    Category first, tags second, collections third
+                    A simpler way to move through the library
                   </h2>
                   <div className="mt-4 space-y-4 text-[0.98rem] leading-7 text-slate-700 sm:text-[1.02rem]">
                     <p>
-                      PhotoPromptsHub now treats category as the main subject or theme, while tags act as secondary modifiers such as mood, styling, lighting, or location. That removes the old overlap where users had to guess whether they should browse by category or by a near-duplicate tag.
+                      On PhotoPromptsHub, categories are the main path. Tags are there to refine the style, mood, lighting, season, or location after you have already chosen the kind of image you want.
                     </p>
                     <p>
-                      Collections remain available as curated landing pages, but they no longer compete with multiple overlapping homepage shelves. The result is a calmer homepage and clearer paths into the archive.
+                      Collections are still available, but they now sit in a more supportive role. The result is a homepage that feels calmer and a library that is easier to understand at a glance.
                     </p>
                   </div>
                 </div>
@@ -229,15 +229,15 @@ function Home() {
                   <div className="mt-4 grid gap-3">
                     <div className="ui-panel p-4">
                       <p className="text-sm font-semibold text-brand-ink">Category</p>
-                      <p className="mt-1 text-sm leading-7 text-slate-700">Primary subject or theme</p>
+                      <p className="mt-1 text-sm leading-7 text-slate-700">The main subject or theme</p>
                     </div>
                     <div className="ui-panel p-4">
                       <p className="text-sm font-semibold text-brand-ink">Tag</p>
-                      <p className="mt-1 text-sm leading-7 text-slate-700">Style, mood, lighting, location, or modifier</p>
+                      <p className="mt-1 text-sm leading-7 text-slate-700">A style, mood, lighting cue, location, or other refinement</p>
                     </div>
                     <div className="ui-panel p-4">
                       <p className="text-sm font-semibold text-brand-ink">Collection</p>
-                      <p className="mt-1 text-sm leading-7 text-slate-700">Curated grouping across models or creative angles</p>
+                      <p className="mt-1 text-sm leading-7 text-slate-700">A broader grouping across models or creative angles</p>
                     </div>
                   </div>
                 </div>

@@ -19,10 +19,10 @@ function About() {
   return (
     <ContentPageLayout
       title="About PhotoPromptsHub"
-      description="PhotoPromptsHub is an independent AI prompt discovery website built to help creators browse organized photo prompts, example images, and related inspiration without the clutter of a generic feed."
+      description="PhotoPromptsHub is an independent prompt library built to help creators browse photo prompts, example images, and related ideas without the clutter of a generic feed."
       path="/about"
       seoTitle="About PhotoPromptsHub AI Prompt Discovery Website"
-      seoDescription="Learn what PhotoPromptsHub is, how the prompt library is organized, who operates the site, and how the platform approaches AI photo prompt discovery."
+      seoDescription="Learn what PhotoPromptsHub is, how the prompt library is organized, and who runs the site."
       breadcrumbs={breadcrumbs}
       eyebrow="About Us"
       meta={[OWNER_NAME, "Independent project", `${STATE}, ${COUNTRY}`]}
@@ -47,7 +47,7 @@ function About() {
         buildWebPageSchema({
           title: `About ${SITE_NAME}`,
           description:
-            "Learn what PhotoPromptsHub is, how its AI photo prompt library is organized, and who operates the project.",
+            "Learn what PhotoPromptsHub is, how its prompt library is organized, and who runs the project.",
           path: "/about",
           type: "AboutPage"
         })
@@ -56,10 +56,10 @@ function About() {
       <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
         <h2 className="font-heading text-2xl font-semibold text-brand-ink">Why this website exists</h2>
         <p className="mt-3 text-sm leading-7 text-slate-600">
-          {SITE_NAME} was created to make AI photo prompt discovery simpler and more useful. Many prompt websites feel like fast-moving feeds with very little structure. This project takes the opposite approach by organizing prompts into categories, collections, latest additions, trending picks, and individual detail pages that are easier to browse and easier to understand.
+          {SITE_NAME} was created to make prompt browsing simpler and more useful. A lot of prompt websites feel like fast-moving feeds with very little structure. This project takes a quieter approach by organizing prompts into categories, collections, latest additions, trending picks, and detail pages that are easier to browse.
         </p>
         <p className="mt-3 text-sm leading-7 text-slate-600">
-          The aim is not to overwhelm visitors with volume. The aim is to help creators find a strong starting point quickly, copy a prompt, understand the context around it, and keep exploring related ideas without losing their place.
+          The goal is not to overwhelm visitors with volume. The goal is to help someone find a strong starting point quickly, understand what they are looking at, and keep exploring without losing their place.
         </p>
       </section>
 
@@ -67,13 +67,13 @@ function About() {
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
           <h2 className="font-heading text-2xl font-semibold text-brand-ink">What you will find here</h2>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            The library focuses on AI photo prompts, example images, category pages, collection pages, and prompt detail pages with useful metadata such as model, aspect ratio, tags, and related prompts. The overall structure is designed to help both people and search engines navigate the content more clearly.
+            The library focuses on prompt pages, example images, category pages, collection pages, and useful metadata such as model, aspect ratio, tags, and related prompts. The structure is meant to be clear for visitors first.
           </p>
         </div>
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
           <h2 className="font-heading text-2xl font-semibold text-brand-ink">Who the site is for</h2>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            {SITE_NAME} is built for creators, designers, marketers, students, researchers, and anyone experimenting with AI image generation who wants practical prompt ideas instead of vague inspiration.
+            {SITE_NAME} is built for creators, designers, marketers, students, researchers, and anyone who wants practical prompt ideas instead of vague inspiration.
           </p>
         </div>
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
@@ -85,7 +85,7 @@ function About() {
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
           <h2 className="font-heading text-2xl font-semibold text-brand-ink">What this website is not</h2>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            {SITE_NAME} is an independent project. It is not an official product of Midjourney, OpenAI, Stability AI, or any other model provider, and it does not promise that a copied prompt will produce identical results across tools or future model versions.
+            {SITE_NAME} is an independent project. It is not an official product of Midjourney, OpenAI, Stability AI, or any other model provider, and it does not promise that the same prompt will give identical results across different tools or future versions.
           </p>
         </div>
       </section>

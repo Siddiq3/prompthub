@@ -98,7 +98,7 @@ function CategoryPage() {
                 <div>
                   <p className="ui-meta">People focus</p>
                   <p className="mt-3 text-sm leading-7 text-slate-700">
-                    These labels make it clearer whether the prompts in this category mainly lean toward men, women, boys, or girls.
+                    These labels help you see at a glance whether the prompts here lean more toward men, women, boys, or girls.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {category.topSubjects.map((tag) => (
@@ -114,7 +114,7 @@ function CategoryPage() {
                 <div className={category.topSubjects.length ? "mt-5" : ""}>
                   <p className="ui-meta">Common refinements</p>
                   <p className="mt-3 text-sm leading-7 text-slate-700">
-                    Use tags as secondary modifiers for style, mood, lighting, or location after you pick the main category.
+                    Once you have picked the main category, use tags to narrow the style, mood, lighting, or location.
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {category.topTags.map((tag) => (
@@ -132,6 +132,9 @@ function CategoryPage() {
         {relatedCollections.length ? (
           <div className="rounded-[2rem] border border-slate-200 bg-white/92 p-6 shadow-soft">
             <h2 className="font-heading text-2xl font-semibold text-brand-ink">Related collections</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
+              If you want to widen the search a little, these collections gather nearby prompts under a broader creative angle.
+            </p>
             <div className="mt-4 flex flex-wrap gap-3">
               {relatedCollections.map((collection) => (
                 <Link
