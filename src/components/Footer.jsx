@@ -41,7 +41,7 @@ function Footer() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 py-12 sm:py-14 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,0.85fr))] xl:gap-10">
           <div className="max-w-md">
-            <p className="section-kicker text-white/70">PhotoPromptsHub</p>
+            <p className="section-kicker text-white/80">PhotoPromptsHub</p>
             <p className="mt-3 font-heading text-[1.9rem] font-semibold tracking-tight text-white">
               {SITE_NAME}
             </p>
@@ -61,7 +61,7 @@ function Footer() {
               <p className="mt-3 text-sm leading-7 text-slate-200">
                 Questions, corrections, privacy requests, and DMCA matters can be sent directly to support. Contact, privacy, terms, disclaimer, and DMCA pages are published sitewide for clarity.
               </p>
-              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
                 {SITE_DOMAIN}
               </p>
             </div>
@@ -137,7 +137,7 @@ function Footer() {
         <span>Copyrights © {new Date().getFullYear()} {SITE_NAME}. </span>
         <span>Developed by </span>
         <a
-          className="signature-script text-[#033f63] underline-offset-4 transition hover:text-[#022c45] hover:underline"
+          className="signature-script text-white underline-offset-4 transition hover:text-white/90 hover:underline"
           href="https://www.instagram.com/siddiqkolimi/"
           target="_blank"
           rel="noreferrer"
