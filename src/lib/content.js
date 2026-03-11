@@ -69,6 +69,9 @@ export const buildCollectionPath = (value) => `/collection/${encodePathSegment(v
 
 export const buildPromptsPathWithTag = (value) => `/prompts?tag=${encodeURIComponent(value)}`;
 
+const hasTag = (prompt, tag) =>
+  prompt.tags.some((item) => String(item).trim().toLowerCase() === String(tag).trim().toLowerCase());
+
 export const enrichPrompts = (prompts) => {
   const baseSlugs = prompts.map((prompt) => slugify(prompt.title || prompt.id || "prompt"));
   const counts = baseSlugs.reduce((acc, slug) => {
@@ -119,6 +122,9 @@ export const getLatestPrompts = (prompts, limit) => {
   return typeof limit === "number" ? sorted.slice(0, limit) : sorted;
 };
 
+export const getLatestPromptsByTag = (prompts, tag, limit) =>
+  getLatestPrompts(prompts.filter((prompt) => hasTag(prompt, tag)), limit);
+
 export const getTrendingPrompts = (prompts, limit = 12) => {
   const featured = getFeaturedPrompts(prompts);
   const latest = getLatestPrompts(prompts).filter(
@@ -162,7 +168,12 @@ export const getCategories = (prompts) =>
         latestPrompt: items[0] || null
       };
     })
-    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+    .sort(
+      (a, b) =>
+        (b.latestPrompt?.createdTimestamp || 0) - (a.latestPrompt?.createdTimestamp || 0) ||
+        b.count - a.count ||
+        a.name.localeCompare(b.name)
+    );
 
 export const getCategoryBySlug = (prompts, slug) =>
   getCategories(prompts).find((category) => category.slug === slug);

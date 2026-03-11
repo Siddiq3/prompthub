@@ -10,12 +10,13 @@ import PromptShelf from "../components/PromptShelf";
 import { HOME_FAQS, OWNER_NAME, SUPPORT_EMAIL } from "../config";
 import { useAppContext } from "../context/AppContext";
 import {
+  buildPromptsPathWithTag,
   getCategories,
   getCollectionHighlights,
   getLatestPrompts,
+  getLatestPromptsByTag,
   getPopularCategories,
-  getTopTags,
-  getTrendingPrompts
+  getTopTags
 } from "../lib/content";
 import Seo from "../seo/Seo";
 import {
@@ -37,8 +38,10 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const categories = useMemo(() => getCategories(prompts), [prompts]);
   const popularCategories = useMemo(() => getPopularCategories(prompts, 6), [prompts]);
-  const trendingPrompts = useMemo(() => getTrendingPrompts(prompts, 6), [prompts]);
   const latestPrompts = useMemo(() => getLatestPrompts(prompts, 6), [prompts]);
+  const latestWomenPrompts = useMemo(() => getLatestPromptsByTag(prompts, "women", 6), [prompts]);
+  const latestMenPrompts = useMemo(() => getLatestPromptsByTag(prompts, "men", 6), [prompts]);
+  const latestKidsPrompts = useMemo(() => getLatestPromptsByTag(prompts, "kids", 6), [prompts]);
   const collections = useMemo(() => getCollectionHighlights(prompts, 4), [prompts]);
   const styleTags = useMemo(() => getTopTags(prompts, 10), [prompts]);
 
@@ -94,7 +97,7 @@ function Home() {
           }),
           buildWebSiteSchema(),
           buildFaqSchema(HOME_FAQS),
-          buildItemListSchema(trendingPrompts)
+          buildItemListSchema(latestPrompts)
         ]}
       />
 
@@ -249,12 +252,30 @@ function Home() {
             />
 
             <PromptShelf
-              eyebrow="Trending Now"
-              title="Trending prompts"
-              description="These are the strongest homepage starting points for first-time visitors who want high-interest prompt ideas without browsing the entire archive."
-              prompts={trendingPrompts}
-              linkTo="/trending"
-              linkLabel="View trending"
+              eyebrow="Latest Women"
+              title="Latest women&apos;s prompts"
+              description="Newest women-focused prompts added to the library, sorted by the latest created date."
+              prompts={latestWomenPrompts}
+              linkTo={buildPromptsPathWithTag("women")}
+              linkLabel="More women&apos;s prompts"
+            />
+
+            <PromptShelf
+              eyebrow="Latest Men"
+              title="Latest men&apos;s prompts"
+              description="Newest men-focused prompts added to the library, sorted by the latest created date."
+              prompts={latestMenPrompts}
+              linkTo={buildPromptsPathWithTag("men")}
+              linkLabel="More men&apos;s prompts"
+            />
+
+            <PromptShelf
+              eyebrow="Latest Kids"
+              title="Latest kids&apos; prompts"
+              description="Newest kids-focused prompts added to the library, sorted by the latest created date."
+              prompts={latestKidsPrompts}
+              linkTo={buildPromptsPathWithTag("kids")}
+              linkLabel="More kids&apos; prompts"
             />
 
             <PromptShelf
@@ -263,7 +284,7 @@ function Home() {
               description="Fresh prompt additions across portrait, wedding, cinematic, kids, fashion, sports, and other categories."
               prompts={latestPrompts}
               linkTo="/latest"
-              linkLabel="View latest"
+              linkLabel="More latest prompts"
             />
 
             <AdSlot

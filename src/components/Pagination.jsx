@@ -41,7 +41,7 @@ function Pagination({
 
   return (
     <div className="section-shell flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="text-sm leading-7 text-slate-600">
+      <div className="text-sm leading-7 text-slate-600 dark:text-slate-300">
         Showing <span className="font-semibold text-brand-ink">{from}</span>-
         <span className="font-semibold text-brand-ink">{to}</span> of{" "}
         <span className="font-semibold text-brand-ink">{totalItems}</span> {itemLabel}
@@ -49,7 +49,7 @@ function Pagination({
 
       <div className="flex flex-wrap items-center gap-2">
         {onItemsPerPageChange ? (
-          <label className="inline-flex items-center gap-2 text-sm text-slate-600">
+          <label className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
             <span>Per page</span>
             <select
               className="ui-select h-10 rounded-pill px-3 py-2"
@@ -90,8 +90,8 @@ function Pagination({
                 aria-current={item === currentPage ? "page" : undefined}
                 className={`inline-flex h-10 min-w-10 items-center justify-center rounded-pill px-3 text-sm font-semibold transition-all duration-180 ease-smooth ${
                   item === currentPage
-                    ? "border border-indigo-100 bg-indigo-50 text-indigo-700"
-                    : "border border-slate-200 bg-white text-brand-ink hover:border-brand-accent/30 hover:text-brand-accent"
+                    ? "border border-indigo-100 bg-indigo-50 text-indigo-700 dark:border-indigo-400/30 dark:bg-indigo-500/15 dark:text-indigo-200"
+                    : "border border-slate-200 bg-white text-brand-ink hover:border-brand-accent/30 hover:text-brand-accent dark:border-slate-700 dark:bg-slate-900/82 dark:text-slate-100"
                 }`}
               >
                 {item}

@@ -29,7 +29,7 @@ function FilterBar({
   const hasActiveControls = pills.length > 0 || sortBy !== "latest";
 
   return (
-    <section className="lg:sticky lg:top-20 lg:z-30">
+    <section>
       <div className="section-shell surface-subtle p-4 sm:p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-2xl">

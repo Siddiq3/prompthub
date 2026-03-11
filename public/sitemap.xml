@@ -73,8 +73,14 @@
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.in/category/fashion</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://photopromptshub.in/category/street</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/category/sports</loc>
+    <lastmod>2026-03-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -91,20 +97,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.in/category/portrait</loc>
-    <lastmod>2025-10-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://photopromptshub.in/category/sports</loc>
-    <lastmod>2026-03-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://photopromptshub.in/category/cinematic</loc>
-    <lastmod>2025-11-16</lastmod>
+    <loc>https://photopromptshub.in/category/fashion</loc>
+    <lastmod>2026-03-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -115,8 +109,14 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://photopromptshub.in/category/street</loc>
-    <lastmod>2026-03-11</lastmod>
+    <loc>https://photopromptshub.in/category/cinematic</loc>
+    <lastmod>2025-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://photopromptshub.in/category/portrait</loc>
+    <lastmod>2025-10-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
