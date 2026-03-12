@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaArrowRight, FaTelegramPlane, FaTimes } from "react-icons/fa";
 import { TELEGRAM_CHANNEL_URL } from "../config";
+import { lockBodyScroll } from "../utils/scrollLock";
 
 const TELEGRAM_POPUP_FLAG = "__telegramPopupShownThisLoad";
 
@@ -29,20 +30,11 @@ function TelegramPopup() {
   }, []);
 
   useEffect(() => {
-    if (typeof document === "undefined") {
+    if (!isVisible) {
       return undefined;
     }
 
-    const { body } = document;
-    const previousOverflow = body.style.overflow;
-
-    if (isVisible) {
-      body.style.overflow = "hidden";
-    }
-
-    return () => {
-      body.style.overflow = previousOverflow;
-    };
+    return lockBodyScroll("telegram-popup");
   }, [isVisible]);
 
   if (!isVisible) {

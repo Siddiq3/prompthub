@@ -427,3 +427,11 @@
     animation: none !important;
   }
 }
+
+@media (max-width: 639px) {
+  .hero-fluid-title {
+    font-size: clamp(2.05rem, 8.6vw, 2.75rem);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+  }
+}
