@@ -1,7 +1,13 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { GITHUB_RAW_URL, buildPromptDataUrl } from "../config";
+import { GITHUB_RAW_URL } from "../config";
 import { enrichPrompts, sortPromptsByDate } from "../lib/content";
 import { normalizePrompts } from "../utils/normalizePrompts";
+import {
+  fetchPromptData,
+  fetchPromptVersion,
+  getCachedPromptData,
+  setCachedPromptData
+} from "../utils/promptData";
 import {
   getCopyCounts,
   getSavedPrompts,
@@ -81,16 +87,31 @@ export function AppProvider({ children }) {
           );
         }
 
-        const response = await fetch(buildPromptDataUrl(Date.now()), {
-          signal: controller.signal,
-          cache: "no-store"
-        });
+        const cached = getCachedPromptData();
+        let data;
 
-        if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
+        try {
+          const latestVersion = await fetchPromptVersion(controller.signal);
+
+          if (cached?.version === latestVersion) {
+            data = cached.data;
+          } else {
+            data = await fetchPromptData(latestVersion, controller.signal);
+            setCachedPromptData(data, latestVersion);
+          }
+        } catch (versionError) {
+          if (versionError?.name === "AbortError") {
+            return;
+          }
+
+          if (cached?.data) {
+            data = cached.data;
+          } else {
+            data = await fetchPromptData("", controller.signal);
+            setCachedPromptData(data, "");
+          }
         }
 
-        const data = await response.json();
         const normalized = normalizePrompts(data);
 
         if (!Array.isArray(normalized)) {

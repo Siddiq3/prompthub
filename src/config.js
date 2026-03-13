@@ -1,14 +1,52 @@
-export const GITHUB_RAW_URL =
-  "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/promptdata.json";
+export const GITHUB_BOOTSTRAP_URL =
+  "https://raw.githubusercontent.com/Siddiq3/promtdata/main/latest.json";
 
-export const buildPromptDataUrl = (cacheBustValue = "") => {
+export const GITHUB_VERSION_URL = GITHUB_BOOTSTRAP_URL;
+
+export const GITHUB_RAW_URL =
+  "https://raw.githubusercontent.com/Siddiq3/promtdata/main/promptdata.json";
+
+export const DEFAULT_PREVIEW_BASE_URL =
+  "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/previews/";
+
+export const buildPromptDataUrl = (version = "") => {
   const url = new URL(GITHUB_RAW_URL);
 
-  if (cacheBustValue) {
-    url.searchParams.set("v", String(cacheBustValue));
+  if (version) {
+    url.searchParams.set("v", String(version));
   }
 
   return url.toString();
+};
+
+export const fetchPromptDataManifest = async () => {
+  const response = await fetch(GITHUB_BOOTSTRAP_URL, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to load manifest: ${response.status}`);
+  }
+
+  return response.json();
+};
+
+export const resolvePromptDataUrl = async () => {
+  try {
+    const manifest = await fetchPromptDataManifest();
+    return manifest?.dataset?.cdnUrl || GITHUB_RAW_URL;
+  } catch {
+    return GITHUB_RAW_URL;
+  }
+};
+
+export const resolvePreviewBaseUrl = async () => {
+  try {
+    const manifest = await fetchPromptDataManifest();
+    return manifest?.previews?.cdnBaseUrl || DEFAULT_PREVIEW_BASE_URL;
+  } catch {
+    return DEFAULT_PREVIEW_BASE_URL;
+  }
 };
 
 export const SITE_NAME = "PhotoPromptsHub";
@@ -24,6 +62,7 @@ export const CONTACT_EMAIL = "photopromptshub@gmail.com";
 export const COUNTRY = "India";
 export const STATE = "Telangana";
 export const FALLBACK_OG_IMAGE = `${SITE_URL}/apple-touch-icon.png`;
+
 export const HOME_FAQS = [
   {
     question: "What is PhotoPromptsHub?",
@@ -56,6 +95,9 @@ export const HOME_FAQS = [
       "Those pages make the site easier to trust. They explain who runs PhotoPromptsHub, how to get in touch, and what to do if you have a privacy, policy, or content-removal question."
   }
 ];
+
 export const WHATSAPP_CHANNEL_URL =
   "https://whatsapp.com/channel/0029VbCfYa9002TAlsIdh71m";
-export const TELEGRAM_CHANNEL_URL = "https://t.me/photopromptshub";
+
+export const TELEGRAM_CHANNEL_URL =
+  "https://t.me/photopromptshub";

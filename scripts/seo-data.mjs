@@ -1,18 +1,22 @@
-import { GITHUB_RAW_URL, SITE_URL, buildPromptDataUrl } from "../src/config.js";
+import { SITE_URL } from "../src/config.js";
 import { enrichPrompts } from "../src/lib/content.js";
 import { getIndexableEntries, getPrerenderRoutes, STATIC_INDEXABLE_ROUTES } from "../src/lib/routes.js";
+import {
+  fetchPromptData as fetchRemotePromptData,
+  fetchPromptVersion
+} from "../src/utils/promptData.js";
 import { normalizePrompts } from "../src/utils/normalizePrompts.js";
 
 export const fetchPromptData = async () => {
-  const response = await fetch(buildPromptDataUrl(`seo-${Date.now()}`), {
-    cache: "no-store"
-  });
+  let payload;
 
-  if (!response.ok) {
-    throw new Error(`Unable to fetch prompts for SEO assets: ${response.status}`);
+  try {
+    const version = await fetchPromptVersion();
+    payload = await fetchRemotePromptData(version);
+  } catch {
+    payload = await fetchRemotePromptData("");
   }
 
-  const payload = await response.json();
   return enrichPrompts(normalizePrompts(payload));
 };
 
