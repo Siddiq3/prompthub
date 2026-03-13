@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { GITHUB_RAW_URL } from "../config";
+import { GITHUB_RAW_URL, buildPromptDataUrl } from "../config";
 import { enrichPrompts, sortPromptsByDate } from "../lib/content";
 import { normalizePrompts } from "../utils/normalizePrompts";
 import {
@@ -81,7 +81,10 @@ export function AppProvider({ children }) {
           );
         }
 
-        const response = await fetch(GITHUB_RAW_URL, { signal: controller.signal });
+        const response = await fetch(buildPromptDataUrl(Date.now()), {
+          signal: controller.signal,
+          cache: "no-store"
+        });
 
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);

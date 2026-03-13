@@ -1,5 +1,16 @@
 export const GITHUB_RAW_URL =
   "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/promptdata.json";
+
+export const buildPromptDataUrl = (cacheBustValue = "") => {
+  const url = new URL(GITHUB_RAW_URL);
+
+  if (cacheBustValue) {
+    url.searchParams.set("v", String(cacheBustValue));
+  }
+
+  return url.toString();
+};
+
 export const SITE_NAME = "PhotoPromptsHub";
 export const SITE_DOMAIN = "photopromptshub.in";
 export const SITE_URL = `https://${SITE_DOMAIN}`;

@@ -1,10 +1,12 @@
-import { GITHUB_RAW_URL, SITE_URL } from "../src/config.js";
+import { GITHUB_RAW_URL, SITE_URL, buildPromptDataUrl } from "../src/config.js";
 import { enrichPrompts } from "../src/lib/content.js";
 import { getIndexableEntries, getPrerenderRoutes, STATIC_INDEXABLE_ROUTES } from "../src/lib/routes.js";
 import { normalizePrompts } from "../src/utils/normalizePrompts.js";
 
 export const fetchPromptData = async () => {
-  const response = await fetch(GITHUB_RAW_URL);
+  const response = await fetch(buildPromptDataUrl(`seo-${Date.now()}`), {
+    cache: "no-store"
+  });
 
   if (!response.ok) {
     throw new Error(`Unable to fetch prompts for SEO assets: ${response.status}`);
