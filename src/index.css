@@ -430,8 +430,9 @@
 
 @media (max-width: 639px) {
   .hero-fluid-title {
-    font-size: clamp(2.05rem, 8.6vw, 2.75rem);
-    line-height: 1.06;
-    letter-spacing: -0.035em;
+    font-size: clamp(1.9rem, 7.6vw, 2.55rem);
+    line-height: 1.08;
+    letter-spacing: -0.032em;
+    text-wrap: pretty;
   }
 }

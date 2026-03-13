@@ -16,7 +16,7 @@ function Hero({
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1.18fr)_minmax(320px,0.82fr)] xl:items-start">
         <div className="max-w-3xl">
           <span className="section-kicker text-brand-accent">AI Prompt Discovery</span>
-          <h1 className="hero-fluid-title mt-4 font-heading text-brand-ink sm:text-balance">
+          <h1 className="hero-fluid-title mt-4 max-w-[12.5ch] font-heading text-brand-ink sm:max-w-none sm:text-balance">
             Find photo prompts without digging through a cluttered feed
           </h1>
           <p className="mt-5 max-w-2xl text-[1rem] leading-8 text-slate-700 sm:text-[1.08rem]">
