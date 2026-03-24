@@ -4,3 +4,5 @@ dist
 .vite
 .env
 .env.*
+.next/
+out/
