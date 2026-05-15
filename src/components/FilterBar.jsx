@@ -21,10 +21,10 @@ function FilterBar({
   onClear
 }) {
   const resolvedFilterTags =
-    activeTag && !filterTags.some((item) => item.name === activeTag)
-      ? [{ name: activeTag, label: activeTag.replace(/-/g, " "), count: 0, slug: activeTag }, ...filterTags]
-      : filterTags;
-  const activeTagLabel = resolvedFilterTags.find((item) => item.name === activeTag)?.label || activeTag;
+    activeTag && !(filterTags || []).some((item) => item.name === activeTag)
+      ? [{ name: activeTag, label: activeTag.replace(/-/g, " "), count: 0, slug: activeTag }, ...(filterTags || [])]
+      : (filterTags || []);
+  const activeTagLabel = (resolvedFilterTags || []).find((item) => item.name === activeTag)?.label || activeTag;
   const pills = [
     searchQuery ? `Search: ${searchQuery}` : null,
     activeCategory !== "all" ? `Category: ${activeCategory}` : null,
@@ -176,7 +176,7 @@ function FilterBar({
             </div>
           </div>
           <div className="hide-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
-            {topTags.map((item) => {
+            {(topTags || []).map((item) => {
               const active = activeTag === item.name;
               return (
                 <button

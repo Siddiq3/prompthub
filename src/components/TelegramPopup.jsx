@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { FaArrowRight, FaTelegramPlane, FaTimes } from "react-icons/fa";
 import { TELEGRAM_CHANNEL_URL } from "../config";

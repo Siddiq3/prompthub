@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 import SearchBar from "./SearchBar";
 
@@ -38,7 +40,7 @@ function Hero({
               <p className="ui-meta">Popular categories</p>
               <div className="mt-3 flex flex-wrap gap-2.5">
                 {popularCategories.slice(0, 5).map((category) => (
-                  <Link key={category.slug} to={category.href} className="ui-tag text-sm">
+                  <Link key={category.slug} href={category.href} className="ui-tag text-sm">
                     {category.name}
                   </Link>
                 ))}
@@ -47,11 +49,11 @@ function Hero({
           ) : null}
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/categories" className="ui-button-primary">
+            <Link href="/categories" className="ui-button-primary">
               Browse categories
               <FaArrowRight className="text-xs" />
             </Link>
-            <Link to="/prompts" className="ui-button-secondary">
+            <Link href="/prompts" className="ui-button-secondary">
               Open prompt archive
             </Link>
           </div>

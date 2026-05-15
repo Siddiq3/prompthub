@@ -1,3 +1,5 @@
+"use client";
+
 import { FaWhatsapp } from "react-icons/fa";
 import { WHATSAPP_CHANNEL_URL } from "../config";
 

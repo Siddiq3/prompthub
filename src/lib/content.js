@@ -339,7 +339,20 @@ export const getSimilarPrompts = (prompts, currentPrompt, limit = 6) => {
 
 export const getCollectionHighlights = (prompts, limit = 4) => getCollections(prompts).slice(0, limit);
 
+export const buildCollectionHighlights = (prompts, limit = 4) => getCollectionHighlights(prompts, limit);
+
+export const buildDefaultOgImage = (prompts, fallback) => getDefaultOgImage(prompts, fallback);
+
 export const getPopularCategories = (prompts, limit = 6) =>
   [...getCategories(prompts)]
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
     .slice(0, limit);
+
+export const getPromptsByCategory = (prompts, categoryName) => {
+  const category = getCategories(prompts).find((c) => c.name.toLowerCase() === categoryName.toLowerCase());
+  return category ? category.prompts : [];
+};
+
+export const getCollectionPrompts = (prompts, collection) => {
+  return prompts.filter((prompt) => collection.matcher(prompt));
+};

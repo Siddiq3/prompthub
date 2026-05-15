@@ -2,26 +2,23 @@
   "name": "photo-prompt-hub",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "generate:seo": "node scripts/generate-seo-assets.mjs",
-    "build": "npm run generate:seo && vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "dependencies": {
+    "next": "^14.2.35",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^3.0.0",
-    "react-icons": "^5.5.0",
-    "react-router-dom": "^6.30.1",
-    "vite-plugin-prerender": "^1.0.8"
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
-    "tailwindcss": "^3.4.17",
-    "vite": "^6.1.0"
+    "tailwindcss": "^3.4.17"
   }
 }

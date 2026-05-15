@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 function Breadcrumbs({ items = [] }) {
   if (items.length === 0) return null;
@@ -21,7 +21,7 @@ function Breadcrumbs({ items = [] }) {
                 </span>
               ) : (
                 <Link
-                  to={item.to}
+                  href={item.to}
                   className="inline-flex items-center rounded-pill border border-slate-200 bg-white px-3 py-1.5 text-slate-600 transition-all duration-180 ease-smooth hover:border-brand-accent/30 hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 dark:border-slate-700 dark:bg-slate-900/82 dark:text-slate-200"
                 >
                   {item.label}

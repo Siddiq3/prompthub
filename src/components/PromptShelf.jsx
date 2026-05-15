@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import MasonryGrid from "./MasonryGrid";
 import PromptCard from "./PromptCard";
 
@@ -29,7 +29,7 @@ function PromptShelf({
       />
       {linkTo ? (
         <div className="flex justify-center pt-1 sm:justify-start">
-          <Link to={linkTo} className="ui-button-secondary">
+          <Link href={linkTo} className="ui-button-secondary">
             {linkLabel}
           </Link>
         </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
@@ -21,7 +23,13 @@ function readThemePreference() {
 }
 
 function ThemeToggle({ className = "" }) {
-  const [theme, setTheme] = useState(readThemePreference);
+  const [theme, setTheme] = useState("light");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    setTheme(readThemePreference());
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -56,6 +64,13 @@ function ThemeToggle({ className = "" }) {
   }, [theme]);
 
   const isDark = theme === "dark";
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <div className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-ink dark:border-slate-700 dark:bg-slate-900/82 dark:text-slate-100 ${className}`} />
+    );
+  }
 
   return (
     <button

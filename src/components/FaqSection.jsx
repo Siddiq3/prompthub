@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 function FaqSection({ items = [], supportEmail, trustLinks = [] }) {
   if (items.length === 0) return null;
@@ -46,8 +46,8 @@ function FaqSection({ items = [], supportEmail, trustLinks = [] }) {
             <div className="mt-4 flex flex-wrap gap-2">
               {trustLinks.map((link) => (
                 <Link
-                  key={link.to}
-                  to={link.to}
+                  key={link.href}
+                  href={link.href}
                   className="ui-tag"
                 >
                   {link.label}

@@ -1,8 +1,10 @@
+"use client";
+
 import { useId } from "react";
 import { FaSearch } from "react-icons/fa";
 
 function SearchBar({
-  value,
+  value = "",
   onChange,
   onSubmit,
   placeholder = "Search prompts...",
@@ -39,7 +41,7 @@ function SearchBar({
         id={inputId}
         type="search"
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange?.(event.target.value)}
         placeholder={placeholder}
         className={`min-w-0 w-full flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500 sm:text-[0.96rem] ${inputClassName}`}
       />

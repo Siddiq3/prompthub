@@ -1,0 +1,12 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+User-Agent: AdsBot-Google
+Allow: /
+
+User-Agent: Googlebot
+Allow: /
+
+Sitemap: https://photopromptshub.in/sitemap.xml

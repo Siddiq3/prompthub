@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { GITHUB_RAW_URL } from "../config";
 import { enrichPrompts, sortPromptsByDate } from "../lib/content";
@@ -16,16 +18,6 @@ import {
 } from "../utils/storage";
 
 export const AppContext = createContext(null);
-
-export const useAppContext = () => {
-  const context = useContext(AppContext);
-
-  if (!context) {
-    throw new Error("useAppContext must be used inside AppContext.Provider");
-  }
-
-  return context;
-};
 
 const copyToClipboard = async (text) => {
   if (!text) return false;

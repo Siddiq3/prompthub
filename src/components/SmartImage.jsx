@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo, useState } from "react";
 import { getImageCandidates } from "../utils/imageUrl";
 
@@ -34,17 +36,54 @@ function SmartImage({
     setImageLoaded(false);
   }, [src, title]);
 
+  useEffect(() => {
+    // Check if image is already loaded (cached case)
+    if (activeImage) {
+      const checkImageLoad = () => {
+        const img = document.querySelector(`img[src="${activeImage}"]`);
+        if (img && img.complete && img.naturalWidth > 0) {
+          setImageLoaded(true);
+        }
+      };
+      
+      // Check immediately
+      checkImageLoad();
+      
+      // Also check after a short delay for images that load quickly
+      const timeout = setTimeout(checkImageLoad, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [activeImage]);
+
+  useEffect(() => {
+    if (!src && typeof window !== "undefined") {
+      console.warn("SmartImage: No src provided for", title);
+    }
+  }, [src, title]);
+
   return (
     <div className={`relative overflow-hidden rounded-[1.5rem] bg-slate-200 ${aspectClassName} ${className}`}>
       {activeImage && (
         <img
+          key={activeImage}
+          ref={(img) => {
+            if (img) {
+              // Check if image is already complete (cached or loaded)
+              if (img.complete && img.naturalWidth > 0) {
+                setImageLoaded(true);
+              }
+            }
+          }}
           src={activeImage}
           alt={alt || title}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : undefined}
           decoding="async"
           sizes={sizes}
-          onLoad={() => setImageLoaded(true)}
+          crossOrigin="anonymous"
+          onLoad={() => {
+            setImageLoaded(true);
+          }}
           onError={() => {
             setImageLoaded(false);
             setImageAttempt((prev) => prev + 1);

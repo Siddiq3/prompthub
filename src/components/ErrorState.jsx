@@ -1,3 +1,5 @@
+"use client";
+
 import { FaRotateRight, FaTriangleExclamation } from "react-icons/fa6";
 
 function ErrorState({ title = "Unable to load prompts", message, onRetry }) {
