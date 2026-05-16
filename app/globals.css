@@ -414,6 +414,23 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -423,7 +440,8 @@
 
   .popup-overlay-in,
   .popup-scale-in,
-  .skeleton-shimmer {
+  .skeleton-shimmer,
+  .animate-gradient {
     animation: none !important;
   }
 }

@@ -7,8 +7,8 @@ import {
 import { getPrompts } from "@/src/lib/data";
 import HomeHeroClient from "@/src/components/HomeHeroClient";
 import TrendingGrid from "@/src/components/TrendingGrid";
-import NewArrivalsCarousel from "@/src/components/NewArrivalsCarousel";
-import AdSlot from "@/src/components/AdSlot";
+import NewArrivalsGrid from "@/src/components/NewArrivalsGrid";
+import NewsletterCTA from "@/src/components/NewsletterCTA";
 
 export const metadata = {
   title: "PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
@@ -36,30 +36,35 @@ export default async function HomePage() {
       <HomeHeroClient />
 
       {/* Main Content */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+      <main className="flex-1 w-full py-16 sm:py-20 lg:py-28">
         {/* Category Filter Pills */}
-        <CategoryFilters popularCategories={popularCategories} />
-
-        <AdSlot slot="home_top" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-20">
+          <CategoryFilters popularCategories={popularCategories} />
+        </div>
 
         {/* Trending Prompts Grid */}
         {trendingPrompts.length > 0 && (
-          <TrendingGrid
-            title="Trending This Week"
-            description="The most popular prompts right now"
-            prompts={trendingPrompts}
-          />
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-20">
+            <TrendingGrid
+              title="Trending This Week"
+              description="The most popular prompts right now"
+              prompts={trendingPrompts}
+            />
+          </section>
         )}
 
-        <AdSlot slot="home_middle" />
+        {/* Newsletter CTA */}
+        <NewsletterCTA />
 
-        {/* New Arrivals Carousel */}
+        {/* New Arrivals Grid */}
         {latestPrompts.length > 0 && (
-          <NewArrivalsCarousel
-            title="New Arrivals"
-            description="Recently added prompts"
-            prompts={latestPrompts}
-          />
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+            <NewArrivalsGrid
+              title="New Arrivals"
+              description="Recently added prompts"
+              prompts={latestPrompts}
+            />
+          </section>
         )}
       </main>
     </div>
@@ -72,17 +77,17 @@ function CategoryFilters({ popularCategories }) {
   const styles = ["Portrait", "Landscape", "Abstract", "Product", "3D Render", "Photography"];
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-8">
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">
           Filter by AI Platform
         </h3>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3">
           {aiModels.map((model) => (
             <Link
               key={model}
               href={`/prompts?model=${encodeURIComponent(model)}`}
-              className="px-4 py-2 rounded-full border border-slate-300 dark:border-slate-600 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all"
+              className="px-4 py-2 rounded-full border-2 border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 dark:hover:border-blue-500 transition-all duration-300"
             >
               {model}
             </Link>
@@ -91,15 +96,15 @@ function CategoryFilters({ popularCategories }) {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wider">
           Filter by Style
         </h3>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3">
           {styles.map((style) => (
             <Link
               key={style}
               href={`/prompts?style=${encodeURIComponent(style)}`}
-              className="px-4 py-2 rounded-full border border-slate-300 dark:border-slate-600 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all"
+              className="px-4 py-2 rounded-full border-2 border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-purple-600 hover:text-white hover:border-purple-600 dark:hover:border-purple-500 transition-all duration-300"
             >
               {style}
             </Link>
