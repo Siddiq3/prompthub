@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState, useMemo } from "react";
+import Image from "next/image";
 import { getImageCandidates } from "../utils/imageUrl";
 
 const getInitials = (title = "Prompt") =>
@@ -22,87 +23,68 @@ function SmartImage({
   sizes = "(min-width: 1280px) 29vw, (min-width: 768px) 46vw, 92vw",
   children
 }) {
-  const [imageAttempt, setImageAttempt] = useState(0);
+  const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Use only the primary image candidate (most reliable, pre-validated)
   const imageCandidates = useMemo(() => getImageCandidates(src), [src]);
-  const activeImage = imageCandidates[imageAttempt] || "";
-  const hasImageCandidates = imageCandidates.length > 0;
-  const isImageExhausted = hasImageCandidates && imageAttempt >= imageCandidates.length;
-  const showSkeleton = hasImageCandidates && !imageLoaded && !isImageExhausted;
-  const showFallback = !hasImageCandidates || isImageExhausted;
+  const primaryImage = imageCandidates[0] || "";
+  const showFallback = !primaryImage || imageError;
 
-  useEffect(() => {
-    setImageAttempt(0);
-    setImageLoaded(false);
-  }, [src, title]);
+  const handleError = () => {
+    setImageError(true);
+  };
 
-  useEffect(() => {
-    // Check if image is already loaded (cached case)
-    if (activeImage) {
-      const checkImageLoad = () => {
-        const img = document.querySelector(`img[src="${activeImage}"]`);
-        if (img && img.complete && img.naturalWidth > 0) {
-          setImageLoaded(true);
-        }
-      };
-      
-      // Check immediately
-      checkImageLoad();
-      
-      // Also check after a short delay for images that load quickly
-      const timeout = setTimeout(checkImageLoad, 100);
-      return () => clearTimeout(timeout);
-    }
-  }, [activeImage]);
+  const handleLoadingComplete = () => {
+    setImageLoaded(true);
+  };
 
-  useEffect(() => {
-    if (!src && typeof window !== "undefined") {
-      console.warn("SmartImage: No src provided for", title);
-    }
-  }, [src, title]);
+  // Fallback UI with initials
+  const FallbackUI = () => (
+    <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-slate-300 to-slate-400 dark:from-slate-600 dark:to-slate-700">
+      <span className="text-3xl font-bold text-white opacity-60">
+        {getInitials(title)}
+      </span>
+    </div>
+  );
+
+  if (showFallback) {
+    return (
+      <div className={`relative overflow-hidden rounded-[1.5rem] bg-slate-200 ${aspectClassName} ${className}`}>
+        <FallbackUI />
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className={`relative overflow-hidden rounded-[1.5rem] bg-slate-200 ${aspectClassName} ${className}`}>
-      {activeImage && (
-        <img
-          key={activeImage}
-          ref={(img) => {
-            if (img) {
-              // Check if image is already complete (cached or loaded)
-              if (img.complete && img.naturalWidth > 0) {
-                setImageLoaded(true);
-              }
-            }
-          }}
-          src={activeImage}
+      {primaryImage && (
+        <Image
+          src={primaryImage}
           alt={alt || title}
-          loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : undefined}
-          decoding="async"
+          fill
           sizes={sizes}
-          crossOrigin="anonymous"
-          onLoad={() => {
-            setImageLoaded(true);
-          }}
-          onError={() => {
-            setImageLoaded(false);
-            setImageAttempt((prev) => prev + 1);
-          }}
-          className={`absolute inset-0 h-full w-full object-cover transition duration-500 ${imageLoaded ? "opacity-100" : "opacity-0"} ${imageClassName}`}
+          priority={priority}
+          quality={85}
+          className={`object-cover group-hover:scale-110 transition-transform duration-300 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          } transition-opacity duration-300`}
+          onError={handleError}
+          onLoadingComplete={handleLoadingComplete}
+          placeholder="empty"
         />
       )}
-
-      {showSkeleton && <div className="skeleton-shimmer absolute inset-0" />}
-
-      {showFallback && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_top_left,#e0e7ff,transparent_60%),linear-gradient(135deg,#f8fafc,#ffffff)] text-4xl font-semibold text-brand-ink">
-          {getInitials(title)}
-        </div>
+      
+      {/* Skeleton loading state */}
+      {!imageLoaded && !imageError && (
+        <div className="absolute inset-0 animate-pulse bg-slate-300 dark:bg-slate-600" />
       )}
-
+      
       {children}
     </div>
   );
 }
 
 export default SmartImage;
+

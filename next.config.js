@@ -11,6 +11,9 @@ const nextConfig = {
       "raw.githubusercontent.com",
     ],
     formats: ["image/avif", "image/webp"],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000, // 1 year for immutable images
   },
 
   // Trailing slash configuration
@@ -27,9 +30,32 @@ const nextConfig = {
     dirs: ["app", "components", "lib", "utils"],
   },
 
-  // Cache headers
+  // Security and cache headers (C-04: Add CSP and security headers)
   async headers() {
     return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "DENY",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: process.env.NODE_ENV === "production"
+              ? "default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https:"
+              : "default-src 'self'; img-src * data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net localhost:*; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https: http: ws: wss:",
+          },
+        ],
+      },
       {
         source: "/images/:path*",
         headers: [
@@ -51,6 +77,23 @@ const nextConfig = {
             value: "public, max-age=3600",
           },
         ],
+      },
+    ];
+  },
+
+  // Domain redirects for SEO (C-02: Enforce canonical domain)
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "prompthub-eta-ruby.vercel.app",
+          },
+        ],
+        destination: "https://photopromptshub.in/:path*",
+        permanent: true,
       },
     ];
   },

@@ -1,6 +1,9 @@
 import { getPromptBySlug, getAllPromptSlugs } from "@/src/lib/data";
 import { FALLBACK_OG_IMAGE, SITE_URL } from "@/src/config";
 
+// C-01: Static generation with ISR revalidation for 200+ prompt pages
+export const revalidate = 86400; // Revalidate once daily
+
 export async function generateStaticParams() {
   const slugs = await getAllPromptSlugs();
   return slugs.map((slug) => ({ slug }));
@@ -16,7 +19,9 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const url = `${SITE_URL}/prompt/${prompt.slug}`;
+  // C-02: Ensure canonical URL uses correct domain from environment
+  const canonicalDomain = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
+  const url = `${canonicalDomain}/prompt/${prompt.slug}`;
   const description =
     prompt.seoIntro ||
     `${prompt.title} is a ${prompt.category.toLowerCase()} prompt for ${prompt.modelLabel}, ideal for creating polished photo-style imagery with vivid detail.`;
