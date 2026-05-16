@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getPrompts } from "@/src/lib/data";
 import PromptsClientPage from "./client";
 
@@ -10,8 +11,8 @@ export default async function PromptsPage() {
   const prompts = await getPrompts();
 
   return (
-    <>
+    <Suspense fallback={<div className="py-12 text-center">Loading prompts...</div>}>
       <PromptsClientPage initialPrompts={prompts} />
-    </>
+    </Suspense>
   );
 }

@@ -1,10 +1,19 @@
 "use client";
 
+import { Suspense } from "react";
 import Navbar from "@/src/components/Navbar";
 import MobileBottomNav from "@/src/components/MobileBottomNav";
 import Footer from "@/src/components/Footer";
 import ScrollToTop from "@/src/components/ScrollToTop";
 import Toast from "@/src/components/Toast";
+
+function NavbarWithSuspense() {
+  return (
+    <Suspense fallback={null}>
+      <Navbar />
+    </Suspense>
+  );
+}
 
 export default function ClientLayout({ children }) {
   return (
@@ -16,7 +25,7 @@ export default function ClientLayout({ children }) {
       >
         Skip to content
       </a>
-      <Navbar />
+      <NavbarWithSuspense />
       <main
         id="main-content"
         className="mx-auto w-full max-w-7xl px-4 pb-24 pt-8 sm:px-6 lg:pb-20 lg:px-8"

@@ -5,9 +5,14 @@ import ClientLayout from "./client-layout";
 export const metadata = {
   title: "PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
   description: "Browse thousands of AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Organized by category, style, and use case.",
-  viewport: "width=device-width, initial-scale=1.0",
   robots: "index, follow",
   metadataBase: new URL("https://photopromptshub.in"),
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f8fafc",
 };
 
 export default function RootLayout({ children }) {
