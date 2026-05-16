@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static site generation
-  output: "export",
-
   // Image optimization settings
   images: {
-    unoptimized: true, // Required for static export
     domains: [
       "photopromptshub.in",
       "images.unsplash.com",
