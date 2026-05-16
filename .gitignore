@@ -4,6 +4,7 @@ node_modules/
 # next.js
 .next/
 out/
+dist/
 
 # logs
 npm-debug.log*
@@ -15,5 +16,4 @@ yarn-error.log*
 .env.local
 
 # mac
-.DS_Store.next/
-out/
+.DS_Store
