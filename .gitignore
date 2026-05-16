@@ -15,4 +15,5 @@ yarn-error.log*
 .env.local
 
 # mac
-.DS_Store
+.DS_Store.next/
+out/
