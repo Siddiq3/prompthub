@@ -19,10 +19,12 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
   ];
   const visibleTags = orderedTags.slice(0, 2);
 
+  const promptText = prompt.prompt || prompt.promptText || prompt.shortDescription || "";
+
   // Truncate prompt text to 2 lines (approx 100 chars)
-  const truncatedPrompt = prompt.promptText && prompt.promptText.length > 100 
-    ? prompt.promptText.substring(0, 100) + "..." 
-    : prompt.promptText || "";
+  const truncatedPrompt = promptText.length > 100 
+    ? promptText.substring(0, 100) + "..." 
+    : promptText;
 
   // Get AI platform badge
   const getToolBadge = () => {
@@ -47,7 +49,7 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
     } else {
       // Fallback: copy to clipboard directly
       try {
-        await navigator.clipboard.writeText(prompt.promptText);
+        await navigator.clipboard.writeText(promptText);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {

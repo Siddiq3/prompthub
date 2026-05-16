@@ -4,8 +4,8 @@ function Breadcrumbs({ items = [] }) {
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
-      <ol className="flex flex-wrap items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400">
+    <nav aria-label="Breadcrumb" className="mb-4">
+      <ol className="flex items-center gap-1 flex-wrap text-sm text-gray-500 dark:text-slate-400">
         {items.map((item, index) => {
           const isCurrent = index === items.length - 1;
 

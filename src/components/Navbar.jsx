@@ -32,12 +32,12 @@ const secondaryLinks = [
 const MOBILE_MENU_ID = "mobile-navigation";
 const MOBILE_MENU_SCROLL_LOCK = "mobile-menu";
 
+const isActive = (href, pathname) => pathname === href || pathname.startsWith(href);
+
 const linkClass = (href, pathname) =>
-  `inline-flex items-center rounded-[0.95rem] border px-3 py-2 text-[0.9rem] font-medium transition-all duration-180 ease-smooth ${
-    pathname === href
-      ? "border-white/18 bg-white/16 text-white"
-      : "border-transparent text-white/82 hover:border-white/10 hover:bg-white/[0.08] hover:text-white"
-  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`;
+  isActive(href, pathname)
+    ? "inline-flex items-center rounded-full bg-white/15 text-white px-3 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+    : "inline-flex items-center rounded-full text-white/70 hover:text-white hover:bg-white/10 px-3 py-2 text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30";
 
 const mobileLinkClass = (href, pathname) =>
   `flex items-center justify-between rounded-[1rem] border px-4 py-3 text-sm font-semibold transition-all duration-200 ease-out ${
@@ -203,7 +203,7 @@ function Navbar() {
 
   return (
     <>
-      <header className="relative sticky top-0 z-30 border-b border-[#b3202c]/35 bg-[linear-gradient(180deg,rgba(219,43,57,0.96),rgba(198,39,54,0.96))] shadow-[0_14px_32px_-24px_rgba(127,29,29,0.55)] backdrop-blur-xl supports-[backdrop-filter]:bg-[#db2b39]/92">
+      <header className="relative sticky top-0 z-30 border-b border-slate-800/30 bg-gradient-to-b from-slate-950 via-violet-950 to-slate-950 shadow-[0_14px_32px_-24px_rgba(0,0,0,0.55)] backdrop-blur-xl supports-[backdrop-filter]:bg-slate-950/95">
         <div className="mx-auto flex min-h-[4.15rem] w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:gap-4 lg:px-8">
           <Link
             href="/"
@@ -244,11 +244,11 @@ function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <ThemeToggle className="!ml-1 !h-9 !w-9 !border-white/14 !bg-white/10 !text-white hover:!border-white/28 hover:!bg-white/14 hover:!text-white focus-visible:!ring-white/30" />
+            <ThemeToggle className="p-2 rounded-full transition-all duration-200 hover:bg-white/10 dark:hover:bg-white/10" />
           </div>
 
           <div className="ml-auto flex items-center gap-2 lg:hidden">
-            <ThemeToggle className="!h-9 !w-9 !border-white/14 !bg-white/10 !text-white hover:!border-white/28 hover:!bg-white/14 hover:!text-white focus-visible:!ring-white/30" />
+            <ThemeToggle className="p-2 rounded-full transition-all duration-200 hover:bg-white/10 dark:hover:bg-white/10" />
             <button
               type="button"
               onClick={() => setIsOpen((prev) => !prev)}

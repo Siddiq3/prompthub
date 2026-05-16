@@ -294,6 +294,8 @@ export default function PromptsClientPage({ initialPrompts }) {
                   <Pagination
                     currentPage={validPage}
                     totalPages={totalPages}
+                    totalItems={filteredPrompts.length}
+                    itemsPerPage={itemsPerPage}
                     baseUrl="/prompts"
                     queryParams={{
                       ...(searchQuery && { q: searchQuery }),

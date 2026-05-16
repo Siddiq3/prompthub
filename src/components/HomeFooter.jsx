@@ -16,18 +16,22 @@ export default function HomeFooter({ popularCategories }) {
             </p>
             <div className="flex gap-4 pt-2">
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/photopromptshub"
                 className="text-slate-400 hover:text-white transition-colors"
                 aria-label="Twitter"
+                target="_blank"
+                rel="noreferrer noopener"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7" />
                 </svg>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/photopromptshub/"
                 className="text-slate-400 hover:text-white transition-colors"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noreferrer noopener"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" strokeWidth="2" />

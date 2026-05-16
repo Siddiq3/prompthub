@@ -1,432 +1,313 @@
-"use client";
-
-import { useState } from "react";
-import { notFound } from "next/navigation";
 import Link from "next/link";
-import { FaCopy, FaCheck, FaTwitter, FaPinterest, FaWhatsapp, FaLink } from "react-icons/fa";
-import AdSlot from "@/src/components/AdSlot";
-import Breadcrumbs from "@/src/components/Breadcrumbs";
-import SmartImage from "@/src/components/SmartImage";
-import PromptCard from "@/src/components/PromptCard";
+import Script from "next/script";
+import { notFound } from "next/navigation";
+import { getPromptBySlug, getPrompts } from "@/src/lib/data";
+import { getRelatedPrompts } from "@/src/lib/content";
+import { buildBreadcrumbSchema } from "@/src/seo/schema";
 import { formatTagLabel } from "@/src/lib/taxonomy";
-import { usePromptData } from "@/src/hooks/usePromptData";
+import { SITE_URL } from "@/src/config";
+import Breadcrumbs from "@/src/components/Breadcrumbs";
+import PromptCard from "@/src/components/PromptCard";
+import PromptCopyButton from "@/src/components/PromptCopyButton";
+import PromptShareBar from "@/src/components/PromptShareBar";
+import Image from "next/image";
 
-export default function PromptDetailsPage({ params }) {
-  const { slug } = params;
-  const { prompt, relatedPrompts, loading } = usePromptData(slug);
-  const [copied, setCopied] = useState(false);
+const modelColors = {
+  "Midjourney": "bg-purple-600",
+  "DALL-E": "bg-pink-600",
+  "Stable Diffusion": "bg-blue-600",
+  "Flux": "bg-orange-600",
+  "Adobe Firefly": "bg-red-600",
+};
 
-  if (loading) {
-    return <div className="py-12 text-center">Loading...</div>;
-  }
+const getToolInstructions = (modelLabel) => {
+  const instructions = {
+    "Midjourney": [
+      "Open your Midjourney Discord server and navigate to the #general or #newbies channel.",
+      "Type /imagine and paste the prompt when prompted.",
+      "Wait for the image to generate, then upscale the best result with U1-U4.",
+      "Use V1-V4 to create variations of the chosen image.",
+      "Adjust aspect ratio with --ar and experiment with stylization values.",
+    ],
+    "DALL-E": [
+      "Open chat.openai.com or dall-e.openai.com and choose image generation.",
+      "Paste the prompt into the input field.",
+      "Click Generate to create multiple variations.",
+      "Refine the prompt and regenerate until the image matches your vision.",
+      "Download the final image once you’re happy with the result.",
+    ],
+    "Stable Diffusion": [
+      "Use an interface like Automatic1111, Replicate, or Hugging Face Spaces.",
+      "Paste the prompt in the positive prompt field.",
+      "Optionally add a negative prompt to remove unwanted elements.",
+      "Set steps, sampler, and CFG scale, then click Generate.",
+      "Save the best output and iterate if you want a different style.",
+    ],
+    "Flux": [
+      "Visit flux.ai or use the Flux AI platform.",
+      "Paste the prompt into the generation field.",
+      "Click Generate and wait for the image to render.",
+      "Adjust settings and regenerate if needed.",
+      "Download the final image in high resolution.",
+    ],
+    "Adobe Firefly": [
+      "Open Firefly in your browser or Creative Cloud app.",
+      "Paste the prompt into the text generation field.",
+      "Generate variations and select your favorite.",
+      "Use Generative Fill or Expand to refine the image.",
+      "Download the finished image in the desired format.",
+    ],
+  };
+  return instructions[modelLabel] || instructions["Midjourney"];
+};
 
-  if (!prompt) {
-    notFound();
-  }
+export default async function PromptDetailsPage({ params }) {
+  const prompt = await getPromptBySlug(params.slug);
+  if (!prompt) notFound();
+
+  const allPrompts = await getPrompts();
+  const relatedPrompts = getRelatedPrompts(allPrompts, prompt, 6);
+  const pageUrl = `${SITE_URL}/prompt/${prompt.slug}`;
+  const promptText = prompt.prompt || prompt.text || "";
+  const promptImage = prompt.previewImage || prompt.image;
+  const promptModel = prompt.modelLabel || prompt.model || "AI model";
+  const negativeTags = prompt.negativePrompt
+    ? prompt.negativePrompt.split(",").map((tag) => tag.trim()).filter(Boolean)
+    : [];
+  const description =
+    prompt.seoIntro ||
+    `${prompt.title} is a ${prompt.category?.toLowerCase() || "photo"} prompt for ${promptModel}. Use it to generate polished AI imagery with vivid detail and strong composition.`;
 
   const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Prompts", href: "/prompts" },
-    { label: prompt.category, href: `/category/${encodeURIComponent(prompt.category.toLowerCase())}` },
-    { label: prompt.title, href: `/prompt/${slug}` },
+    { label: "Home", to: "/" },
+    { label: prompt.category || "Prompts", to: `/category/${encodeURIComponent((prompt.category || "prompts").toLowerCase())}` },
+    { label: prompt.title, to: `/prompt/${prompt.slug}` },
   ];
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(prompt.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy:", err);
-    }
-  };
-
-  const handleShare = (platform) => {
-    const url = typeof window !== "undefined" ? `${window.location.origin}/prompt/${slug}` : "";
-    const text = `Check out this ${prompt.modelLabel} prompt: ${prompt.title}`;
-    
-    const shareUrls = {
-      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
-      pinterest: `https://pinterest.com/pin/create/button/?description=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
-      whatsapp: `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`,
-      copy: null
-    };
-
-    if (platform === "copy") {
-      navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } else if (shareUrls[platform]) {
-      window.open(shareUrls[platform], "_blank");
-    }
-  };
-
-  // Extract parameters from prompt text for breakdown
-  const getParameterBreakdown = () => {
-    const params = [];
-    const promptLower = (prompt.prompt || "").toLowerCase();
-    
-    // Common Midjourney/Stable Diffusion parameters
-    const paramPatterns = [
-      { pattern: /--ar\s+[\d:]+/i, label: "Aspect Ratio", description: "Controls the width-to-height ratio of the generated image" },
-      { pattern: /--niji/i, label: "Niji Mode", description: "Anime/illustration style (Midjourney)" },
-      { pattern: /--style\s+\w+/i, label: "Style", description: "Specific style preset or artistic direction" },
-      { pattern: /--quality\s+\d/i, label: "Quality", description: "Detail level of the image (1=low, 2=normal)" },
-      { pattern: /negative prompt:/i, label: "Negative Prompt", description: "Elements to exclude from the image" },
-    ];
-
-    paramPatterns.forEach(({ pattern, label, description }) => {
-      if (pattern.test(promptLower)) {
-        params.push({ label, description });
-      }
-    });
-
-    return params;
-  };
-
-  const getToolInstructions = () => {
-    const platform = prompt.modelLabel || "";
-    
-    const instructions = {
-      "Midjourney": [
-        "Open your Midjourney Discord server and navigate to the #general or #newbies channel",
-        "Type /imagine in the chat and paste the prompt when prompted",
-        "Wait 1-2 minutes for Midjourney to generate 4 variations",
-        "Click U1, U2, U3, or U4 to upscale your favorite variation",
-        "Use V1, V2, V3, V4 to create variations of your chosen image",
-        "Experiment with parameters like --ar for different aspect ratios"
-      ],
-      "DALL-E": [
-        "Go to chat.openai.com and select the DALL-E mode in GPT-4 or visit dall-e.openai.com",
-        "Paste the prompt into the text field",
-        "Click 'Generate' to create 4 variations",
-        "Edit the prompt and regenerate for different results",
-        "Use 'Open in editor' to modify specific areas of the image",
-        "Download your favorite image once satisfied"
-      ],
-      "Flux": [
-        "Visit flux.ai or use the Flux API through their platform",
-        "Paste the prompt in the text input field",
-        "Click 'Generate' to process the prompt",
-        "Wait for the image to render (usually 10-30 seconds)",
-        "Adjust parameters if needed and regenerate",
-        "Download the final image in high resolution"
-      ],
-      "Stable Diffusion": [
-        "Use a web interface like Hugging Face Spaces, Automatic1111, or Replicate",
-        "Paste the prompt in the positive prompt field",
-        "Add any negative prompt if provided",
-        "Adjust settings: Steps (20-50), CFG Scale (7-15), Sampler type",
-        "Click 'Generate' to create the image",
-        "Download or save your result"
-      ],
-      "Adobe Firefly": [
-        "Go to firefly.adobe.com or use it within Adobe Creative Cloud apps",
-        "Paste the prompt in the text generation field",
-        "Click 'Generate' to create 4 variations",
-        "Select your favorite variation",
-        "Use 'Generative Fill' or 'Generative Expand' for further editing",
-        "Download the final image in your desired format"
-      ]
-    };
-
-    return instructions[platform] || instructions["Midjourney"];
-  };
-
-  const parameters = getParameterBreakdown();
-  const toolInstructions = getToolInstructions();
+  const tagItems = [prompt.category, prompt.modelLabel, ...(prompt.displayTags || [])].filter(Boolean);
 
   return (
-    <div className="w-full">
-      <Breadcrumbs breadcrumbs={breadcrumbs} />
+    <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Breadcrumbs items={breadcrumbs} />
 
-      {/* Hero Section with Image */}
-      <div className="mb-12 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg">
-        <div className="relative aspect-video bg-slate-100 dark:bg-slate-800">
-          <SmartImage
-            src={prompt.previewImage}
-            alt={prompt.title}
-            priority={true}
-            className="w-full h-full object-cover"
-            imageClassName="w-full h-full"
-            aspectClassName=""
-          />
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-        {/* Left Column - Main Content */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Title and Model Badge */}
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white">
-              {prompt.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className={`px-4 py-2 rounded-full text-sm font-bold text-white ${
-                {
-                  "Midjourney": "bg-purple-600",
-                  "DALL-E": "bg-pink-600",
-                  "Stable Diffusion": "bg-blue-600",
-                  "Flux": "bg-orange-600",
-                  "Adobe Firefly": "bg-red-600",
-                }[prompt.modelLabel] || "bg-slate-600"
-              }`}>
-                {prompt.modelLabel}
-              </span>
-              {prompt.aspectRatio && (
-                <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300">
-                  {prompt.aspectRatio}
-                </span>
-              )}
-              {prompt.category && (
-                <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300">
-                  {prompt.category}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Prompt Text Code Block */}
-          <div className="space-y-3">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              Prompt Text
-            </h2>
-            <div className="relative">
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg p-6 border border-slate-700 overflow-auto">
-                <pre className="text-slate-100 font-mono text-sm whitespace-pre-wrap break-words">
-                  {prompt.prompt}
-                </pre>
-              </div>
-              <button
-                onClick={handleCopy}
-                className={`absolute top-3 right-3 flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  copied
-                    ? "bg-emerald-500 text-white"
-                    : "bg-blue-600 hover:bg-blue-700 text-white"
-                }`}
-              >
-                {copied ? (
-                  <>
-                    <FaCheck className="w-4 h-4" />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <FaCopy className="w-4 h-4" />
-                    Copy
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Negative Prompt */}
-          {prompt.negativePrompt && (
-            <div className="space-y-3">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                Negative Prompt
-              </h2>
-              <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900 rounded-lg p-4">
-                <pre className="text-red-900 dark:text-red-100 font-mono text-sm whitespace-pre-wrap break-words">
-                  {prompt.negativePrompt}
-                </pre>
-              </div>
-            </div>
+      <header className="space-y-4 mb-10">
+        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 dark:text-white">
+          {prompt.title}
+        </h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-white ${modelColors[prompt.modelLabel] || "bg-slate-600"}`}>
+            {prompt.modelLabel}
+          </span>
+          {prompt.aspectRatio && (
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              {prompt.aspectRatio}
+            </span>
           )}
+          {prompt.category && (
+            <Link
+              href={`/category/${encodeURIComponent(prompt.category.toLowerCase())}`}
+              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-700 hover:border-blue-500 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-400 dark:hover:text-blue-300"
+            >
+              {prompt.category}
+            </Link>
+          )}
+        </div>
+      </header>
 
-          <AdSlot slot="prompt_content" />
+      {promptImage && (
+        <section className="mb-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-100 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <div className="relative aspect-[16/9]">
+            <Image
+              src={promptImage}
+              alt={prompt.title}
+              fill
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </section>
+      )}
 
-          {/* Parameter Breakdown */}
-          {parameters.length > 0 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                Parameter Breakdown
-              </h2>
-              <div className="grid gap-3">
-                {parameters.map((param, idx) => (
-                  <div key={idx} className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
-                      {param.label}
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      {param.description}
-                    </p>
-                  </div>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px] mb-16">
+        <div className="space-y-8">
+          <section className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm dark:border-slate-700 dark:bg-slate-950">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">The prompt</p>
+              </div>
+              <div className="sm:shrink-0">
+                <PromptCopyButton promptText={promptText} label="Copy prompt" />
+              </div>
+            </div>
+
+            <div className="mt-6 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 rounded-xl p-4 font-mono text-sm leading-relaxed overflow-hidden w-full">
+              <pre className="whitespace-pre-wrap break-words overflow-hidden w-full">
+                {promptText}
+              </pre>
+            </div>
+
+            <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
+              {promptText.length} characters · Generated for {promptModel}
+            </p>
+          </section>
+
+          {negativeTags.length > 0 && (
+            <section className="rounded-[2rem] border border-red-200 bg-red-50 p-6 dark:border-red-900 dark:bg-red-950/30">
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Negative prompt</h2>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {negativeTags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
-          {/* How to Use Section */}
-          <div className="space-y-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-xl border border-blue-200 dark:border-slate-700 p-6">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              How to Use This Prompt
-            </h2>
-            <p className="text-sm text-slate-700 dark:text-slate-300 mb-4">
-              Step-by-step guide for {prompt.modelLabel}:
-            </p>
-            <ol className="space-y-3">
-              {toolInstructions.map((instruction, idx) => (
-                <li key={idx} className="flex gap-3 text-sm">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-xs">
-                    {idx + 1}
-                  </span>
-                  <span className="text-slate-700 dark:text-slate-300 pt-0.5">
-                    {instruction}
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          {/* Tags Section */}
-          {prompt.displayTags && prompt.displayTags.length > 0 && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                Tags
-              </h2>
+          {prompt.displayTags?.length > 0 && (
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Tags</h2>
               <div className="flex flex-wrap gap-2">
-                {prompt.displayTags.map((tag) => (
+                {tagItems.map((tag) => (
                   <Link
                     key={tag}
                     href={`/prompts?tag=${encodeURIComponent(tag)}`}
-                    className="px-3 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-colors"
+                    className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-blue-400"
                   >
                     #{formatTagLabel(tag)}
                   </Link>
                 ))}
               </div>
-            </div>
+            </section>
           )}
+
+          <section className="grid gap-6 lg:grid-cols-3">
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-semibold">Resolution</p>
+              <p className="mt-3 text-lg font-semibold text-slate-900 dark:text-white">
+                {prompt.aspectRatio?.includes("16") ? "1920×1080 / 2048×1152" : "1024×1024 / 1536×1536"}
+              </p>
+            </div>
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-semibold">Steps</p>
+              <p className="mt-3 text-lg font-semibold text-slate-900 dark:text-white">20–35</p>
+            </div>
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400 font-semibold">CFG scale</p>
+              <p className="mt-3 text-lg font-semibold text-slate-900 dark:text-white">
+                {prompt.modelLabel === "Stable Diffusion" ? "7–14" : "Auto / N/A"}
+              </p>
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-blue-200 bg-blue-50 p-6 dark:border-slate-700 dark:bg-slate-900">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">How to use this prompt</h2>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">A quick start guide for {prompt.modelLabel}.</p>
+            <ol className="mt-5 space-y-3">
+              {getToolInstructions(prompt.modelLabel).map((instruction, index) => (
+                <li key={index} className="flex gap-3 text-sm text-slate-700 dark:text-slate-300">
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs font-semibold text-white">
+                    {index + 1}
+                  </span>
+                  <span>{instruction}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
         </div>
 
-        {/* Right Column - Share & Info */}
-        <div className="space-y-6">
-          {/* Share Section */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-6 bg-white dark:bg-slate-800">
-            <h3 className="font-bold text-slate-900 dark:text-white mb-4">Share</h3>
-            <div className="space-y-2">
-              <button
-                onClick={() => handleShare("twitter")}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors"
-              >
-                <FaTwitter className="w-4 h-4" />
-                Twitter/X
-              </button>
-              <button
-                onClick={() => handleShare("pinterest")}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-semibold transition-colors"
-              >
-                <FaPinterest className="w-4 h-4" />
-                Pinterest
-              </button>
-              <button
-                onClick={() => handleShare("whatsapp")}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors"
-              >
-                <FaWhatsapp className="w-4 h-4" />
-                WhatsApp
-              </button>
-              <button
-                onClick={() => handleShare("copy")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-semibold transition-colors ${
-                  copied
-                    ? "bg-emerald-500 text-white"
-                    : "bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-600"
-                }`}
-              >
-                {copied ? <FaCheck /> : <FaLink />}
-                {copied ? "Copied!" : "Copy Link"}
-              </button>
+        <aside className="space-y-4 sm:space-y-6">
+          <div className="rounded-[2rem] border border-slate-200 bg-white p-5 sm:p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Share this prompt</h3>
+            <PromptShareBar title={prompt.title} slug={prompt.slug} />
+          </div>
+
+          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-5 sm:p-6 dark:border-slate-700 dark:bg-slate-950">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Prompt details</h3>
+            <div className="space-y-4 text-sm text-slate-700 dark:text-slate-300">
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">AI platform</dt>
+                <dd className="mt-1 font-medium text-slate-900 dark:text-white">{prompt.modelLabel}</dd>
+              </div>
+
+              {prompt.category && (
+                <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
+                  <dt className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Category</dt>
+                  <dd className="mt-1">
+                    <Link
+                      href={`/category/${encodeURIComponent(prompt.category.toLowerCase())}`}
+                      className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      {prompt.category}
+                    </Link>
+                  </dd>
+                </div>
+              )}
+
+              {prompt.aspectRatio && (
+                <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
+                  <dt className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Aspect ratio</dt>
+                  <dd className="mt-1 font-medium text-slate-900 dark:text-white">{prompt.aspectRatio}</dd>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Details Box */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 p-6 bg-white dark:bg-slate-800 space-y-4">
-            <h3 className="font-bold text-slate-900 dark:text-white">Details</h3>
-            
-            {prompt.modelLabel && (
-              <div>
-                <dt className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
-                  AI Platform
-                </dt>
-                <dd className="mt-1 font-medium text-slate-900 dark:text-white">
-                  {prompt.modelLabel}
-                </dd>
-              </div>
-            )}
-
-            {prompt.category && (
-              <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
-                <dt className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
-                  Category
-                </dt>
-                <dd className="mt-1">
-                  <Link
-                    href={`/category/${encodeURIComponent(prompt.category.toLowerCase())}`}
-                    className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                  >
-                    {prompt.category}
-                  </Link>
-                </dd>
-              </div>
-            )}
-
-            {prompt.aspectRatio && (
-              <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
-                <dt className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
-                  Aspect Ratio
-                </dt>
-                <dd className="mt-1 font-medium text-slate-900 dark:text-white">
-                  {prompt.aspectRatio}
-                </dd>
-              </div>
-            )}
-
-            {prompt.bestFor && prompt.bestFor.length > 0 && (
-              <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
-                <dt className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
-                  Best For
-                </dt>
-                <dd className="mt-2 space-y-1">
-                  {prompt.bestFor.map((item) => (
-                    <div key={item.label} className="text-sm text-slate-700 dark:text-slate-300">
-                      • {item.label}
-                    </div>
-                  ))}
-                </dd>
-              </div>
-            )}
-          </div>
-
-          <AdSlot slot="prompt_sidebar" />
-        </div>
+        </aside>
       </div>
 
-      {/* Related Prompts Section */}
-      {relatedPrompts && relatedPrompts.length > 0 && (
-        <div className="mb-12">
+      {relatedPrompts.length > 0 && (
+        <section className="mb-16">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-              You Might Also Like
-            </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400">
-              Explore related prompts
-            </p>
+            <h2 className="text-3xl font-semibold text-slate-900 dark:text-white">More {prompt.category || "photo"} prompts</h2>
+            <p className="mt-2 text-slate-600 dark:text-slate-400">Related prompts you can try next.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {relatedPrompts.slice(0, 6).map((relatedPrompt) => (
-              <PromptCard
-                key={relatedPrompt.id}
-                prompt={relatedPrompt}
-                priority={false}
-              />
+              <PromptCard key={relatedPrompt.id} prompt={relatedPrompt} priority={false} />
             ))}
           </div>
-        </div>
+        </section>
       )}
-    </div>
+
+      <Script
+        id="prompt-breadcrumb-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildBreadcrumbSchema(breadcrumbs)),
+        }}
+      />
+
+      <Script
+        id="prompt-creativework-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: prompt.title,
+            headline: prompt.title,
+            description,
+            url: pageUrl,
+            image: prompt.previewImage ? [prompt.previewImage] : [],
+            keywords: (prompt.displayTags || []).map((tag) => formatTagLabel(tag)).join(", "),
+            author: {
+              "@type": "Person",
+              name: "PhotoPromptsHub",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "PhotoPromptsHub",
+              url: SITE_URL,
+            },
+            inLanguage: "en",
+            datePublished: prompt.createdAt || undefined,
+          }),
+        }}
+      />
+    </main>
   );
 }

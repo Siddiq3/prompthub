@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const buildPageItems = (currentPage, totalPages) => {
@@ -19,16 +20,25 @@ const buildPageItems = (currentPage, totalPages) => {
   return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
 };
 
+const buildUrl = (baseUrl, page, queryParams) => {
+  const params = new URLSearchParams(queryParams);
+  params.set("page", String(page));
+  return `${baseUrl}?${params.toString()}`;
+};
+
 function Pagination({
   currentPage,
   totalPages,
-  totalItems,
-  itemsPerPage,
+  totalItems = 0,
+  itemsPerPage = 12,
   onPageChange,
   onItemsPerPageChange,
   pageSizeOptions = [12, 24, 36],
-  itemLabel = "prompts"
+  itemLabel = "prompts",
+  baseUrl,
+  queryParams
 }) {
+  const router = useRouter();
   const pageItems = useMemo(
     () => buildPageItems(currentPage, totalPages),
     [currentPage, totalPages]
@@ -40,6 +50,14 @@ function Pagination({
 
   const from = (currentPage - 1) * itemsPerPage + 1;
   const to = Math.min(currentPage * itemsPerPage, totalItems);
+
+  const handlePageChange = (page) => {
+    if (baseUrl && queryParams) {
+      router.push(buildUrl(baseUrl, page, queryParams));
+    } else if (onPageChange) {
+      onPageChange(page);
+    }
+  };
 
   return (
     <div className="section-shell flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -71,7 +89,7 @@ function Pagination({
         <div className="inline-flex items-center gap-1">
           <button
             type="button"
-            onClick={() => onPageChange(currentPage - 1)}
+            onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className="ui-icon-button h-10 w-10 disabled:pointer-events-none disabled:opacity-50"
             aria-label="Previous page"
@@ -88,7 +106,7 @@ function Pagination({
               <button
                 key={item}
                 type="button"
-                onClick={() => onPageChange(item)}
+                onClick={() => handlePageChange(item)}
                 aria-current={item === currentPage ? "page" : undefined}
                 className={`inline-flex h-10 min-w-10 items-center justify-center rounded-pill px-3 text-sm font-semibold transition-all duration-180 ease-smooth ${
                   item === currentPage
@@ -103,7 +121,7 @@ function Pagination({
 
           <button
             type="button"
-            onClick={() => onPageChange(currentPage + 1)}
+            onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             className="ui-icon-button h-10 w-10 disabled:pointer-events-none disabled:opacity-50"
             aria-label="Next page"

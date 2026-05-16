@@ -18,9 +18,6 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
-      <head>
-        <link rel="canonical" href="https://photopromptshub.in" />
-      </head>
       <body className="h-full bg-site text-slate-900 transition-colors duration-300 dark:bg-[#08131d] dark:text-slate-100">
         <Providers>
           <ClientLayout>{children}</ClientLayout>

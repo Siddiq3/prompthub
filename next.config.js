@@ -7,6 +7,8 @@ const nextConfig = {
       "images.unsplash.com",
       "images.pexels.com",
       "cdn.openai.com",
+      "cdn.jsdelivr.net",
+      "raw.githubusercontent.com",
     ],
     formats: ["image/avif", "image/webp"],
   },
