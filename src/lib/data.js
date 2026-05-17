@@ -35,7 +35,7 @@ export async function fetchLatestVersion() {
 }
 
 /**
- * Fetch all prompt data from GitHub
+ * Fetch all prompt data from GitHub with timeout
  */
 export async function fetchAllPrompts(version) {
   if (!GITHUB_RAW_URL || GITHUB_RAW_URL.includes("PASTE_YOUR_GITHUB_RAW_JSON_URL")) {
@@ -49,9 +49,16 @@ export async function fetchAllPrompts(version) {
       ? GITHUB_RAW_URL.replace("main", version)
       : GITHUB_RAW_URL;
 
+    // Add 30-second timeout to prevent indefinite loading
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
+
     const response = await fetch(url, {
       cache: "force-cache",
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch prompts: ${response.status}`);

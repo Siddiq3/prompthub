@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { getPrompts } from "@/src/lib/data";
 import PromptsClientPage from "./client";
+import { PromptsSkeleton } from "@/src/components/PromptsSkeleton";
 
 // C-01: Enable ISR (revalidate every hour) for SEO indexing
 export const revalidate = 3600;
@@ -14,7 +15,7 @@ export default async function PromptsPage() {
   const prompts = await getPrompts();
 
   return (
-    <Suspense fallback={<div className="py-12 text-center">Loading prompts...</div>}>
+    <Suspense fallback={<PromptsSkeleton />}>
       <PromptsClientPage initialPrompts={prompts} />
     </Suspense>
   );

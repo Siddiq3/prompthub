@@ -71,7 +71,7 @@ function SmartImage({
             imageLoaded ? "opacity-100" : "opacity-0"
           } transition-opacity duration-300`}
           onError={handleError}
-          onLoadingComplete={handleLoadingComplete}
+          onLoad={() => setImageLoaded(true)}
           placeholder="empty"
         />
       )}
