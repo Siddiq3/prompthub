@@ -1,4 +1,4 @@
-import { getPrompts, getAllPromptSlugs } from "@/src/lib/data";
+import { getPrompts, getAllPromptSlugs, getAllPromptIds } from "@/src/lib/data";
 import { getCategories, getCollections } from "@/src/lib/content";
 import { STATIC_INDEXABLE_ROUTES } from "@/src/lib/routes";
 
@@ -10,6 +10,7 @@ export default async function sitemap() {
     const categories = getCategories(prompts);
     const collections = getCollections(prompts);
     const slugs = await getAllPromptSlugs();
+    const ids = await getAllPromptIds();
 
     // Static routes
     const staticRoutes = STATIC_INDEXABLE_ROUTES.map((route) => ({
@@ -19,12 +20,20 @@ export default async function sitemap() {
       priority: parseFloat(route.priority),
     }));
 
-    // Dynamic prompt routes
+    // Dynamic prompt routes (slug-based - legacy)
     const promptRoutes = slugs.map((slug) => ({
       url: `${baseUrl}/prompt/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+    }));
+
+    // Dynamic prompt routes (ID-based - primary)
+    const promptIdRoutes = ids.map((id) => ({
+      url: `${baseUrl}/prompts/${id}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
     }));
 
     // Category routes
@@ -43,7 +52,7 @@ export default async function sitemap() {
       priority: 0.7,
     }));
 
-    return [...staticRoutes, ...promptRoutes, ...categoryRoutes, ...collectionRoutes];
+    return [...staticRoutes, ...promptRoutes, ...promptIdRoutes, ...categoryRoutes, ...collectionRoutes];
   } catch (error) {
     console.error("Error generating sitemap:", error);
     return [];

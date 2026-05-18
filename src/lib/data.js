@@ -125,9 +125,25 @@ export async function getPromptBySlug(slug) {
 }
 
 /**
+ * Get a single prompt by ID
+ */
+export async function getPromptById(id) {
+  const prompts = await getPrompts();
+  return prompts.find((p) => p.id === id);
+}
+
+/**
  * Get all prompt slugs for generateStaticParams
  */
 export async function getAllPromptSlugs() {
   const prompts = await getPrompts();
   return prompts.map((p) => p.slug).filter(Boolean);
+}
+
+/**
+ * Get all prompt IDs for generateStaticParams
+ */
+export async function getAllPromptIds() {
+  const prompts = await getPrompts();
+  return prompts.map((p) => p.id).filter(Boolean);
 }
