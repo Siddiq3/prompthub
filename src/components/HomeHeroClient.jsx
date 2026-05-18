@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import StatsCounter from "./StatsCounter";
 
-export default function HomeHeroClient() {
+export default function HomeHeroClient({ totalPrompts = 0, totalAiTools = 0 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const suggestionsRef = useRef(null);
@@ -54,7 +54,7 @@ export default function HomeHeroClient() {
             </h1>
 
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              Discover 100+ professionally crafted prompts for every AI art tool.
+              Discover {totalPrompts}+ professionally crafted prompts for every AI art tool.
               <br className="hidden sm:block" />
               Copy. Customize. Create stunning visuals instantly.
             </p>
@@ -109,7 +109,10 @@ export default function HomeHeroClient() {
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-8 font-semibold">
               Trusted by creative professionals worldwide
             </p>
-            <StatsCounter />
+            <StatsCounter 
+              totalPrompts={totalPrompts}
+              totalAiTools={totalAiTools}
+            />
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function StatsCounter() {
+export default function StatsCounter({ totalPrompts = 0, totalAiTools = 0 }) {
   const [counts, setCounts] = useState({ prompts: 0, tools: 0 });
 
   useEffect(() => {
@@ -15,15 +15,15 @@ export default function StatsCounter() {
       const progress = Math.min(elapsed / duration, 1);
 
       setCounts({
-        prompts: Math.floor(100 * progress),
-        tools: Math.floor(5 * progress),
+        prompts: Math.floor(totalPrompts * progress),
+        tools: Math.floor(totalAiTools * progress),
       });
 
       if (progress === 1) clearInterval(interval);
     }, 16); // 60fps
 
     return () => clearInterval(interval);
-  }, []);
+  }, [totalPrompts, totalAiTools]);
 
   return (
     <div className="grid grid-cols-3 gap-6 sm:gap-8">

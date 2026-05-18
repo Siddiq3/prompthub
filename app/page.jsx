@@ -10,6 +10,8 @@ import TrendingGrid from "@/src/components/TrendingGrid";
 import NewArrivalsGrid from "@/src/components/NewArrivalsGrid";
 import NewsletterCTA from "@/src/components/NewsletterCTA";
 
+export const revalidate = 3600; // Revalidate every hour for dynamic stats
+
 export const metadata = {
   title: "PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
   description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Browse by category, style, and use case.",
@@ -24,6 +26,11 @@ export const metadata = {
 export default async function HomePage() {
   const prompts = await getPrompts();
 
+  // Calculate dynamic stats
+  const totalPrompts = prompts.length;
+  const uniqueModels = [...new Set(prompts.map((p) => p.model).filter(Boolean))];
+  const totalAiTools = uniqueModels.length;
+
   const trendingPrompts = getTrendingPrompts(prompts, 6);
   const latestPrompts = getLatestPrompts(prompts)
     .filter((prompt) => !trendingPrompts.find((t) => t.id === prompt.id))
@@ -33,7 +40,10 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-slate-950">
       {/* Hero Section */}
-      <HomeHeroClient />
+      <HomeHeroClient 
+        totalPrompts={totalPrompts}
+        totalAiTools={totalAiTools}
+      />
 
       {/* Main Content */}
       <main className="flex-1 w-full py-16 sm:py-20 lg:py-28">
