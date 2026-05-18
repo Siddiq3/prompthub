@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import Link from "next/link";
 import Breadcrumbs from "@/src/components/Breadcrumbs";
 import MasonryGrid from "@/src/components/MasonryGrid";
 import PageHeader from "@/src/components/PageHeader";
@@ -87,12 +88,13 @@ export default function SavedPromptsClient({ initialPrompts }) {
           </p>
           <MasonryGrid>
             {savedPrompts.map((prompt) => (
-              <PromptCard
-                key={prompt.id}
-                prompt={prompt}
-                onSave={handleSave}
-                savedPrompts={savedPromptIds}
-              />
+              <Link key={prompt.id} href={`/prompt/${prompt.slug}`} className="group">
+                <PromptCard
+                  prompt={prompt}
+                  onSave={handleSave}
+                  savedPrompts={savedPromptIds}
+                />
+              </Link>
             ))}
           </MasonryGrid>
         </>

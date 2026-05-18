@@ -20,10 +20,10 @@ export async function generateMetadata({ params }) {
       };
     }
 
+    const canonicalUrl = prompt.slug ? `${SITE_URL}/prompt/${prompt.slug}` : `${SITE_URL}/prompts/${prompt.id}`;
     const title = `${prompt.title} | ${prompt.model} Prompt - PhotoPromptsHub`;
     const description = `${prompt.title} - Copy this ${prompt.model} prompt for ${prompt.category}. ${(prompt.prompt || "").substring(0, 100)}...`;
     const image = prompt.previewImage || `${SITE_URL}/og-image.jpg`;
-    const url = `${SITE_URL}/prompts/${prompt.id}`;
 
     return {
       title,
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
             alt: prompt.title,
           },
         ],
-        url,
+        url: canonicalUrl,
         type: "website",
       },
       twitter: {
@@ -49,7 +49,8 @@ export async function generateMetadata({ params }) {
         description: (prompt.prompt || "").substring(0, 120),
         images: [image],
       },
-      canonical: url,
+      // Point canonical to the slug-based URL
+      canonical: canonicalUrl,
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
