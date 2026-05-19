@@ -5,9 +5,9 @@ import {
   getTrendingPrompts,
 } from "@/src/lib/content";
 import { getPrompts } from "@/src/lib/data";
-import HomeHeroClient from "@/src/components/HomeHeroClient";
-import TrendingGrid from "@/src/components/TrendingGrid";
-import NewArrivalsGrid from "@/src/components/NewArrivalsGrid";
+import DopamineHeroSection from "@/src/components/DopamineHeroSection";
+import TrendingCarousel from "@/src/components/TrendingCarousel";
+import DopaminePromptCard from "@/src/components/DopaminePromptCard";
 import NewsletterCTA from "@/src/components/NewsletterCTA";
 
 export const revalidate = 3600; // Revalidate every hour for dynamic stats
@@ -34,48 +34,50 @@ export default async function HomePage() {
   const trendingPrompts = getTrendingPrompts(prompts, 6);
   const latestPrompts = getLatestPrompts(prompts)
     .filter((prompt) => !trendingPrompts.find((t) => t.id === prompt.id))
-    .slice(0, 12);
+    .slice(0, 16);
   const popularCategories = getPopularCategories(prompts, 6);
 
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-slate-950">
-      {/* Hero Section */}
-      <HomeHeroClient 
+    <div className="flex flex-col min-h-screen bg-slate-950">
+      {/* HIGH-DOPAMINE HERO SECTION */}
+      <DopamineHeroSection 
         totalPrompts={totalPrompts}
         totalAiTools={totalAiTools}
       />
 
       {/* Main Content */}
-      <main className="flex-1 w-full py-16 sm:py-20 lg:py-28">
+      <main className="flex-1 w-full py-12 sm:py-16 lg:py-20">
+        
+        {/* HIGH-DOPAMINE TRENDING CAROUSEL */}
+        {trendingPrompts.length > 0 && (
+          <TrendingCarousel prompts={trendingPrompts} />
+        )}
+
         {/* Category Filter Pills */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-20">
           <CategoryFilters popularCategories={popularCategories} />
         </div>
 
-        {/* Trending Prompts Grid */}
-        {trendingPrompts.length > 0 && (
+        {/* HIGH-DOPAMINE PROMPT GRID */}
+        {latestPrompts.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-20">
-            <TrendingGrid
-              title="Trending This Week"
-              description="The most popular prompts right now"
-              prompts={trendingPrompts}
-            />
+            <h2 className="text-3xl sm:text-4xl font-black text-white mb-8">
+              Explore Latest Prompts
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-max">
+              {latestPrompts.map((prompt, index) => (
+                <DopaminePromptCard 
+                  key={prompt.id} 
+                  prompt={prompt}
+                  position={index}
+                />
+              ))}
+            </div>
           </section>
         )}
 
         {/* Newsletter CTA */}
         <NewsletterCTA />
-
-        {/* New Arrivals Grid */}
-        {latestPrompts.length > 0 && (
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-            <NewArrivalsGrid
-              title="New Arrivals"
-              description="Recently added prompts"
-              prompts={latestPrompts}
-            />
-          </section>
-        )}
       </main>
     </div>
   );
