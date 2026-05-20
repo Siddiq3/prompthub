@@ -59,25 +59,26 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
   };
 
   return (
-    <article 
-      className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-lg transition-all duration-300"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <Link href={`/prompt/${prompt.slug}`} className="block group">
+      <article
+        className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-lg transition-all duration-300"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
       {/* Image Container with Overlay */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-700">
-        {/* Image */}
-        <Link href={`/prompt/${prompt.slug}`} className="block w-full h-full">
-          <SmartImage
-            src={prompt.previewImage}
-            alt={prompt.title}
-            title={prompt.title}
-            priority={priority}
-            className="w-full h-full"
-            imageClassName="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-            aspectClassName=""
-          />
-        </Link>
+        <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-700">
+          {/* Image */}
+          <div className="block w-full h-full">
+            <SmartImage
+              src={prompt.previewImage}
+              alt={prompt.title}
+              title={prompt.title}
+              priority={priority}
+              className="w-full h-full"
+              imageClassName="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              aspectClassName=""
+            />
+          </div>
 
         {/* AI Tool Badge - Top Left */}
         <div className={`absolute top-3 left-3 inline-block px-3 py-1 rounded-full text-xs font-bold ${getToolBadge()} shadow-md`}>
@@ -87,7 +88,11 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
         {/* Save Button - Top Right */}
         <button
           type="button"
-          onClick={() => onSave?.(prompt.id)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onSave?.(prompt.id);
+          }}
           className={`absolute top-3 right-3 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full backdrop-blur-md transition-all duration-200 active:scale-95 ${
             isSaved
               ? "bg-yellow-500/90 text-white"
@@ -104,28 +109,25 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
 
         {/* Hover Overlay with CTA */}
         {hovered && (
-          <Link
-            href={`/prompt/${prompt.slug}`}
-            className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/60 flex items-center justify-center group"
-          >
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/60 flex items-center justify-center group">
             <div className="text-center transform transition-transform duration-200 group-hover:scale-105">
-              <button className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-lg font-semibold hover:bg-slate-100 transition-colors">
+              <div className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-lg font-semibold">
                 View Full Prompt
                 <FaArrowRight className="w-4 h-4" />
-              </button>
+              </div>
             </div>
-          </Link>
+          </div>
         )}
       </div>
 
       {/* Content Section */}
       <div className="flex flex-1 flex-col gap-3 p-4">
         {/* Title */}
-        <Link href={`/prompt/${prompt.slug}`} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+        <div className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
           <h3 className="font-semibold text-slate-900 dark:text-white line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             {prompt.title}
           </h3>
-        </Link>
+        </div>
 
         {/* Category Tag */}
         <div className="flex items-center gap-2">
@@ -152,6 +154,7 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
                 key={`${prompt.id}-${tag}`}
                 href={`/prompts?tag=${encodeURIComponent(tag)}`}
                 className="inline-block px-2 py-1 text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                onClick={(e) => e.stopPropagation()}
               >
                 #{formatTagLabel(tag)}
               </Link>
@@ -162,7 +165,11 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
         {/* Copy Button */}
         <button
           type="button"
-          onClick={handleCopy}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleCopy();
+          }}
           className={`w-full mt-auto flex items-center justify-center gap-2 px-4 py-3 min-h-[44px] rounded-lg font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-95 ${
             copied
               ? "bg-emerald-500 text-white focus-visible:ring-emerald-300"
@@ -182,7 +189,8 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
           )}
         </button>
       </div>
-    </article>
+      </article>
+    </Link>
   );
 }
 

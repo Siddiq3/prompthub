@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import PromptDetail from '@/src/components/PromptDetail';
+import Image from 'next/image';
 import { getPrompts } from '@/src/lib/data';
 import { generatePromptSEO, generatePromptSchema, getRelatedPrompts } from '@/src/utils/prompts';
 import type { Prompt } from '@/src/types';

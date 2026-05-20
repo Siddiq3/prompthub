@@ -84,7 +84,7 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
       {/* ===== BREADCRUMB ===== */}
       <nav className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur border-b border-slate-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="flex items-center gap-1.5 text-sm text-slate-500 flex-wrap mb-4">
             <Link href="/" className="hover:text-white transition">
               Home
             </Link>
@@ -93,7 +93,7 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
               {prompt.category}
             </Link>
             <span>/</span>
-            <span className="text-white truncate">{prompt.title}</span>
+            <span className="text-slate-900 dark:text-white line-clamp-1 max-w-[180px]">{prompt.title}</span>
           </div>
         </div>
       </nav>
@@ -158,7 +158,7 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
               transition={{ delay: 0.1 }}
               className="space-y-4"
             >
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white">{prompt.title}</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white leading-tight break-words hyphens-auto">{prompt.title}</h1>
 
               <div className="flex flex-wrap gap-4 text-sm text-slate-400">
                 <div className="flex items-center gap-2">
@@ -381,27 +381,7 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
         </motion.div>
       </div>
 
-      {/* Sticky Mobile CTA */}
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        className="fixed bottom-0 left-0 right-0 lg:hidden bg-gradient-to-t from-slate-950 to-transparent border-t border-slate-800 p-4"
-      >
-        <motion.button
-          onClick={handleCopyPrompt}
-          whileTap={{ scale: 0.95 }}
-          className={`w-full px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${
-            copyState === 'success'
-              ? 'bg-green-600 text-white'
-              : 'bg-blue-600 hover:bg-blue-700 text-white'
-          }`}
-        >
-          <FiCopy className="w-5 h-5" />
-          {copyState === 'idle' && 'Copy Prompt'}
-          {copyState === 'copying' && 'Copying...'}
-          {copyState === 'success' && 'Copied!'}
-        </motion.button>
-      </motion.div>
+      {/* Mobile sticky CTA removed - single copy button remains inside content */}
     </div>
   );
 }
