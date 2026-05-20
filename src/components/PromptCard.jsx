@@ -11,13 +11,13 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
   const [hovered, setHovered] = useState(false);
   const isSaved = savedPrompts.includes(prompt.id);
 
-  // Get visible tags (up to 2)
+  // Get visible tags (up to 3)
   const subjectTagSlugs = new Set((prompt.subjectTags || []).map((tag) => String(tag).trim().toLowerCase()));
   const orderedTags = [
     ...(prompt.subjectTags || []),
-    ...prompt.displayTags.filter((tag) => !subjectTagSlugs.has(String(tag).trim().toLowerCase()))
+    ...((prompt.displayTags || []).filter((tag) => !subjectTagSlugs.has(String(tag).trim().toLowerCase())))
   ];
-  const visibleTags = orderedTags.slice(0, 2);
+  const visibleTags = orderedTags.slice(0, 3);
 
   const promptText = prompt.prompt || prompt.promptText || prompt.shortDescription || "";
 
@@ -65,7 +65,7 @@ function PromptCard({ prompt, priority = false, onSave, onCopy, savedPrompts = [
       onMouseLeave={() => setHovered(false)}
     >
       {/* Image Container with Overlay */}
-      <div className="relative aspect-video overflow-hidden bg-slate-100 dark:bg-slate-700">
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-700">
         {/* Image */}
         <Link href={`/prompt/${prompt.slug}`} className="block w-full h-full">
           <SmartImage

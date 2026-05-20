@@ -42,18 +42,18 @@ export default function HomeHeroClient({ totalPrompts = 0, totalAiTools = 0 }) {
       <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-200 dark:bg-pink-900/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
 
       {/* Main content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-32">
         <div className="space-y-12 text-center">
           {/* Headline with gradient accent */}
           <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-900 dark:text-white tracking-tight">
               AI Photo Prompts <br className="hidden sm:block" />
               <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-gradient">
                 Made Simple
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Discover {totalPrompts}+ professionally crafted prompts for every AI art tool.
               <br className="hidden sm:block" />
               Copy. Customize. Create stunning visuals instantly.
@@ -61,7 +61,7 @@ export default function HomeHeroClient({ totalPrompts = 0, totalAiTools = 0 }) {
           </div>
 
           {/* Large search bar with keyboard shortcut hint */}
-          <div className="max-w-3xl mx-auto">
+          <div className="w-full max-w-3xl mx-auto">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300" />
               <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-1">
@@ -73,7 +73,7 @@ export default function HomeHeroClient({ totalPrompts = 0, totalAiTools = 0 }) {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-lg"
+                    className="flex-1 min-w-0 w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-base sm:text-lg"
                   />
                   <kbd className="hidden sm:flex items-center gap-2 px-3 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 rounded-lg">
                     <span>⌘</span>

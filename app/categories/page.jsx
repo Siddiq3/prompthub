@@ -21,18 +21,18 @@ export default async function CategoriesPage() {
       </div>
 
       {categories.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <Link
               key={category.name}
               href={`/category/${encodeURIComponent(category.name.toLowerCase())}`}
-              className="group rounded-lg border border-slate-200 p-6 transition-all hover:border-brand-primary hover:shadow-lg dark:border-slate-700"
+              className="group rounded-lg border border-slate-200 p-5 transition-all hover:border-brand-primary hover:shadow-lg dark:border-slate-700 min-h-[140px] flex flex-col justify-between"
             >
-              <h3 className="mb-4 text-2xl font-semibold group-hover:text-brand-primary">
+              <h3 className="mb-2 text-xl sm:text-2xl font-semibold group-hover:text-brand-primary">
                 {category.name}
               </h3>
-              <p className="font-medium text-brand-primary">
-                {category.count} prompts →
+              <p className="text-sm font-medium text-brand-primary">
+                {category.count.toLocaleString()} prompts →
               </p>
             </Link>
           ))}

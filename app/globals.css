@@ -398,6 +398,27 @@
     animation: popup-overlay-in 0.26s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 
+  /* Small safety utilities */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rounded-pill {
+    border-radius: 9999px;
+  }
+
+  /* Fallback for line-clamp-2 when plugin isn't available */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .popup-scale-in {
     animation: popup-scale-in 0.34s cubic-bezier(0.18, 0.88, 0.24, 1) both;
   }

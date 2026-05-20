@@ -36,7 +36,7 @@ function FilterBar({
 
   return (
     <section>
-      <div className="section-shell surface-subtle p-5 sm:p-6">
+      <div className="section-shell surface-subtle p-5 sm:p-6 sticky top-14 z-30 sm:static bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-2xl">
             <p className="section-kicker text-brand-accent">Guided Filters</p>
@@ -77,8 +77,8 @@ function FilterBar({
           </div>
         ) : null}
 
-        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-          <label className="ui-card p-4">
+        <div className="mt-5 flex gap-3 overflow-x-auto pb-4 hide-scrollbar md:grid md:grid-cols-2 xl:grid-cols-5">
+          <label className="ui-card p-4 min-w-[72%] md:min-w-0">
             <p className="ui-meta">Category</p>
             <p className="mt-2 text-xs leading-6 text-slate-600">Choose the primary subject or theme.</p>
             <select
@@ -96,7 +96,7 @@ function FilterBar({
             </select>
           </label>
 
-          <label className="ui-card p-4">
+          <label className="ui-card p-4 min-w-[72%] md:min-w-0">
             <p className="ui-meta">Model</p>
             <p className="mt-2 text-xs leading-6 text-slate-600">Limit the prompt list by model label.</p>
             <select
@@ -114,7 +114,7 @@ function FilterBar({
             </select>
           </label>
 
-          <label className="ui-card p-4">
+          <label className="ui-card p-4 min-w-[72%] md:min-w-0">
             <p className="ui-meta">Aspect ratio</p>
             <p className="mt-2 text-xs leading-6 text-slate-600">Refine the composition format.</p>
             <select
@@ -132,7 +132,7 @@ function FilterBar({
             </select>
           </label>
 
-          <label className="ui-card p-4">
+          <label className="ui-card p-4 min-w-[72%] md:min-w-0">
             <p className="ui-meta">Tag</p>
             <p className="mt-2 text-xs leading-6 text-slate-600">Use a secondary style or mood tag.</p>
             <select
@@ -150,7 +150,7 @@ function FilterBar({
             </select>
           </label>
 
-          <label className="ui-card p-4">
+          <label className="ui-card p-4 min-w-[72%] md:min-w-0">
             <p className="ui-meta">Sort</p>
             <p className="mt-2 text-xs leading-6 text-slate-600">Switch between fresh, popular, and featured results.</p>
             <select

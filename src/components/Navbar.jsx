@@ -110,24 +110,25 @@ function Navbar() {
             }`}
             onClick={closeMenu}
           />
-          <aside
-            id={MOBILE_MENU_ID}
+
+          {/* Full-screen slide-down menu */}
+          <div
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
-            className={`fixed inset-y-0 left-0 z-50 flex h-full w-[min(86vw,320px)] transform-gpu flex-col overflow-hidden bg-white shadow-2xl transition-transform duration-300 ease-out dark:bg-slate-950 ${
-              isOpen ? "translate-x-0" : "-translate-x-full"
+            className={`fixed inset-x-0 top-0 z-50 transform-gpu overflow-hidden bg-white shadow-2xl dark:bg-slate-950 transition-transform duration-300 ease-out ${
+              isOpen ? "translate-y-0" : "-translate-y-full"
             }`}
-            onClick={(event) => event.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="border-b border-slate-200 px-5 pb-5 pt-6 dark:border-slate-800">
-              <div className="relative flex items-center gap-3 pr-12">
+            <div className="px-5 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800">
+              <div className="flex items-center justify-between">
                 <Link
                   href="/"
-                  className="inline-flex min-w-0 items-center gap-3 text-brand-ink transition hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25"
+                  className="inline-flex items-center gap-3 text-brand-ink transition hover:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25"
                   onClick={closeMenu}
                 >
-                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-[#033f63] text-[0.95rem] text-white shadow-[0_12px_22px_-18px_rgba(15,23,42,0.6)] dark:border-slate-700">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-[#033f63] text-[0.95rem] text-white">
                     <FaCameraRetro />
                   </span>
                   <span className="truncate font-heading text-[1rem] font-semibold tracking-tight">
@@ -138,7 +139,7 @@ function Navbar() {
                 <button
                   type="button"
                   onClick={closeMenu}
-                  className="absolute right-0 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition duration-200 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-900 dark:hover:text-white"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition duration-200 hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/25 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300"
                   aria-label="Close mobile menu"
                 >
                   <FaTimes />
@@ -146,7 +147,7 @@ function Navbar() {
               </div>
 
               {showSearch ? (
-                <div className="mt-5">
+                <div className="mt-4">
                   <SearchBar
                     value={searchValue}
                     onChange={setSearchValue}
@@ -161,8 +162,8 @@ function Navbar() {
               ) : null}
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-5">
-              <nav className="grid gap-2">
+            <div className="px-4 pb-8 pt-6">
+              <nav className="grid gap-3">
                 {primaryLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -195,7 +196,7 @@ function Navbar() {
                 </nav>
               </section>
             </div>
-          </aside>
+          </div>
         </div>,
         document.body
       )
@@ -204,7 +205,7 @@ function Navbar() {
   return (
     <>
       <header className="relative sticky top-0 z-30 border-b border-slate-800/30 bg-gradient-to-b from-slate-950 via-violet-950 to-slate-950 shadow-[0_14px_32px_-24px_rgba(0,0,0,0.55)] backdrop-blur-xl supports-[backdrop-filter]:bg-slate-950/95">
-        <div className="mx-auto flex min-h-[4.15rem] w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:gap-4 lg:px-8">
+        <div className="mx-auto flex h-14 sm:h-16 w-full max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
           <Link
             href="/"
             className="inline-flex shrink-0 items-center gap-3 px-1 py-1 text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"

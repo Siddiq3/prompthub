@@ -158,7 +158,7 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
               transition={{ delay: 0.1 }}
               className="space-y-4"
             >
-              <h1 className="text-4xl sm:text-5xl font-black text-white">{prompt.title}</h1>
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white">{prompt.title}</h1>
 
               <div className="flex flex-wrap gap-4 text-sm text-slate-400">
                 <div className="flex items-center gap-2">
@@ -271,7 +271,7 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="sticky top-20 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur border border-slate-700/50 rounded-2xl p-6"
+              className="lg:sticky lg:top-20 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur border border-slate-700/50 rounded-2xl p-6"
             >
               <motion.button
                 onClick={handleSave}

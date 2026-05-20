@@ -5,7 +5,7 @@ function Footer() {
 
   return (
     <footer className="w-full bg-slate-900 dark:bg-black border-t border-slate-800">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-12">
         {/* Footer Content Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Section */}
@@ -118,15 +118,11 @@ function Footer() {
         <div className="border-t border-slate-800"></div>
 
         {/* Bottom Footer */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-400 text-sm">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-400 text-sm text-center sm:text-left">
+          <p>© {currentYear} PhotoPromptsHub. All rights reserved.</p>
+          <p>Made with ❤️ for creative professionals</p>
           <p>
-            © {currentYear} PhotoPromptsHub. All rights reserved.
-          </p>
-          <p>
-            Made with ❤️ for creative professionals
-          </p>
-          <p>
-            <a href="https://www.instagram.com/siddiqkolimi/" className="hover:text-white transition-colors">
+            <a href="https://www.instagram.com/siddiqkolimi/" className="hover:text-white transition-colors inline-block py-1">
               Developed by Siddiq Kolimi
             </a>
           </p>
