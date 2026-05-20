@@ -3,6 +3,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
-    }
-  }
+    },
+    "allowJs": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
 }
