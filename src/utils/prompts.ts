@@ -306,6 +306,7 @@ export const getPromptStats = (prompts: Prompt[]) => {
     total: prompts.length,
     totalCopies: prompts.reduce((acc, p) => acc + (p.copies || 0), 0),
     totalSaves: prompts.reduce((acc, p) => acc + (p.saves || 0), 0),
+    totalViews: prompts.reduce((acc, p) => acc + (p.views || 0), 0),
     categories: [...new Set(prompts.map((p) => p.category))].length,
     models: [...new Set(prompts.map((p) => p.model))].length,
     tags: [...new Set(prompts.flatMap((p) => p.tags))].length,
@@ -397,6 +398,41 @@ export const unsavePrompt = (promptId: string): void => {
 export const isPromptSaved = (promptId: string): boolean => {
   if (typeof window === 'undefined') return false;
   return getSavedPrompts().includes(promptId);
+};
+
+// ============================================
+// VIEW TRACKING UTILITIES
+// ============================================
+
+export const getPromptViews = (): Record<string, number> => {
+  if (typeof window === 'undefined') return {};
+  const views = localStorage.getItem('promptViews');
+  return views ? JSON.parse(views) : {};
+};
+
+export const incrementPromptViews = (promptId: string): number => {
+  if (typeof window === 'undefined') return 0;
+  const views = getPromptViews();
+  views[promptId] = (views[promptId] || 0) + 1;
+  localStorage.setItem('promptViews', JSON.stringify(views));
+  return views[promptId];
+};
+
+export const getPromptViewCount = (promptId: string): number => {
+  if (typeof window === 'undefined') return 0;
+  const views = getPromptViews();
+  return views[promptId] || 0;
+};
+
+export const trackPromptView = (prompt: Prompt) => {
+  const views = incrementPromptViews(prompt.id);
+  trackEvent('prompt_view', {
+    prompt_id: prompt.id,
+    prompt_title: prompt.title,
+    model: prompt.model,
+    category: prompt.category,
+    view_count: views,
+  });
 };
 
 // ============================================

@@ -3,7 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FiCopy, FiHeart, FiShare2 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { FiCopy, FiHeart, FiShare2, FiExternalLink, FiArrowRight } from "react-icons/fi";
 
 /**
  * HIGH-DOPAMINE PROMPT CARD
@@ -18,8 +19,8 @@ import { FiCopy, FiHeart, FiShare2 } from "react-icons/fi";
  */
 
 export default function DopaminePromptCard({ prompt, position = 0 }) {
+  const router = useRouter();
   const [isSaved, setIsSaved] = useState(false);
-  const [copyState, setCopyState] = useState("idle"); // idle, copying, success
   const [saveCount, setSaveCount] = useState(prompt.saves || 0);
   const [showParticles, setShowParticles] = useState(false);
 
@@ -30,34 +31,8 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
     return <RecommendationCard />;
   }
 
-  const handleCopy = async () => {
-    try {
-      setCopyState("copying");
-
-      // Copy to clipboard
-      await navigator.clipboard.writeText(prompt.prompt);
-
-      // Haptic feedback
-      navigator.vibrate?.([10, 20, 10, 20, 20]);
-
-      // Success state
-      setCopyState("success");
-
-      // Particle burst
-      setShowParticles(true);
-
-      // Play success sound (optional - you can add later)
-      playSuccessSound();
-
-      // Show toast notification
-      showNotification("✓ Prompt copied!", "Ready to use in Midjourney");
-
-      // Reset after 2 seconds
-      setTimeout(() => setCopyState("idle"), 2000);
-    } catch (err) {
-      console.error("Copy failed:", err);
-      setCopyState("idle");
-    }
+  const handleOpen = () => {
+    router.push(`/prompt/${prompt.slug}`);
   };
 
   const handleSave = () => {
@@ -68,13 +43,14 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
 
   return (
     <motion.div
+      onClick={handleOpen}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{
         duration: 0.4,
         delay: (position % 4) * 0.05
       }}
-      className="group relative overflow-hidden rounded-2xl bg-slate-800/50 backdrop-blur border border-slate-700/50 hover:border-slate-600 transition-all duration-300"
+      className="group relative overflow-hidden rounded-2xl bg-slate-800/50 backdrop-blur border border-slate-700/50 hover:border-slate-600 transition-all duration-300 cursor-pointer"
     >
       {/* ===== IMAGE SECTION ===== */}
       <motion.div
@@ -82,12 +58,28 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
         transition={{ duration: 0.4 }}
         className="relative aspect-square overflow-hidden bg-slate-900"
       >
-        {/* Main image */}
-        <img
-          src={prompt.previewImage}
-          alt={prompt.title}
-          className="w-full h-full object-cover"
-        />
+        {/* Main image with fallback */}
+        {prompt.previewImage ? (
+          <img
+            src={prompt.previewImage}
+            alt={prompt.title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.style.display = "none";
+            }}
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
+            <span className="text-4xl font-bold text-slate-600">
+              {(prompt.title || "AI Prompt")
+                .split(" ")
+                .slice(0, 2)
+                .map((w) => w[0])
+                .join("")
+                .toUpperCase() || "PP"}
+            </span>
+          </div>
+        )}
 
         {/* Gradient overlay - appears on hover */}
         <motion.div
@@ -125,40 +117,38 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
           transition={{ duration: 0.2 }}
           className="absolute bottom-0 left-0 right-0 p-4 flex gap-2 z-20"
         >
-          <QuickCopyButton prompt={prompt} onCopy={handleCopy} />
+          <QuickOpenButton prompt={prompt} onOpen={handleOpen} />
           <QuickSaveButton isSaved={isSaved} onSave={handleSave} />
         </motion.div>
       </motion.div>
 
       {/* ===== CONTENT SECTION ===== */}
-      <Link href={`/prompt/${prompt.slug}`} className="block">
-        <div className="p-4 space-y-3 cursor-pointer">
-          {/* Title */}
-          <motion.h3
-            whileHover={{ color: "#60A5FA" }}
-            className="text-lg font-bold text-white line-clamp-2 transition-colors duration-200"
-          >
-            {prompt.title}
-          </motion.h3>
+      <div className="p-4 space-y-3">
+        {/* Title */}
+        <motion.h3
+          whileHover={{ color: "#60A5FA" }}
+          className="text-lg font-bold text-white line-clamp-2 transition-colors duration-200"
+        >
+          {prompt.title}
+        </motion.h3>
 
-          {/* Description preview */}
-          <p className="text-sm text-slate-400 line-clamp-2">
-            {prompt.prompt.substring(0, 80)}...
-          </p>
+        {/* Description preview */}
+        <p className="text-sm text-slate-400 line-clamp-2">
+          {prompt.prompt.substring(0, 80)}...
+        </p>
 
-          {/* Category tags */}
-          <div className="flex flex-wrap gap-2">
-            <span className="text-xs px-2 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-blue-300">
-              {prompt.model || "Midjourney"}
+        {/* Category tags */}
+        <div className="flex flex-wrap gap-2">
+          <span className="text-xs px-2 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-blue-300">
+            {prompt.model || "Midjourney"}
+          </span>
+          {prompt.category && (
+            <span className="text-xs px-2 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-purple-300">
+              {prompt.category}
             </span>
-            {prompt.category && (
-              <span className="text-xs px-2 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-purple-300">
-                {prompt.category}
-              </span>
-            )}
-          </div>
+          )}
         </div>
-      </Link>
+      </div>
 
       {/* ===== ACTION BUTTONS SECTION ===== */}
       <div className="border-t border-slate-700/50 px-4 py-3 flex items-center justify-between gap-2">
@@ -172,34 +162,15 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
           <span>{saveCount.toLocaleString()}</span>
         </motion.div>
 
-        {/* Copy button - MAIN CTA */}
+        {/* Open button - MAIN CTA */}
         <motion.button
-          onClick={handleCopy}
+          onClick={handleOpen}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className={`relative px-3 py-2 rounded-lg font-semibold text-sm overflow-hidden transition-all duration-300 flex items-center gap-2 ${
-            copyState === "success"
-              ? "bg-green-600 text-white"
-              : "bg-blue-600 hover:bg-blue-700 text-white"
-          }`}
+          className="relative px-4 py-2 rounded-lg font-semibold text-sm overflow-hidden transition-all duration-300 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
         >
-          <FiCopy className="w-4 h-4" />
-          <span>
-            {copyState === "idle" && "Copy"}
-            {copyState === "copying" && "⏳"}
-            {copyState === "success" && "✓"}
-          </span>
-
-          {/* Ripple effect */}
-          {copyState === "success" && (
-            <motion.span
-              className="absolute inset-0 bg-white/20 rounded-lg"
-              initial={{ scale: 0 }}
-              animate={{ scale: 2 }}
-              transition={{ duration: 0.5 }}
-              style={{ pointerEvents: "none" }}
-            />
-          )}
+          <FiArrowRight className="w-4 h-4" />
+          <span>Open</span>
 
           {/* Hover shine */}
           <motion.div
@@ -269,18 +240,18 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
 }
 
 /**
- * Quick Copy Button - Overlay on image
+ * Quick Open Button - Overlay on image
  */
-function QuickCopyButton({ prompt, onCopy }) {
+function QuickOpenButton({ prompt, onOpen }) {
   return (
     <motion.button
-      onClick={onCopy}
+      onClick={onOpen}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-sm flex items-center justify-center gap-2 transition-colors duration-200"
     >
-      <FiCopy className="w-4 h-4" />
-      Copy
+      <FiArrowRight className="w-4 h-4" />
+      Open
     </motion.button>
   );
 }

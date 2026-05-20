@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { FiCopy, FiHeart, FiShare2, FiArrowLeft } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { FiCopy, FiHeart, FiShare2, FiArrowLeft, FiEye } from 'react-icons/fi';
 import { Prompt, RelatedPrompts } from '@/src/types';
 import {
   getPromptUrl,
@@ -18,9 +18,12 @@ import {
   getBadgeIcon,
   formatDate,
   getImageDimensions,
+  formatCount,
   trackPromptCopy,
   trackPromptSave,
   trackPromptShare,
+  trackPromptView,
+  getPromptViewCount,
 } from '@/src/utils/prompts';
 import PromptCard from '@/src/components/PromptCard';
 
@@ -33,7 +36,17 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
   const [copyState, setCopyState] = useState<'idle' | 'copying' | 'success'>('idle');
   const [negativeCopyState, setNegativeCopyState] = useState<'idle' | 'copying' | 'success'>('idle');
   const [isSaved, setIsSaved] = useState(isPromptSaved(prompt.id));
+  const [viewCount, setViewCount] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const imageDims = getImageDimensions(prompt.aspectRatio);
+
+  // Track view on component mount (client-side only)
+  useEffect(() => {
+    setIsClient(true);
+    const newViewCount = getPromptViewCount(prompt.id) + 1;
+    setViewCount(newViewCount);
+    trackPromptView(prompt);
+  }, [prompt.id, prompt]);
 
   const handleCopyPrompt = async () => {
     setCopyState('copying');
@@ -291,6 +304,23 @@ export default function PromptDetail({ prompt, relatedPrompts }: PromptDetailPro
               </p>
             </motion.div>
 
+            {/* Stats Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25 }}
+              className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur border border-slate-700/50 rounded-2xl p-6"
+            >
+              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
+                Stats
+              </h3>
+              <div className="space-y-3">
+                <StatItem icon={<FiEye className="w-4 h-4" />} label="Views" value={formatCount(viewCount)} />
+                <StatItem icon={<FiCopy className="w-4 h-4" />} label="Copies" value={formatCount(prompt.copies || 0)} />
+                <StatItem icon={<FiHeart className="w-4 h-4" />} label="Saves" value={formatCount(prompt.saves || 0)} />
+              </div>
+            </motion.div>
+
             {/* Model Info */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -446,6 +476,18 @@ function DetailItem({ label, value }: { label: string; value: string }) {
     <div>
       <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">{label}</p>
       <p className="text-white font-semibold">{value}</p>
+    </div>
+  );
+}
+
+function StatItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg border border-slate-700/30">
+      <div className="flex items-center gap-2">
+        <div className="text-slate-400">{icon}</div>
+        <p className="text-sm text-slate-400">{label}</p>
+      </div>
+      <p className="text-white font-bold">{value}</p>
     </div>
   );
 }

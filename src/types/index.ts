@@ -51,6 +51,7 @@ export interface Prompt {
   // Optional fields for enrichment
   saves?: number;
   copies?: number;
+  views?: number;
   isTrending?: boolean;
   isNew?: boolean;
 }
