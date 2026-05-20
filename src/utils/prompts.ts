@@ -45,7 +45,7 @@ export const generatePromptSEO = (prompt: Prompt): SEOMetadata => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://photopromptshub.in';
   const canonicalUrl = `${baseUrl}${getPromptUrl(prompt.slug)}`;
 
-    const seo = prompt.seo ?? {};
+    const seo = (prompt.seo ?? {}) as any;
     return {
       title: seo.metaTitle || `${prompt.title} - AI Prompt for ${prompt.model}`,
       description: seo.metaDescription || `Get this stunning ${prompt.category.toLowerCase()} prompt for ${prompt.model}. Perfect for creating cinematic AI images.`,
@@ -94,7 +94,7 @@ export const generateModelSEO = (model: AIModel, count: number): SEOMetadata => 
 export const generatePromptSchema = (prompt: Prompt) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://photopromptshub.in';
   
-  const seo: Partial<SEOMetadata> = prompt.seo ?? {};
+  const seo = (prompt.seo ?? {}) as any;
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
