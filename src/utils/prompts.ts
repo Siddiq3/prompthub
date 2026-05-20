@@ -94,7 +94,7 @@ export const generateModelSEO = (model: AIModel, count: number): SEOMetadata => 
 export const generatePromptSchema = (prompt: Prompt) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://photopromptshub.in';
   
-  const seo = prompt.seo ?? {};
+  const seo: Partial<SEOMetadata> = prompt.seo ?? {};
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
