@@ -88,13 +88,12 @@ export default function SavedPromptsClient({ initialPrompts }) {
           </p>
           <MasonryGrid>
             {savedPrompts.map((prompt) => (
-              <Link key={prompt.id} href={`/prompt/${prompt.slug}`} className="group">
-                <PromptCard
-                  prompt={prompt}
-                  onSave={handleSave}
-                  savedPrompts={savedPromptIds}
-                />
-              </Link>
+              <PromptCard
+                key={prompt.id}
+                prompt={prompt}
+                onSave={handleSave}
+                savedPrompts={savedPromptIds}
+              />
             ))}
           </MasonryGrid>
         </>

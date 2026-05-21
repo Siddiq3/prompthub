@@ -37,40 +37,43 @@ export default function CategoryShowcase({ category, count, image }: CategorySho
   return (
     <Link href={getCategoryUrl(category)}>
       <motion.div
-        whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(59, 130, 246, 0.2)' }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur border border-slate-700/50 hover:border-slate-600 transition-all h-48 cursor-pointer group"
+        whileHover={{ y: -6, scale: 1.02 }}
+        className="relative overflow-hidden rounded-[20px] bg-[#131729] transition-all duration-300 cursor-pointer group border-[0.5px] border-white/[0.08] shadow-slate-950/20 hover:border-[#7c3aed] hover:shadow-[0_20px_60px_-30px_rgba(124,58,237,0.85)]"
+        style={{ minHeight: '220px' }}
       >
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${image || ''})` }}
+        />
 
-        {/* Content */}
-        <div className="relative h-full p-6 flex flex-col justify-between">
-          {/* Icon */}
-          <motion.div
-            initial={{ scale: 1 }}
-            whileHover={{ scale: 1.2, rotate: 10 }}
-            className="text-5xl"
-          >
-            {emoji}
-          </motion.div>
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-[#7c3aed]/15 opacity-0 transition duration-500 group-hover:opacity-100" />
 
-          {/* Text */}
+        {/* Content overlay */}
+        <div className="relative z-10 h-full p-4 flex flex-col justify-between">
           <div>
-            <h3 className="text-xl font-bold text-white mb-1 group-hover:text-blue-300 transition">
-              {category}
-            </h3>
-            <p className="text-sm text-slate-400">{count.toLocaleString()} prompts</p>
+            <div className="flex items-center gap-3">
+              <div className="text-[18px] font-bold text-white flex items-center gap-2">
+                <span className="text-lg">{emoji}</span>
+                <span>{category}</span>
+              </div>
+            </div>
           </div>
 
-          {/* Arrow indicator */}
-          <motion.div
-            initial={{ x: 0 }}
-            whileHover={{ x: 4 }}
-            className="text-slate-500 group-hover:text-blue-400 transition text-lg"
-          >
-            →
-          </motion.div>
+          <div className="flex items-center justify-between">
+            <div className="inline-flex items-center gap-2">
+              <span className="inline-flex items-center rounded-full bg-white/6 text-white/90 px-3 py-1 text-sm font-semibold">{count.toLocaleString()} prompts</span>
+            </div>
+
+            <div className="opacity-0 group-hover:opacity-100 transition">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </div>
+          </div>
         </div>
+
+        <div className="absolute inset-0 pointer-events-none group-hover" style={{ boxShadow: 'inset 0 0 0 1px rgba(124,58,237,0.0)' }} />
       </motion.div>
     </Link>
   );

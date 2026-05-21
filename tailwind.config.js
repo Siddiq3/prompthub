@@ -16,58 +16,98 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Manrope", "Inter", "system-ui", "Segoe UI", "sans-serif"],
-        heading: ["Manrope", "Inter", "system-ui", "Segoe UI", "sans-serif"],
+        sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+        heading: ["Clash Display", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        display: ["Clash Display", "system-ui", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
       },
       colors: {
-        site: "#F8FAFC",
-        canvas: "#F8FAFC",
-        surface: "#FFFFFF",
-        border: "#E5E7EB",
-        ink: "#111827",
-        primary: "#4F46E5",
-        "primary-light": "#6366F1",
-        "primary-dark": "#4338CA",
-        secondary: "#10B981",
-        "secondary-light": "#34D399",
-        warm: "#F59E0B",
-        "warm-light": "#FCD34D",
-        cream: "#F8FAFC",
+        // Dark-mode-first design tokens
+        bg: {
+          primary: "#0B0E1A",
+          secondary: "#131729",
+          tertiary: "#1C2240"
+        },
+        accent: {
+          primary: "#7C3AED",
+          secondary: "#EC4899"
+        },
+        text: {
+          primary: "#F0EBE3",
+          secondary: "#9CA3B8",
+          tertiary: "#5B6380"
+        },
+        // Model-specific colors
+        model: {
+          midjourney: {
+            bg: "#2D1B69",
+            text: "#A78BFA",
+            border: "#7C3AED"
+          },
+          flux: {
+            bg: "#0D3D2E",
+            text: "#34D399",
+            border: "#10B981"
+          },
+          dalle: {
+            bg: "#1E3A5F",
+            text: "#60A5FA",
+            border: "#3B82F6"
+          },
+          "stable-diffusion": {
+            bg: "#3D1F00",
+            text: "#FB923C",
+            border: "#F97316"
+          }
+        },
+        // Legacy support
+        site: "#0B0E1A",
+        canvas: "#0B0E1A",
+        surface: "#131729",
+        border: "rgba(255,255,255,0.08)",
+        ink: "#F0EBE3",
+        primary: "#7C3AED",
+        "primary-light": "#A78BFA",
+        "primary-dark": "#6D28D9",
+        secondary: "#EC4899",
+        "secondary-light": "#F472B6",
+        warm: "#FB923C",
+        "warm-light": "#FDBA74",
+        cream: "#F0EBE3",
         ui: {
-          background: "#F8FAFC",
-          backgroundAlt: "#F1F5F9",
-          surface: "#FFFFFF",
-          surfaceMuted: "#F8FAFC",
-          border: "#E5E7EB",
-          borderStrong: "#D1D5DB",
-          text: "#111827",
-          muted: "#4B5563",
-          subtle: "#6B7280",
-          accent: "#4F46E5",
-          "accent-hover": "#4338CA",
-          "accent-soft": "#EEF2FF",
+          background: "#0B0E1A",
+          backgroundAlt: "#131729",
+          surface: "#131729",
+          surfaceMuted: "#1C2240",
+          border: "rgba(255,255,255,0.08)",
+          borderStrong: "rgba(255,255,255,0.16)",
+          text: "#F0EBE3",
+          muted: "#9CA3B8",
+          subtle: "#5B6380",
+          accent: "#7C3AED",
+          "accent-hover": "#6D28D9",
+          "accent-soft": "rgba(124,58,237,0.12)",
           success: "#10B981",
-          "success-soft": "#ECFDF5",
-          warning: "#F59E0B",
-          "warning-soft": "#FFFBEB",
-          danger: "#DC2626",
-          "danger-soft": "#FEF2F2"
+          "success-soft": "rgba(16,185,129,0.12)",
+          warning: "#FB923C",
+          "warning-soft": "rgba(251,146,60,0.12)",
+          danger: "#EF4444",
+          "danger-soft": "rgba(239,68,68,0.12)"
         },
         brand: {
-          primary: "#6366F1",
-          secondary: "#10B981",
-          accent: "#4F46E5",
-          ink: "#111827",
-          gold: "#818CF8",
-          "gold-soft": "#C7D2FE",
-          soft: "#F1F5F9",
-          border: "#E5E7EB"
+          primary: "#7C3AED",
+          secondary: "#EC4899",
+          accent: "#7C3AED",
+          ink: "#F0EBE3",
+          gold: "#A78BFA",
+          "gold-soft": "rgba(167,139,250,0.12)",
+          soft: "#1C2240",
+          border: "rgba(255,255,255,0.08)"
         },
-        "brand-ink": "#111827",
-        "brand-accent": "#4F46E5",
-        "brand-gold": "#818CF8",
-        "brand-gold-soft": "#C7D2FE"
+        "brand-ink": "#F0EBE3",
+        "brand-accent": "#7C3AED",
+        "brand-gold": "#A78BFA",
+        "brand-gold-soft": "rgba(167,139,250,0.12)"
       },
       spacing: {
         18: "4.5rem",
@@ -85,9 +125,24 @@ export default {
         pill: "9999px"
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(15, 23, 42, 0.03), 0 12px 32px -20px rgba(15, 23, 42, 0.12)",
-        lift: "0 1px 2px rgba(15, 23, 42, 0.04), 0 20px 40px -20px rgba(15, 23, 42, 0.16)",
-        panel: "0 18px 40px -28px rgba(15, 23, 42, 0.18)"
+        // Dark-mode shadows with purple/magenta tints
+        soft: "0 4px 16px rgba(0, 0, 0, 0.3)",
+        lift: "0 12px 32px rgba(0, 0, 0, 0.4)",
+        panel: "0 20px 64px rgba(0, 0, 0, 0.5)",
+        glow: "0 0 32px rgba(124, 58, 237, 0.25)",
+        "glow-secondary": "0 0 32px rgba(236, 72, 153, 0.25)"
+      },
+      fontSize: {
+        // Typography scale
+        "hero-lg": ["96px", { lineHeight: "1.1", fontWeight: "700" }],
+        "hero-md": ["72px", { lineHeight: "1.1", fontWeight: "700" }],
+        "section-lg": ["40px", { lineHeight: "1.2", fontWeight: "700" }],
+        "section-md": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+        "card-title": ["16px", { lineHeight: "1.4", fontWeight: "700" }],
+        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+        "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+        "body-xs": ["12px", { lineHeight: "1.4", fontWeight: "400" }]
       },
       transitionDuration: {
         150: "150ms",
@@ -105,11 +160,16 @@ export default {
         "pulse-ring": {
           "0%": { transform: "scale(0.94)", opacity: "1" },
           "100%": { transform: "scale(1.12)", opacity: "0" }
+        },
+        glow: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(124, 58, 237, 0.5)" },
+          "50%": { boxShadow: "0 0 40px rgba(124, 58, 237, 0.8)" }
         }
       },
       animation: {
         float: "float 4s ease-in-out infinite",
-        "pulse-ring": "pulse-ring 1.8s ease-out infinite"
+        "pulse-ring": "pulse-ring 1.8s ease-out infinite",
+        glow: "glow 2s ease-in-out infinite"
       }
     }
   },

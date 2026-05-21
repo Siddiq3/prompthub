@@ -284,9 +284,7 @@ export default function PromptsClientPage({ initialPrompts }) {
             <>
               <MasonryGrid>
                 {paginatedPrompts.map((prompt) => (
-                  <Link key={prompt.id} href={`/prompt/${prompt.slug}`} className="group">
-                    <PromptCard prompt={prompt} />
-                  </Link>
+                  <PromptCard key={prompt.id} prompt={prompt} />
                 ))}
               </MasonryGrid>
 

@@ -13,7 +13,8 @@ function SearchBar({
   className = "",
   inputClassName = "",
   buttonClassName = "",
-  iconClassName = ""
+  iconClassName = "",
+  inputRef
 }) {
   const inputId = useId();
 
@@ -42,6 +43,7 @@ function SearchBar({
         type="search"
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
+        ref={inputRef}
         placeholder={placeholder}
         className={`min-w-0 w-full flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500 sm:text-[0.96rem] ${inputClassName}`}
       />

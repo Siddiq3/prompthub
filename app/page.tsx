@@ -58,22 +58,25 @@ export default async function HomePage() {
 
       {/* ===== LATEST PROMPTS SECTION ===== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="mb-8">
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">Latest Prompts</h2>
-          <p className="text-lg text-slate-400">
-            Explore {stats.total} premium AI prompts, {stats.tags} tags, {stats.categories} categories
-          </p>
+        <div className="mb-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-[40px] font-black text-white">Latest prompts</h2>
+              <p className="mt-2 text-lg text-slate-400 max-w-2xl">
+                Discover the freshest prompt ideas for AI art, photography compositions, cinematic scenes, and product visuals.
+              </p>
+            </div>
+            <a href="/prompts" className="inline-flex h-12 items-center justify-center rounded-full border border-white/[0.08] bg-white/5 px-6 text-sm font-semibold text-white transition hover:border-[#7c3aed] hover:bg-white/10">
+              View all prompts →
+            </a>
+          </div>
         </div>
 
-        <PromptGrid prompts={latestPrompts} variant="grid" />
+        <PromptGrid prompts={latestPrompts.slice(0, 9)} variant="grid" />
 
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          <a
-            href="/prompts"
-            className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:scale-105"
-          >
-            Browse All Prompts →
+        <div className="mt-10 flex justify-center">
+          <a href="/prompts" className="inline-flex h-14 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] px-8 text-base font-semibold text-white shadow-lg shadow-[#7C3AED]/20 transition hover:opacity-95">
+            Browse more prompts
           </a>
         </div>
       </section>
@@ -82,23 +85,28 @@ export default async function HomePage() {
       {categoryData.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="mb-8">
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">Browse by Category</h2>
-            <p className="text-lg text-slate-400">Find the perfect prompts for your creative vision</p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="text-[40px] font-black text-white mb-2">Browse by category</h2>
+                <p className="text-lg text-slate-400 max-w-2xl">
+                  Jump into categories tailored for portraits, landscapes, product shots, sci-fi art, and more.
+                </p>
+              </div>
+              <a href="/categories" className="inline-flex h-12 items-center justify-center rounded-full border border-white/[0.08] bg-white/5 px-6 text-sm font-semibold text-white transition hover:border-[#7c3aed] hover:bg-white/10">
+                Explore categories →
+              </a>
+            </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {categoryData.slice(0, 8).map((cat) => (
-              <CategoryShowcase key={cat.category} category={cat.category} count={cat.total} />
+              <CategoryShowcase
+                key={cat.category}
+                category={cat.category}
+                count={cat.total}
+                image={cat.prompts && cat.prompts[0] ? cat.prompts[0].previewImage : ''}
+              />
             ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <a
-              href="/categories"
-              className="inline-block px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all hover:scale-105"
-            >
-              View All Categories →
-            </a>
           </div>
         </section>
       )}
