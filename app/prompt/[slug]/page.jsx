@@ -16,9 +16,90 @@ export default async function PromptDetailsPage({ params }) {
   const allPrompts = await getPrompts();
   const relatedPrompts = getRelatedPrompts(allPrompts, prompt, 6);
   const trimmedPrompt = prompt.prompt || prompt.text || "";
+  const pageUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/prompt/${slug}`;
+
+  // JSON-LD Schema Markup
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": pageUrl,
+        "headline": prompt.title,
+        "description": prompt.seo?.metaDescription || prompt.title,
+        "image": {
+          "@type": "ImageObject",
+          "url": prompt.previewImage,
+        },
+        "datePublished": prompt.createdAt,
+        "author": {
+          "@type": "Organization",
+          "name": "PhotoPromptsHub",
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/logo.png`,
+          },
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "PhotoPromptsHub",
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/logo.png`,
+          },
+        },
+        "keywords": (prompt.seo?.keywords || prompt.tags || []).join(", "),
+      },
+      {
+        "@type": "CreativeWork",
+        "name": prompt.title,
+        "description": prompt.prompt,
+        "category": [prompt.category, prompt.model, ...((prompt.tags || []).slice(0, 5))],
+        "about": {
+          "@type": "Thing",
+          "name": prompt.model,
+          "description": `AI image generation for ${prompt.category}`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}`,
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Prompts",
+            "item": `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/prompts`,
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": prompt.category,
+            "item": `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/category/${(prompt.category || "").toLowerCase().replace(/\s+/g, "-")}`,
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": prompt.title,
+            "item": pageUrl,
+          },
+        ],
+      },
+    ],
+  };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <div className="min-h-screen bg-white text-slate-900">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
         {/* Left: Full-height Image */}
         <div className="relative lg:sticky lg:top-16 h-80 sm:h-96 lg:h-[calc(100vh-64px)] bg-slate-100 flex items-center justify-center overflow-hidden">
@@ -144,7 +225,8 @@ export default async function PromptDetailsPage({ params }) {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -161,18 +243,37 @@ export async function generateMetadata({ params }) {
   
   if (!prompt) notFound();
 
-  const description =
-    prompt.seoIntro ||
-    `${prompt.title} is a ${prompt.category?.toLowerCase() || "photo"} prompt for ${prompt.modelLabel || prompt.model || "AI model"}.`;
+  const keywords = prompt.seo?.keywords || prompt.tags || [];
+  const description = prompt.seo?.metaDescription || prompt.seoIntro ||
+    `${prompt.title} - ${prompt.category} AI prompt for ${prompt.model}. Create stunning ${prompt.category?.toLowerCase()} images with this detailed ${prompt.model} prompt. ${prompt.tags?.slice(0, 3).join(', ')}.`;
+
+  const title = prompt.seo?.metaTitle || `${prompt.title} | AI Prompt for ${prompt.model}`;
+  const pageUrl = `${SITE_URL}/prompt/${prompt.slug}`;
 
   return {
-    title: `${prompt.title} | PhotoPromptsHub`,
+    title,
     description,
+    keywords: keywords.join(', '),
     openGraph: {
-      title: prompt.title,
+      title,
       description,
-      url: `${SITE_URL}/prompt/${prompt.slug}`,
-      images: prompt.previewImage ? [{ url: prompt.previewImage, width: 1200, height: 630 }] : [],
+      url: pageUrl,
+      type: 'article',
+      images: prompt.previewImage ? [{ url: prompt.previewImage, width: 1200, height: 630, alt: prompt.title }] : [],
+      authors: ['PhotoPromptsHub'],
+      publishedTime: prompt.createdAt,
+      tags: keywords.slice(0, 5),
     },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: prompt.previewImage ? [prompt.previewImage] : [],
+    },
+    alternates: {
+      canonical: pageUrl,
+    },
+    authors: [{ name: 'PhotoPromptsHub' }],
+    creator: 'PhotoPromptsHub',
   };
 }

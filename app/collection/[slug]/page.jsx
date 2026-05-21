@@ -34,11 +34,32 @@ export async function generateMetadata({ params }) {
       };
     }
 
+    const collectionPrompts = getCollectionPrompts(prompts, collection);
+    const keywords = [
+      `${collection.title} ai prompts`,
+      `${collection.title} prompt collection`,
+      `${collection.title} midjourney`,
+      `${collection.title} flux prompts`,
+      "ai prompt collection",
+      "curated prompts",
+    ];
+
     return {
-      title: `${collection.title} - PhotoPromptsHub`,
-      description: collection.description,
+      title: `${collection.title} - Curated AI Prompt Collection | PhotoPromptsHub`,
+      description: `${collection.description} Browse ${collectionPrompts.length} professional AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Curated collection.`,
+      keywords: keywords.join(", "),
+      alternates: {
+        canonical: `https://photopromptshub.in/collection/${slug}`,
+      },
       openGraph: {
-        title: `${collection.title} - AI Prompts Collection`,
+        title: `${collection.title} - Curated AI Prompts Collection`,
+        description: `${collection.description} ${collectionPrompts.length}+ professional curated prompts.`,
+        type: "website",
+        url: `https://photopromptshub.in/collection/${slug}`,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${collection.title} - AI Prompts`,
         description: collection.description,
       },
     };

@@ -4,8 +4,22 @@ import PromptCard from "@/src/components/PromptCard";
 
 export function generateMetadata() {
   return {
-    title: "Latest Prompts - PhotoPromptsHub",
-    description: "Latest AI image prompts added to PhotoPromptsHub.",
+    title: "Latest AI Prompts - New Prompts for Midjourney, DALL·E, Flux & More",
+    description: "Discover the newest AI image prompts added to PhotoPromptsHub. Fresh prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Recently added by our community.",
+    keywords: "new ai prompts, latest prompts, fresh prompts, newest midjourney prompts, recent ai image prompts, trending new prompts",
+    alternates: {
+      canonical: "https://photopromptshub.in/latest",
+    },
+    openGraph: {
+      title: "Latest AI Prompts - Fresh & New Prompts",
+      description: "Discover the newest AI image prompts for creative projects",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Latest AI Prompts",
+      description: "Fresh AI image prompts added daily",
+    },
   };
 }
 

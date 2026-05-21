@@ -22,8 +22,15 @@ const EMAIL_ADDRESS = "photopromptshub@gmail.com";
 
 export function generateMetadata() {
   return {
-    title: "Categories - PhotoPromptsHub",
-    description: "Find the prompt categories that match your creative vision.",
+    title: "AI Prompt Categories - PhotoPromptsHub | Browse All Prompt Types",
+    description: "Explore our complete collection of AI image prompt categories including portrait prompts, fashion prompts, cinematic prompts, and more for Midjourney, DALL·E, Flux & Stable Diffusion.",
+    keywords: "ai prompt categories, midjourney prompts, fashion prompts, portrait prompts, cinematic ai prompts, prompt templates, ai image generation",
+    robots: "index, follow",
+    openGraph: {
+      title: "AI Prompt Categories - PhotoPromptsHub",
+      description: "Browse thousands of AI prompts organized by category and style.",
+      type: "website",
+    },
   };
 }
 

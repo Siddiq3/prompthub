@@ -12,9 +12,35 @@ const font = Plus_Jakarta_Sans({
 
 export const metadata = {
   title: "PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
-  description: "Browse thousands of AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Organized by category, style, and use case.",
-  robots: "index, follow",
+  description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, Stable Diffusion & more. Browse by category, model, and style. Get trending prompts, celebrity looks, movie styles, and viral AI art prompts.",
+  keywords: "ai prompts, midjourney prompts, dall-e prompts, flux prompts, stable diffusion prompts, ai image generation, prompt engineering, trending ai prompts, celebrity ai prompts, movie style prompts",
+  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   metadataBase: new URL("https://photopromptshub.in"),
+  alternates: {
+    canonical: "https://photopromptshub.in",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://photopromptshub.in",
+    siteName: "PhotoPromptsHub",
+    title: "PhotoPromptsHub - AI Image Prompts",
+    description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, Stable Diffusion & more.",
+    images: [
+      {
+        url: "https://photopromptshub.in/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PhotoPromptsHub - AI Image Prompts",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PhotoPromptsHub - AI Image Prompts",
+    description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, Stable Diffusion & more.",
+    images: ["https://photopromptshub.in/og-image.jpg"],
+  },
 };
 
 export const viewport = {

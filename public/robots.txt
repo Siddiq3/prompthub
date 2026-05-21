@@ -1,9 +1,34 @@
-# *
+# Robots.txt for PhotoPromptsHub
+# Allow all crawlers to index our content
+
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /*.json$
+Disallow: /data/
+
+# Wait between requests (in seconds)
+Crawl-delay: 1
+
+# Fast crawlers can go faster
+User-agent: Googlebot
+Crawl-delay: 0
+
+User-agent: Bingbot
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+Disallow: /
 
 # Host
-Host: https://www.photopromptshub.in
+Host: https://photopromptshub.in
 
-# Sitemaps
-Sitemap: https://www.photopromptshub.in/sitemap.xml
+# Sitemaps - Important for SEO
+Sitemap: https://photopromptshub.in/sitemap.xml
+
+# Specific sitemap for all prompts
+Sitemap: https://photopromptshub.in/sitemap-prompts.xml
