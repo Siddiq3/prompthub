@@ -21,7 +21,7 @@ export default async function PromptDetailsPage({ params }) {
     <div className="min-h-screen bg-white text-slate-900">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
         {/* Left: Full-height Image */}
-        <div className="relative lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-slate-100 flex items-center justify-center overflow-hidden">
+        <div className="relative lg:sticky lg:top-16 h-80 sm:h-96 lg:h-[calc(100vh-64px)] bg-slate-100 flex items-center justify-center overflow-hidden">
           <div className="relative h-full w-full">
             {prompt.previewImage ? (
               <Image

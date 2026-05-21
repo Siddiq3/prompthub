@@ -44,10 +44,28 @@ export default function ClientLayout({ children }) {
       <CookieConsent
         location="bottom"
         buttonText="Accept"
-        style={{ background: '#ffffff', border: '1px solid #e5e7eb' }}
-        buttonStyle={{ background: '#7c3aed', color: '#fff', borderRadius: '8px' }}
+        style={{
+          background: '#ffffff',
+          border: '1px solid #e5e7eb',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          padding: '16px 24px',
+          color: '#111827',
+        }}
+        buttonStyle={{
+          background: '#7c3aed',
+          color: '#fff',
+          borderRadius: '8px',
+          padding: '12px 20px',
+          fontWeight: 600,
+        }}
+        buttonWrapperClasses="!m-0"
       >
-        This site uses cookies to improve your experience and serve relevant ads.
+        <span className="text-sm">
+          This site uses cookies to improve your experience and serve relevant ads.
+        </span>
       </CookieConsent>
     </>
   );

@@ -172,8 +172,8 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
             <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-slate-900'}`} />
           </button>
 
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-slate-50/0 transition duration-300 group-hover:bg-slate-100/70">
-            <span className="opacity-0 text-slate-900 font-medium transition duration-300 group-hover:opacity-100">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-slate-50/0 transition-all duration-300 group-hover:bg-slate-900/80">
+            <span className="opacity-0 text-white font-bold text-lg transition-opacity duration-300 group-hover:opacity-100 drop-shadow-lg">
               View prompt →
             </span>
           </div>
