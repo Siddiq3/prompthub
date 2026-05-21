@@ -26,7 +26,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased overflow-x-hidden" suppressHydrationWarning>
-      <body className={`${font.variable} font-sans antialiased h-full overflow-x-hidden bg-site text-slate-900 transition-colors duration-300`}>
+      <body className={`${font.variable} font-sans antialiased h-full overflow-x-hidden bg-white text-slate-900 transition-colors duration-300`}>
         <Providers>
           <ClientLayout>{children}</ClientLayout>
         </Providers>

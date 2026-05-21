@@ -16,7 +16,7 @@ const CATEGORY_EMOJI = {
   Street: "🚶",
 };
 
-const EMAIL_ADDRESS = "hello@photopromptshub.com";
+const EMAIL_ADDRESS = "photopromptshub@gmail.com";
 
 export function generateMetadata() {
   return {
@@ -37,17 +37,16 @@ export default async function CategoriesPage() {
   const otherCategories = categories.filter((category) => !primaryCategorySet.has(category.name));
 
   return (
-    <div className="space-y-12">
-      <header className="space-y-4">
-        <h1 className="text-[56px] font-black tracking-[-0.03em] text-slate-100" style={{ fontFamily: 'Clash Display, ui-sans-serif, system-ui' }}>
-          All categories
-        </h1>
-        <p className="max-w-3xl text-lg text-slate-400">
-          Find the perfect prompts for your creative vision
-        </p>
-      </header>
+    <>
+      <div className="bg-white text-black py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl font-clash font-bold mb-4 text-black">All categories</h1>
+          <p className="text-slate-700 text-lg leading-relaxed">Find the perfect prompts for your creative vision</p>
+        </div>
+      </div>
 
-      {categories.length > 0 ? (
+      <div className="space-y-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12">
+        {categories.length > 0 ? (
         <div className="space-y-10">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-violet-400">
@@ -188,6 +187,7 @@ export default async function CategoriesPage() {
           Suggest a category
         </a>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

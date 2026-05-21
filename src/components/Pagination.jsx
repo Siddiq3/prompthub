@@ -60,19 +60,19 @@ function Pagination({
   };
 
   return (
-    <div className="section-shell flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="text-sm leading-7 text-slate-600 dark:text-slate-300">
-        Showing <span className="font-semibold text-brand-ink">{from}</span>-
-        <span className="font-semibold text-brand-ink">{to}</span> of{" "}
-        <span className="font-semibold text-brand-ink">{totalItems}</span> {itemLabel}
+    <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="text-sm leading-7 text-slate-600">
+        Showing <span className="font-semibold text-slate-900">{from}</span>-
+        <span className="font-semibold text-slate-900">{to}</span> of{" "}
+        <span className="font-semibold text-slate-900">{totalItems}</span> {itemLabel}
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
         {onItemsPerPageChange ? (
-          <label className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+          <label className="inline-flex items-center gap-2 text-sm text-slate-600">
             <span>Per page</span>
             <select
-              className="ui-select h-10 rounded-pill px-3 py-2"
+              className="h-10 rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 transition hover:border-slate-300 focus:border-[#7C3AED] focus:outline-none"
               value={itemsPerPage}
               onChange={(event) => onItemsPerPageChange(Number(event.target.value))}
               aria-label="Items per page"
@@ -91,7 +91,7 @@ function Pagination({
             type="button"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="ui-icon-button h-10 w-10 disabled:pointer-events-none disabled:opacity-50"
+            className="h-10 w-10 rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 disabled:pointer-events-none disabled:opacity-50"
             aria-label="Previous page"
           >
             <FaChevronLeft />
@@ -108,10 +108,10 @@ function Pagination({
                 type="button"
                 onClick={() => handlePageChange(item)}
                 aria-current={item === currentPage ? "page" : undefined}
-                className={`inline-flex h-10 min-w-10 items-center justify-center rounded-pill px-3 text-sm font-semibold transition-all duration-180 ease-smooth ${
+                className={`inline-flex h-10 min-w-10 items-center justify-center rounded-lg px-3 text-sm font-semibold transition-all ${
                   item === currentPage
-                    ? "border border-indigo-100 bg-indigo-50 text-indigo-700 dark:border-indigo-400/30 dark:bg-indigo-500/15 dark:text-indigo-200"
-                    : "border border-slate-200 bg-white text-brand-ink hover:border-brand-accent/30 hover:text-brand-accent dark:border-slate-700 dark:bg-slate-900/82 dark:text-slate-100"
+                    ? "border border-[#7C3AED] bg-[#7C3AED] text-white"
+                    : "border border-slate-200 bg-white text-slate-900 hover:border-[#7C3AED] hover:text-[#7C3AED]"
                 }`}
               >
                 {item}
@@ -123,7 +123,7 @@ function Pagination({
             type="button"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="ui-icon-button h-10 w-10 disabled:pointer-events-none disabled:opacity-50"
+            className="h-10 w-10 rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 disabled:pointer-events-none disabled:opacity-50"
             aria-label="Next page"
           >
             <FaChevronRight />

@@ -252,7 +252,12 @@ export default function PromptsClientPage({ initialPrompts }) {
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <PageHeader title={pageTitle} description={pageDescription} />
+      <PageHeader
+        title={pageTitle}
+        description={pageDescription}
+        className="section-shell bg-white text-slate-900 p-6 sm:p-7 lg:p-8"
+        titleClassName="text-balance font-heading text-[1.95rem] font-semibold tracking-tight text-black sm:text-[2.5rem] lg:text-[2.9rem]"
+      />
 
       <div className="grid gap-6 lg:grid-cols-4">
         {/* Sidebar - Enhanced Search & Filter */}

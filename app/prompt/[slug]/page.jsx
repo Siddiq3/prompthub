@@ -18,10 +18,10 @@ export default async function PromptDetailsPage({ params }) {
   const trimmedPrompt = prompt.prompt || prompt.text || "";
 
   return (
-    <div className="min-h-screen bg-[#0B0E1A]">
+    <div className="min-h-screen bg-white text-slate-900">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
         {/* Left: Full-height Image */}
-        <div className="relative lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-[#131729] flex items-center justify-center overflow-hidden">
+        <div className="relative lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-slate-100 flex items-center justify-center overflow-hidden">
           <div className="relative h-full w-full">
             {prompt.previewImage ? (
               <Image
@@ -31,7 +31,7 @@ export default async function PromptDetailsPage({ params }) {
                 className="object-cover"
               />
             ) : (
-              <div className="flex h-full items-center justify-center bg-slate-800 text-slate-200">
+              <div className="flex h-full items-center justify-center bg-slate-100 text-slate-500">
                 No preview available
               </div>
             )}
@@ -41,37 +41,37 @@ export default async function PromptDetailsPage({ params }) {
         {/* Right: Action Panel */}
         <div className="flex flex-col lg:overflow-y-auto lg:h-[calc(100vh-64px)]">
           {/* Header Section */}
-          <div className="border-b border-[rgba(255,255,255,0.08)] px-6 lg:px-8 py-8">
+          <div className="border-b border-slate-200 px-6 lg:px-8 py-8">
             <div className="max-w-2xl">
               {/* Breadcrumb */}
-              <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-[#9CA3B8]">
-                <Link href="/" className="hover:text-[#F0EBE3] transition">
+              <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-slate-500">
+                <Link href="/" className="hover:text-slate-900 transition">
                   Home
                 </Link>
                 <span>/</span>
-                <Link href="/prompts" className="hover:text-[#F0EBE3] transition">
+                <Link href="/prompts" className="hover:text-slate-900 transition">
                   Prompts
                 </Link>
                 <span>/</span>
                 <Link
                   href={`/category/${prompt.category?.toLowerCase()}`}
-                  className="hover:text-[#F0EBE3] transition"
+                  className="hover:text-slate-900 transition"
                 >
                   {prompt.category}
                 </Link>
                 <span>/</span>
-                <span className="text-white/70">{prompt.title}</span>
+                <span className="text-slate-500">{prompt.title}</span>
               </div>
 
-              <h1 className="text-4xl font-clash font-bold text-[#F0EBE3] mb-4">
+              <h1 className="text-4xl font-clash font-bold text-slate-900 mb-4">
                 {prompt.title}
               </h1>
 
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#1C2240] px-3 py-1 text-xs font-medium text-[#7C3AED] mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 mb-6">
                 {prompt.modelLabel || prompt.platform || prompt.model}
               </div>
 
-              <p className="max-w-2xl text-base leading-8 text-[#CBD5E1]">
+              <p className="max-w-2xl text-base leading-8 text-slate-600">
                 This prompt is crafted to help you generate polished, high-quality AI imagery with a modern, visually striking look. It works especially well for {prompt.category?.toLowerCase() || 'photo'} compositions and is tuned for use with {prompt.modelLabel || prompt.model || 'top AI image models'}. Use it when you want reliable, creative results without manual prompt experimentation.
               </p>
             </div>
@@ -88,8 +88,8 @@ export default async function PromptDetailsPage({ params }) {
               />
             </div>
 
-            <section className="max-w-2xl space-y-6 text-[#CBD5E1]">
-              <h2 className="text-2xl font-semibold text-[#F0EBE3]">About this prompt</h2>
+            <section className="max-w-2xl space-y-6 text-slate-700">
+              <h2 className="text-2xl font-semibold text-slate-900">About this prompt</h2>
               <p>
                 This prompt has been shaped to deliver crisp, high-impact visuals with clear subject focus and strong atmosphere. It works best when you want a refined creative output that retains consistent styling across multiple generations. The structure balances descriptive detail with flexible composition guidance, so you can adapt the prompt quickly for portraits, product shots, landscapes, or editorial scenes.
               </p>
@@ -99,9 +99,9 @@ export default async function PromptDetailsPage({ params }) {
               <p>
                 The primary goal is to get a clean first pass that needs minimal revision. Use the prompt for concept art, stylized photo-realistic scenes, social media imagery, or marketing visuals. The prompt is especially useful when you need consistent results across multiple designs, because it prioritizes a reliable structure over random output.
               </p>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                <h3 className="text-xl font-semibold text-[#F0EBE3] mb-3">Tips for best results</h3>
-                <ul className="list-inside list-disc space-y-3 text-[#CBD5E1]">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">Tips for best results</h3>
+                <ul className="list-inside list-disc space-y-3 text-slate-700">
                   <li>Use the prompt as a starting point and add one or two style modifiers like "cinematic lighting" or "soft film grain."</li>
                   <li>Keep your subject and mood consistent across variations to maintain visual coherence.</li>
                   <li>For more dramatic results, boost contrast with words like "moody shadows" or "high-end editorial."</li>
@@ -113,13 +113,13 @@ export default async function PromptDetailsPage({ params }) {
             {/* Tags */}
             {(prompt.displayTags || []).length > 0 && (
               <div className="max-w-2xl">
-                <h2 className="text-sm font-medium text-[#5B6380] mb-3 uppercase tracking-wide">Tags</h2>
+                <h2 className="text-sm font-medium text-slate-500 mb-3 uppercase tracking-wide">Tags</h2>
                 <div className="flex flex-wrap gap-2">
                   {prompt.displayTags.map((tag) => (
                     <Link
                       key={tag}
                       href={`/prompts?tag=${encodeURIComponent(tag)}`}
-                      className="px-3 py-1.5 rounded-full bg-[#1C2240] text-sm text-[#9CA3B8] hover:text-[#7C3AED] hover:bg-[#7C3AED]/20 transition-colors"
+                      className="px-3 py-1.5 rounded-full bg-slate-100 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-200 transition-colors"
                     >
                       #{tag}
                     </Link>
@@ -130,9 +130,9 @@ export default async function PromptDetailsPage({ params }) {
           </div>
 
           {/* Related Prompts */}
-          <div className="border-t border-[rgba(255,255,255,0.08)] px-6 lg:px-8 py-8">
+          <div className="border-t border-slate-200 px-6 lg:px-8 py-8">
             <div className="max-w-full">
-              <h2 className="text-xl font-clash font-bold text-[#F0EBE3] mb-6">
+              <h2 className="text-xl font-clash font-bold text-slate-900 mb-6">
                 Similar Prompts
               </h2>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
