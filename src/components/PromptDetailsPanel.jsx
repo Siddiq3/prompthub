@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBookmark, FaCheck, FaChevronDown, FaChevronUp, FaCopy, FaLink, FaRegBookmark } from "react-icons/fa";
+import { useCopyCount } from "@/src/hooks/useCopyCount";
 
 const modelColors = {
   "Midjourney": "bg-purple-600",
@@ -24,10 +25,10 @@ const getSizeLabel = (aspectRatio) => {
 export default function PromptDetailsPanel({ prompt, promptText, pageUrl }) {
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [copyCount, setCopyCount] = useState(0);
   const [animatingCount, setAnimatingCount] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [negativeOpen, setNegativeOpen] = useState(false);
+  const { copyCount, refetch: refetchCopyCount } = useCopyCount(prompt.id, prompt.copies || 0);
 
   const aspectRatio = prompt.aspectRatio || "1:1";
   const promptModel = prompt.modelLabel || prompt.model || "AI model";
@@ -50,6 +51,25 @@ export default function PromptDetailsPanel({ prompt, promptText, pageUrl }) {
 
   const handleCopyPrompt = async () => {
     if (!trimmedPrompt) return;
+    
+    // Track the copy
+    try {
+      const response = await fetch("/api/track-copy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ promptId: prompt.id }),
+      });
+      if (response.ok) {
+        setAnimatingCount(true);
+        setTimeout(() => setAnimatingCount(false), 600);
+        // Refetch to update count
+        refetchCopyCount();
+      }
+    } catch (error) {
+      console.error("Error tracking copy:", error);
+    }
+
+    // Copy to clipboard
     await copyToClipboard(trimmedPrompt, setCopied);
   };
 
@@ -58,9 +78,7 @@ export default function PromptDetailsPanel({ prompt, promptText, pageUrl }) {
       try {
         await navigator.share({ title: prompt.title, text: prompt.title, url: pageUrl });
         return;
-      setAnimatingCount(true);
       } catch (error) {
-      setTimeout(() => setAnimatingCount(false), 700);
         // fallback to copy link
       }
     }
@@ -166,9 +184,19 @@ export default function PromptDetailsPanel({ prompt, promptText, pageUrl }) {
             <span className="text-[11px] uppercase tracking-[0.28em] text-slate-500">Size</span>
             <span className="font-medium text-slate-100">{sizeLabel}</span>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <span className="text-[11px] uppercase tracking-[0.28em] text-slate-500">Date added</span>
             <span className="font-medium text-slate-100">{formattedDate}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] uppercase tracking-[0.28em] text-slate-500">Times copied</span>
+            <motion.span
+              className="font-medium text-slate-100"
+              animate={animatingCount ? { scale: [1, 1.2, 1] } : { scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {copyCount}
+            </motion.span>
           </div>
         </div>
       </section>
