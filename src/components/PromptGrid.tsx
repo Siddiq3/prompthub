@@ -80,7 +80,7 @@ function LoadingGrid() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: i * 0.05 }}
-          className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl aspect-square animate-pulse"
+          className="bg-slate-100 rounded-2xl aspect-square animate-pulse"
         />
       ))}
     </div>

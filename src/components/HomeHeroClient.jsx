@@ -36,7 +36,7 @@ export default function HomeHeroClient({ totalPrompts = 204 }) {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden py-12" style={{ background: "#0B0E1A" }}>
+    <section className="relative w-full overflow-hidden py-12 bg-slate-50">
       {/* Violet radial glow top-left */}
       <div className="pointer-events-none absolute -left-36 -top-20 h-72 w-72 rounded-full" style={{ background: "rgba(124,58,237,0.15)", filter: 'blur(60px)' }} />
 
@@ -48,12 +48,12 @@ export default function HomeHeroClient({ totalPrompts = 204 }) {
               <span className="inline-flex items-center rounded-full bg-[#7c3aed]/20 text-[#7c3aed] px-3 py-1 text-xs font-semibold">204+ Premium Prompts</span>
             </div>
 
-            <h1 className="mt-6 font-heading font-bold text-[80px] leading-[0.95] text-[#F0EBE3]">
+            <h1 className="mt-6 font-heading font-bold text-[80px] leading-[0.95] text-slate-950">
               Create stunning AI images —
               <span className="block text-[#EC4899]">instantly.</span>
             </h1>
 
-            <p className="mt-4 max-w-xl text-[18px] text-[#9CA3B8]">
+            <p className="mt-4 max-w-xl text-[18px] text-slate-600">
               Curated prompts for Midjourney, Flux, DALL·E & Stable Diffusion. Copy, paste, create.
             </p>
 
@@ -62,7 +62,7 @@ export default function HomeHeroClient({ totalPrompts = 204 }) {
                 Browse Prompts <span className="ml-3">→</span>
               </Link>
 
-              <Link href="/categories" className="inline-flex h-12 items-center justify-center rounded-full border border-white/[0.06] px-5 py-3 text-[#F0EBE3] text-lg font-medium hover:bg-white/3 transition">
+              <Link href="/categories" className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 px-5 py-3 text-slate-900 text-lg font-medium hover:bg-slate-100 transition">
                 View Categories
               </Link>
             </div>

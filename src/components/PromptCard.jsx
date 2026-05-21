@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaBookmark, FaRegBookmark, FaArrowRight } from "react-icons/fa";
 import { formatTagLabel } from "../lib/taxonomy";
@@ -8,6 +9,7 @@ import SmartImage from "./SmartImage";
 import { motion, useAnimation } from "framer-motion";
 
 function PromptCard({ prompt, priority = false, onSave, savedPrompts = [] }) {
+  const router = useRouter();
   const [hovered, setHovered] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const bookmarkControls = useAnimation();
@@ -46,9 +48,10 @@ function PromptCard({ prompt, priority = false, onSave, savedPrompts = [] }) {
 
   return (
     <article
-      className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#131729] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+      className="group cursor-pointer flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#131729] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={() => router.push(`/prompt/${prompt.slug}`)}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-[#1C2240]">
         <motion.div

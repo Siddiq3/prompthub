@@ -22,50 +22,50 @@ export default {
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
       },
       colors: {
-        // Dark-mode-first design tokens
+        // Light-theme design tokens
         bg: {
-          primary: "#0B0E1A",
-          secondary: "#131729",
-          tertiary: "#1C2240"
+          primary: "#f8fafc",
+          secondary: "#ffffff",
+          tertiary: "#e2e8f0"
         },
         accent: {
           primary: "#7C3AED",
           secondary: "#EC4899"
         },
         text: {
-          primary: "#F0EBE3",
-          secondary: "#9CA3B8",
-          tertiary: "#5B6380"
+          primary: "#111827",
+          secondary: "#6B7280",
+          tertiary: "#9CA3AF"
         },
         // Model-specific colors
         model: {
           midjourney: {
-            bg: "#2D1B69",
-            text: "#A78BFA",
+            bg: "#ede9fe",
+            text: "#7C3AED",
             border: "#7C3AED"
           },
           flux: {
-            bg: "#0D3D2E",
-            text: "#34D399",
+            bg: "#dcfce7",
+            text: "#10B981",
             border: "#10B981"
           },
           dalle: {
-            bg: "#1E3A5F",
-            text: "#60A5FA",
+            bg: "#dbeafe",
+            text: "#3B82F6",
             border: "#3B82F6"
           },
           "stable-diffusion": {
-            bg: "#3D1F00",
-            text: "#FB923C",
+            bg: "#ffedd5",
+            text: "#F97316",
             border: "#F97316"
           }
         },
         // Legacy support
-        site: "#0B0E1A",
-        canvas: "#0B0E1A",
-        surface: "#131729",
-        border: "rgba(255,255,255,0.08)",
-        ink: "#F0EBE3",
+        site: "#ffffff",
+        canvas: "#f8fafc",
+        surface: "#ffffff",
+        border: "rgba(15,23,42,0.08)",
+        ink: "#111827",
         primary: "#7C3AED",
         "primary-light": "#A78BFA",
         "primary-dark": "#6D28D9",
@@ -73,17 +73,17 @@ export default {
         "secondary-light": "#F472B6",
         warm: "#FB923C",
         "warm-light": "#FDBA74",
-        cream: "#F0EBE3",
+        cream: "#F8FAFC",
         ui: {
-          background: "#0B0E1A",
-          backgroundAlt: "#131729",
-          surface: "#131729",
-          surfaceMuted: "#1C2240",
-          border: "rgba(255,255,255,0.08)",
-          borderStrong: "rgba(255,255,255,0.16)",
-          text: "#F0EBE3",
-          muted: "#9CA3B8",
-          subtle: "#5B6380",
+          background: "#ffffff",
+          backgroundAlt: "#f8fafc",
+          surface: "#ffffff",
+          surfaceMuted: "#e2e8f0",
+          border: "rgba(15,23,42,0.08)",
+          borderStrong: "rgba(15,23,42,0.16)",
+          text: "#111827",
+          muted: "#6B7280",
+          subtle: "#9CA3AF",
           accent: "#7C3AED",
           "accent-hover": "#6D28D9",
           "accent-soft": "rgba(124,58,237,0.12)",

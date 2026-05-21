@@ -97,20 +97,20 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
 
   if (variant === 'list') {
     return (
-      <div className="group flex gap-4 p-4 rounded-[12px] bg-[#131729] border border-white/[0.08] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-        <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-slate-900 flex-shrink-0">
+      <div className="group flex gap-4 p-4 rounded-[12px] bg-white border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
           <Image src={prompt.previewImage} alt={prompt.title} fill className="object-cover" />
         </div>
 
         <div className="flex-1 min-w-0">
           <Link href={getPromptUrl(prompt.slug)} prefetch={true} className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-            <h3 className="text-sm font-semibold text-[#F0EBE3] truncate hover:text-[#7C3AED] transition-colors">
+            <h3 className="text-sm font-semibold text-slate-900 truncate hover:text-[#7C3AED] transition-colors">
               {prompt.title}
             </h3>
           </Link>
-          <p className="text-[12px] text-[#9CA3B8] line-clamp-2 mt-2 italic">{prompt.prompt}</p>
+          <p className="text-[12px] text-slate-500 line-clamp-2 mt-2 italic">{prompt.prompt}</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <span className="text-[10px] rounded-full bg-[#1C2240] px-2 py-1 text-white/70">{prompt.category}</span>
+            <span className="text-[10px] rounded-full bg-slate-100 px-2 py-1 text-slate-700">{prompt.category}</span>
             <span className="text-[10px] rounded-full px-2 py-1 font-semibold" style={{ backgroundColor: modelColor.bg, color: modelColor.text }}>
               {prompt.model}
             </span>
@@ -121,10 +121,10 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
           <button
             type="button"
             onClick={handleSave}
-            className="p-2 rounded-full bg-white/5 text-white transition hover:bg-white/10"
+            className="p-2 rounded-full bg-slate-100 text-slate-900 transition hover:bg-slate-200"
             aria-label={isSaved ? 'Remove saved prompt' : 'Save prompt'}
           >
-            <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+            <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-slate-900'}`} />
           </button>
           <Link
             href={getPromptUrl(prompt.slug)}
@@ -145,9 +145,9 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative overflow-hidden rounded-[12px] bg-[#131729] border border-white/[0.08] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+      className="group relative overflow-hidden rounded-[12px] bg-white border border-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
     >
-      <div className={`relative overflow-hidden bg-slate-900 ${aspectClass}`}>
+      <div className={`relative overflow-hidden bg-slate-100 ${aspectClass}`}>
         <div className="absolute inset-0 transition-transform duration-300 ease-[ease] group-hover:scale-105">
           <Image src={prompt.previewImage} alt={prompt.title} fill className="object-cover" />
         </div>
@@ -164,14 +164,14 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
         <button
           type="button"
           onClick={handleSave}
-          className="absolute top-3 right-3 z-20 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60"
+          className="absolute top-3 right-3 z-20 rounded-full bg-slate-100 p-2 text-slate-900 transition hover:bg-slate-200"
           aria-label={isSaved ? 'Remove saved prompt' : 'Save prompt'}
         >
-          <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+          <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-slate-900'}`} />
         </button>
 
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition duration-300 group-hover:bg-black/60">
-          <span className="opacity-0 text-white font-medium transition duration-300 group-hover:opacity-100">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-slate-50/0 transition duration-300 group-hover:bg-slate-100/70">
+          <span className="opacity-0 text-slate-900 font-medium transition duration-300 group-hover:opacity-100">
             View prompt →
           </span>
         </div>
@@ -179,34 +179,34 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
 
       <div className="p-4 pb-0 flex flex-col gap-3 h-full">
         <Link href={getPromptUrl(prompt.slug)} prefetch={true} className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-          <h3 className="text-[14px] font-semibold text-[#F0EBE3] truncate hover:text-[#7C3AED] transition-colors cursor-pointer">
+          <h3 className="text-[14px] font-semibold text-slate-900 truncate hover:text-[#7C3AED] transition-colors cursor-pointer">
             {prompt.title}
           </h3>
         </Link>
 
-        <p className="text-[11px] text-white/60 mt-2">{prompt.category}</p>
+        <p className="text-[11px] text-slate-500 mt-2">{prompt.category}</p>
 
-        <p className="text-[12px] text-[#9CA3B8] italic line-clamp-2 mt-3 flex-1">
+        <p className="text-[12px] text-slate-600 italic line-clamp-2 mt-3 flex-1">
           {prompt.prompt}
         </p>
 
         <div className="mt-auto flex flex-wrap gap-2">
           {tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[10px] rounded-full bg-[#1C2240] px-2 py-1 text-white/70">
+            <span key={tag} className="text-[10px] rounded-full bg-slate-100 px-2 py-1 text-slate-700">
               #{tag}
             </span>
           ))}
           {tags.length > 3 && (
-            <span className="text-[10px] rounded-full bg-[#1C2240] px-2 py-1 text-white/70">
+            <span className="text-[10px] rounded-full bg-slate-100 px-2 py-1 text-slate-700">
               +{tags.length - 3} more
             </span>
           )}
         </div>
       </div>
 
-      <div className="border-t border-white/[0.06] px-4 py-4 bg-[#0F162A]">
+      <div className="border-t border-slate-200 px-4 py-4 bg-slate-50">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-[11px] text-white/60">{prompt.copies || 0} copies</span>
+          <span className="text-[11px] text-slate-500">{prompt.copies || 0} copies</span>
           <Link
             href={getPromptUrl(prompt.slug)}
             prefetch={true}

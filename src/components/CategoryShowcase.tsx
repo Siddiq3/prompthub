@@ -38,7 +38,7 @@ export default function CategoryShowcase({ category, count, image }: CategorySho
     <Link href={getCategoryUrl(category)}>
       <motion.div
         whileHover={{ y: -6, scale: 1.02 }}
-        className="relative overflow-hidden rounded-[20px] bg-[#131729] transition-all duration-300 cursor-pointer group border-[0.5px] border-white/[0.08] shadow-slate-950/20 hover:border-[#7c3aed] hover:shadow-[0_20px_60px_-30px_rgba(124,58,237,0.85)]"
+        className="relative overflow-hidden rounded-[20px] bg-white transition-all duration-300 cursor-pointer group border border-slate-200 shadow-sm hover:border-[#7c3aed] hover:shadow-[0_20px_60px_-30px_rgba(124,58,237,0.15)]"
         style={{ minHeight: '220px' }}
       >
         {/* Background image */}
@@ -47,15 +47,15 @@ export default function CategoryShowcase({ category, count, image }: CategorySho
           style={{ backgroundImage: `url(${image || ''})` }}
         />
 
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-[#7c3aed]/15 opacity-0 transition duration-500 group-hover:opacity-100" />
+        {/* Light overlay */}
+        <div className="absolute inset-0 bg-slate-950/10" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-[#7c3aed]/10 opacity-0 transition duration-500 group-hover:opacity-100" />
 
         {/* Content overlay */}
         <div className="relative z-10 h-full p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <div className="text-[18px] font-bold text-white flex items-center gap-2">
+              <div className="text-[18px] font-bold text-slate-900 flex items-center gap-2">
                 <span className="text-lg">{emoji}</span>
                 <span>{category}</span>
               </div>
@@ -64,7 +64,7 @@ export default function CategoryShowcase({ category, count, image }: CategorySho
 
           <div className="flex items-center justify-between">
             <div className="inline-flex items-center gap-2">
-              <span className="inline-flex items-center rounded-full bg-white/6 text-white/90 px-3 py-1 text-sm font-semibold">{count.toLocaleString()} prompts</span>
+              <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-900 px-3 py-1 text-sm font-semibold">{count.toLocaleString()} prompts</span>
             </div>
 
             <div className="opacity-0 group-hover:opacity-100 transition">

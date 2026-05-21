@@ -9,16 +9,16 @@
 /* ========== DESIGN TOKENS ========== */
 :root {
   /* Colors */
-  --color-bg: #0B0E1A;
-  --color-card: #131729;
-  --color-elevated: #1C2240;
+  --color-bg: #f8fafc;
+  --color-card: #ffffff;
+  --color-elevated: #f1f5f9;
   --color-accent-primary: #7C3AED;
   --color-accent-secondary: #EC4899;
-  --color-text: #F0EBE3;
-  --color-text-muted: #9CA3B8;
-  --color-text-hint: #5B6380;
-  --color-border-default: rgba(255,255,255,0.08);
-  --color-border-hover: rgba(255,255,255,0.16);
+  --color-text: #111827;
+  --color-text-muted: #6B7280;
+  --color-text-hint: #9CA3AF;
+  --color-border-default: rgba(15,23,42,0.08);
+  --color-border-hover: rgba(15,23,42,0.12);
   
   /* Model Colors */
   --color-model-mj: #7C3AED;
@@ -37,7 +37,7 @@ html {
 }
 
 body {
-  @apply bg-[#0B0E1A] text-[#F0EBE3] font-sans;
+  @apply bg-white text-slate-900 font-sans;
 }
 
 /* ========== TYPOGRAPHY ========== */
@@ -166,52 +166,52 @@ a, button {
 
   /* Dark-mode-first design tokens */
   :root {
-    color-scheme: dark;
+    color-scheme: light;
 
     /* Background colors */
-    --bg-primary: #0b0e1a;
-    --bg-secondary: #131729;
-    --bg-tertiary: #1c2240;
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e2e8f0;
 
     /* Accent colors */
     --accent-primary: #7c3aed;
     --accent-secondary: #ec4899;
 
     /* Text colors */
-    --text-primary: #f0ebe3;
-    --text-secondary: #9ca3b8;
-    --text-tertiary: #5b6380;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-tertiary: #6b7280;
 
     /* Borders */
-    --border-default: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.16);
+    --border-default: rgba(15, 23, 42, 0.08);
+    --border-hover: rgba(15, 23, 42, 0.12);
 
     /* Model-specific tokens */
-    --model-midjourney-bg: #2d1b69;
-    --model-midjourney-text: #a78bfa;
+    --model-midjourney-bg: #ede9fe;
+    --model-midjourney-text: #7c3aed;
     --model-midjourney-border: #7c3aed;
 
-    --model-flux-bg: #0d3d2e;
-    --model-flux-text: #34d399;
+    --model-flux-bg: #dcfce7;
+    --model-flux-text: #10b981;
     --model-flux-border: #10b981;
 
-    --model-dalle-bg: #1e3a5f;
-    --model-dalle-text: #60a5fa;
+    --model-dalle-bg: #dbeafe;
+    --model-dalle-text: #3b82f6;
     --model-dalle-border: #3b82f6;
 
-    --model-sd-bg: #3d1f00;
-    --model-sd-text: #fb923c;
+    --model-sd-bg: #ffedd5;
+    --model-sd-text: #f97316;
     --model-sd-border: #f97316;
 
     /* Legacy CSS variables for compatibility */
-    --ui-bg: #0b0e1a;
-    --ui-bg-alt: #131729;
-    --ui-surface: #131729;
-    --ui-border: rgba(255, 255, 255, 0.08);
-    --ui-border-strong: rgba(255, 255, 255, 0.16);
-    --ui-text: #f0ebe3;
-    --ui-text-muted: #9ca3b8;
-    --ui-text-subtle: #5b6380;
+    --ui-bg: #f8fafc;
+    --ui-bg-alt: #ffffff;
+    --ui-surface: #ffffff;
+    --ui-border: rgba(15, 23, 42, 0.08);
+    --ui-border-strong: rgba(15, 23, 42, 0.16);
+    --ui-text: #111827;
+    --ui-text-muted: #6b7280;
+    --ui-text-subtle: #9ca3af;
     --ui-accent: #7c3aed;
     --ui-accent-hover: #6d28d9;
     --ui-accent-soft: rgba(124, 58, 237, 0.12);

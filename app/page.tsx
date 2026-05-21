@@ -49,7 +49,7 @@ export default async function HomePage() {
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900">
+    <div className="min-h-screen bg-slate-50">
       {/* ===== HERO SECTION ===== */}
       <HomeHeroClient totalPrompts={stats.total} totalModels={stats.models} />
 
@@ -61,12 +61,12 @@ export default async function HomePage() {
         <div className="mb-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="text-[40px] font-black text-white">Latest prompts</h2>
-              <p className="mt-2 text-lg text-slate-400 max-w-2xl">
+              <h2 className="text-[40px] font-black text-slate-900">Latest prompts</h2>
+              <p className="mt-2 text-lg text-slate-600 max-w-2xl">
                 Discover the freshest prompt ideas for AI art, photography compositions, cinematic scenes, and product visuals.
               </p>
             </div>
-            <a href="/prompts" className="inline-flex h-12 items-center justify-center rounded-full border border-white/[0.08] bg-white/5 px-6 text-sm font-semibold text-white transition hover:border-[#7c3aed] hover:bg-white/10">
+            <a href="/prompts" className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-900 transition hover:border-[#7c3aed] hover:bg-slate-100">
               View all prompts →
             </a>
           </div>
@@ -87,12 +87,12 @@ export default async function HomePage() {
           <div className="mb-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 className="text-[40px] font-black text-white mb-2">Browse by category</h2>
-                <p className="text-lg text-slate-400 max-w-2xl">
+                <h2 className="text-[40px] font-black text-slate-900 mb-2">Browse by category</h2>
+                <p className="text-lg text-slate-600 max-w-2xl">
                   Jump into categories tailored for portraits, landscapes, product shots, sci-fi art, and more.
                 </p>
               </div>
-              <a href="/categories" className="inline-flex h-12 items-center justify-center rounded-full border border-white/[0.08] bg-white/5 px-6 text-sm font-semibold text-white transition hover:border-[#7c3aed] hover:bg-white/10">
+              <a href="/categories" className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-900 transition hover:border-[#7c3aed] hover:bg-slate-100">
                 Explore categories →
               </a>
             </div>
@@ -149,10 +149,10 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 hover:border-slate-600 transition text-center">
+    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm transition text-center">
       <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-      <p className="text-slate-400">{description}</p>
+      <h3 className="text-xl font-bold text-slate-900 mb-2">{title}</h3>
+      <p className="text-slate-600">{description}</p>
     </div>
   );
 }

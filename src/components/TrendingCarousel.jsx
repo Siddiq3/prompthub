@@ -65,7 +65,7 @@ export default function TrendingCarousel({ prompts = [], title = "🔥 Trending 
   ];
 
   return (
-    <section className="relative w-full py-12 px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
       <div className="max-w-7xl mx-auto">
         {/* ===== HEADER ===== */}
         <motion.div
@@ -73,10 +73,10 @@ export default function TrendingCarousel({ prompts = [], title = "🔥 Trending 
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-2">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-2">
             {title}
           </h2>
-          <p className="text-sm text-slate-400 flex items-center justify-center gap-2">
+          <p className="text-sm text-slate-600 flex items-center justify-center gap-2">
             <motion.span
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1, repeat: Infinity }}
@@ -100,7 +100,7 @@ export default function TrendingCarousel({ prompts = [], title = "🔥 Trending 
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Main carousel */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur border border-slate-700/50 p-1">
+          <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 p-1 shadow-sm">
             <div className="relative h-96 sm:h-[500px] overflow-hidden">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
@@ -192,10 +192,10 @@ export default function TrendingCarousel({ prompts = [], title = "🔥 Trending 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 p-6 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-xl backdrop-blur"
+          className="mt-8 p-6 bg-slate-100 border border-slate-200 rounded-xl"
         >
-          <p className="text-sm text-purple-300 font-semibold mb-2">💡 Pro Tip</p>
-          <p className="text-white">
+          <p className="text-sm text-purple-700 font-semibold mb-2">💡 Pro Tip</p>
+          <p className="text-slate-900">
             This prompt is trending {" "}
             <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
               340% more this week
@@ -291,7 +291,7 @@ function NavigationArrow({ onClick, direction, className }) {
       onClick={onClick}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className={`absolute top-1/2 -translate-y-1/2 z-20 ${className} p-3 bg-white/20 hover:bg-white/30 backdrop-blur border border-white/30 rounded-full text-white transition-all duration-300 opacity-0 group-hover:opacity-100`}
+      className={`absolute top-1/2 -translate-y-1/2 z-20 ${className} p-3 bg-white/90 hover:bg-white transition-all duration-300 border border-slate-200 rounded-full text-slate-900 opacity-0 group-hover:opacity-100`}
     >
       {direction === "left" ? (
         <FiChevronLeft className="w-6 h-6" />

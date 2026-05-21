@@ -26,12 +26,12 @@ export default function NewsletterCTA() {
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-950 dark:to-slate-900">
+    <section className="py-16 sm:py-24 bg-gradient-to-r from-slate-100 to-slate-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
           Never miss new prompts
         </h2>
-        <p className="text-lg text-slate-300 mb-8">
+        <p className="text-lg text-slate-600 mb-8">
           Get the latest AI prompts delivered to your inbox weekly
         </p>
 
@@ -42,7 +42,7 @@ export default function NewsletterCTA() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="flex-1 px-4 py-3 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-3 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             disabled={loading}
           />
           <button
