@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { FiCopy, FiHeart } from 'react-icons/fi';
+import { FiHeart } from 'react-icons/fi';
+import { ArrowRight } from 'lucide-react';
 import { Prompt } from '@/src/types';
-import { getPromptUrl, copyToClipboard } from '@/src/utils/prompts';
+import { getPromptUrl } from '@/src/utils/prompts';
 
 interface PromptCardProps {
   prompt: Prompt;
@@ -40,7 +41,6 @@ const ASPECT_RATIO_MAP: Record<string, string> = {
 
 export default function PromptCard({ prompt, variant = 'grid', isSaved: externalSaved, onSave, savedPrompts }: PromptCardProps) {
   const [isSaved, setIsSaved] = useState(false);
-  const [copyState, setCopyState] = useState<'idle' | 'copying' | 'success'>('idle');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -89,32 +89,22 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
     }
   };
 
-  const handleCopy = async () => {
-    setCopyState('copying');
-    const success = await copyToClipboard(prompt.prompt);
-    if (success) {
-      setCopyState('success');
-      window.setTimeout(() => setCopyState('idle'), 1800);
-    } else {
-      setCopyState('idle');
-    }
-  };
-
   if (!mounted) return null;
 
   const modelColor = MODEL_COLORS[prompt.model] || { bg: '#6B7280', text: 'white' };
   const aspectClass = ASPECT_RATIO_MAP[prompt.aspectRatio] || 'aspect-[3/4]';
+  const tags = Array.isArray(prompt.tags) ? prompt.tags : [];
 
   if (variant === 'list') {
     return (
-      <div className="flex gap-4 p-4 rounded-[12px] bg-[#131729] border border-white/[0.08] hover:border-[rgba(124,58,237,0.5)] transition-all duration-300">
+      <div className="group flex gap-4 p-4 rounded-[12px] bg-[#131729] border border-white/[0.08] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
         <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-slate-900 flex-shrink-0">
           <Image src={prompt.previewImage} alt={prompt.title} fill className="object-cover" />
         </div>
 
         <div className="flex-1 min-w-0">
-          <Link href={getPromptUrl(prompt.slug)}>
-            <h3 className="text-sm font-semibold text-[#F0EBE3] truncate hover:text-[#7C3AED] transition-colors cursor-pointer">
+          <Link href={getPromptUrl(prompt.slug)} prefetch={true} className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+            <h3 className="text-sm font-semibold text-[#F0EBE3] truncate hover:text-[#7C3AED] transition-colors">
               {prompt.title}
             </h3>
           </Link>
@@ -134,17 +124,18 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
             className="p-2 rounded-full bg-white/5 text-white transition hover:bg-white/10"
             aria-label={isSaved ? 'Remove saved prompt' : 'Save prompt'}
           >
-            {isSaved ? <FiHeart className="w-5 h-5 fill-red-500 text-red-500" /> : <FiHeart className="w-5 h-5 text-white" />}
+            <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-white'}`} />
           </button>
-          <button
-            type="button"
-            onClick={handleCopy}
-            className={`h-7 rounded px-3 text-[11px] font-semibold transition ${
-              copyState === 'success' ? 'bg-green-600 text-white' : 'bg-[#7C3AED] text-white hover:bg-[#6D28D9]'
-            }`}
+          <Link
+            href={getPromptUrl(prompt.slug)}
+            prefetch={true}
+            aria-label={`Open ${prompt.title}`}
+            className="inline-flex items-center gap-2 rounded-xl bg-[#7C3AED] px-3 py-2 text-[11px] font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            {copyState === 'success' ? '✓' : copyState === 'copying' ? 'Copying' : 'Copy'}
-          </button>
+            <span className="hidden sm:inline">Open Prompt</span>
+            <span className="sm:hidden">Open</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     );
@@ -154,7 +145,7 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative overflow-hidden rounded-[12px] bg-[#131729] border border-white/[0.08] transition-all duration-300 hover:border-[rgba(124,58,237,0.5)]"
+      className="group relative overflow-hidden rounded-[12px] bg-[#131729] border border-white/[0.08] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
     >
       <div className={`relative overflow-hidden bg-slate-900 ${aspectClass}`}>
         <div className="absolute inset-0 transition-transform duration-300 ease-[ease] group-hover:scale-105">
@@ -176,16 +167,8 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
           className="absolute top-3 right-3 z-20 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60"
           aria-label={isSaved ? 'Remove saved prompt' : 'Save prompt'}
         >
-          {isSaved ? <FiHeart className="w-5 h-5 fill-red-500 text-red-500" /> : <FiHeart className="w-5 h-5 text-white" />}
+          <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-white'}`} />
         </button>
-
-        <Link
-          href={getPromptUrl(prompt.slug)}
-          className="absolute inset-0 z-10"
-          aria-label={`View details for ${prompt.title}`}
-        >
-          <span className="sr-only">View details for {prompt.title}</span>
-        </Link>
 
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition duration-300 group-hover:bg-black/60">
           <span className="opacity-0 text-white font-medium transition duration-300 group-hover:opacity-100">
@@ -194,8 +177,8 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
         </div>
       </div>
 
-      <div className="p-4 pb-0">
-        <Link href={getPromptUrl(prompt.slug)}>
+      <div className="p-4 pb-0 flex flex-col gap-3 h-full">
+        <Link href={getPromptUrl(prompt.slug)} prefetch={true} className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
           <h3 className="text-[14px] font-semibold text-[#F0EBE3] truncate hover:text-[#7C3AED] transition-colors cursor-pointer">
             {prompt.title}
           </h3>
@@ -203,36 +186,38 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
 
         <p className="text-[11px] text-white/60 mt-2">{prompt.category}</p>
 
-        <p className="text-[12px] text-[#9CA3B8] italic line-clamp-2 mt-3">
+        <p className="text-[12px] text-[#9CA3B8] italic line-clamp-2 mt-3 flex-1">
           {prompt.prompt}
         </p>
 
-        <div className="mt-3 flex flex-wrap gap-2">
-          {prompt.tags.slice(0, 3).map((tag) => (
+        <div className="mt-auto flex flex-wrap gap-2">
+          {tags.slice(0, 3).map((tag) => (
             <span key={tag} className="text-[10px] rounded-full bg-[#1C2240] px-2 py-1 text-white/70">
               #{tag}
             </span>
           ))}
-          {prompt.tags.length > 3 && (
+          {tags.length > 3 && (
             <span className="text-[10px] rounded-full bg-[#1C2240] px-2 py-1 text-white/70">
-              +{prompt.tags.length - 3} more
+              +{tags.length - 3} more
             </span>
           )}
         </div>
       </div>
 
-      <div className="border-t border-white/[0.06] px-4 py-3 flex items-center justify-between">
-        <span className="text-[11px] text-white/60">{prompt.copies || 0} copies</span>
-        <button
-          type="button"
-          onClick={handleCopy}
-          className={`h-7 inline-flex items-center gap-1.5 rounded px-3 text-[11px] font-semibold transition ${
-            copyState === 'success' ? 'bg-green-600 text-white' : 'bg-[#7C3AED] text-white hover:bg-[#6D28D9]'
-          }`}
-        >
-          <FiCopy className="w-3.5 h-3.5" />
-          <span>{copyState === 'success' ? 'Copied' : 'Copy'}</span>
-        </button>
+      <div className="border-t border-white/[0.06] px-4 py-4 bg-[#0F162A]">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-[11px] text-white/60">{prompt.copies || 0} copies</span>
+          <Link
+            href={getPromptUrl(prompt.slug)}
+            prefetch={true}
+            aria-label={`Open ${prompt.title}`}
+            className="group inline-flex items-center gap-2 rounded-xl bg-[#7C3AED] px-4 py-2 text-[12px] font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          >
+            <span className="hidden sm:inline">Open Prompt</span>
+            <span className="sm:hidden">Open</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

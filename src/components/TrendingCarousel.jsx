@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { ArrowRight } from "lucide-react";
 
 /**
  * HIGH-DOPAMINE TRENDING CAROUSEL
@@ -266,9 +267,13 @@ function FeaturedCard({ prompt }) {
           >
             <Link
               href={`/prompt/${prompt.slug}`}
-              className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              prefetch={true}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              aria-label={`Open ${prompt.title}`}
             >
-              Copy This Prompt →
+              <span className="hidden sm:inline">Open Prompt</span>
+              <span className="sm:hidden">Open</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
         </motion.div>
