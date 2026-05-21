@@ -1,6 +1,14 @@
 import "./globals.css";
 import { Providers } from "./providers";
 import ClientLayout from "./client-layout";
+import { Plus_Jakarta_Sans } from "next/font/google";
+
+const font = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata = {
   title: "PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
@@ -18,7 +26,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased overflow-x-hidden" suppressHydrationWarning>
-      <body className="h-full overflow-x-hidden bg-site text-slate-900 transition-colors duration-300">
+      <body className={`${font.variable} font-sans antialiased h-full overflow-x-hidden bg-site text-slate-900 transition-colors duration-300`}>
         <Providers>
           <ClientLayout>{children}</ClientLayout>
         </Providers>

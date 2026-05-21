@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { ArrowRight } from "lucide-react";
@@ -220,11 +221,14 @@ function FeaturedCard({ prompt }) {
         transition={{ duration: 3 }}
         className="absolute inset-0"
       >
-        <img
-          src={prompt.previewImage}
-          alt={prompt.title}
-          className="w-full h-full object-cover"
-        />
+        <div className="relative h-full w-full">
+          <Image
+            src={prompt.previewImage}
+            alt={prompt.title}
+            fill
+            className="object-cover"
+          />
+        </div>
       </motion.div>
 
       {/* Overlay gradient */}

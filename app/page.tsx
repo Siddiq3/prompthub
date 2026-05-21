@@ -6,25 +6,27 @@ import TrendingCarousel from '@/src/components/TrendingCarousel';
 import PromptGrid from '@/src/components/PromptGrid';
 import CategoryShowcase from '@/src/components/CategoryShowcase';
 import NewsletterCTA from '@/src/components/NewsletterCTA';
-import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: 'PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion',
-  description:
-    'Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Get premium prompts optimized for cinematic results.',
-  keywords: [
-    'AI prompts',
-    'Midjourney prompts',
-    'DALL-E prompts',
-    'Flux prompts',
-    'Stable Diffusion prompts',
-    'image generation',
-    'prompt engineering',
-    'AI art',
-  ],
-};
+export function generateMetadata() {
+  return {
+    title: 'PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion',
+    description:
+      'Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Get premium prompts optimized for cinematic results.',
+    keywords: [
+      'AI prompts',
+      'Midjourney prompts',
+      'DALL-E prompts',
+      'Flux prompts',
+      'Stable Diffusion prompts',
+      'image generation',
+      'prompt engineering',
+      'AI art',
+    ],
+  };
+}
+
 
 export default async function HomePage() {
   const prompts: Prompt[] = await getPrompts();

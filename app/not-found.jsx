@@ -1,7 +1,9 @@
-export const metadata = {
-  title: "Page Not Found - PhotoPromptsHub",
-  description: "The page you're looking for doesn't exist.",
-};
+export function generateMetadata() {
+  return {
+    title: "Page Not Found - PhotoPromptsHub",
+    description: "The page you're looking for doesn't exist.",
+  };
+}
 
 export default function NotFound() {
   return (

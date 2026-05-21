@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiCopy, FiHeart, FiShare2, FiExternalLink, FiArrowRight } from "react-icons/fi";
@@ -60,14 +61,17 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
       >
         {/* Main image with fallback */}
         {prompt.previewImage ? (
-          <img
-            src={prompt.previewImage}
-            alt={prompt.title}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.target.style.display = "none";
-            }}
-          />
+          <div className="relative h-full w-full">
+            <Image
+              src={prompt.previewImage}
+              alt={prompt.title}
+              fill
+              className="object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          </div>
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
             <span className="text-4xl font-bold text-slate-600">

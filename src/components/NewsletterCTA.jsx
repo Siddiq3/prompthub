@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function NewsletterCTA() {
   const [email, setEmail] = useState("");
@@ -26,7 +27,13 @@ export default function NewsletterCTA() {
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-r from-slate-100 to-slate-200">
+    <motion.section
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="py-16 sm:py-24 bg-gradient-to-r from-slate-100 to-slate-200"
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
           Never miss new prompts

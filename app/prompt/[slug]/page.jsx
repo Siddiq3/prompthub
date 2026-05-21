@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPromptBySlug, getPrompts } from "@/src/lib/data";
@@ -21,11 +22,20 @@ export default async function PromptDetailsPage({ params }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
         {/* Left: Full-height Image */}
         <div className="relative lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] bg-[#131729] flex items-center justify-center overflow-hidden">
-          <img
-            src={prompt.previewImage}
-            alt={prompt.title}
-            className="w-full h-full object-cover"
-          />
+          <div className="relative h-full w-full">
+            {prompt.previewImage ? (
+              <Image
+                src={prompt.previewImage}
+                alt={prompt.title}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center bg-slate-800 text-slate-200">
+                No preview available
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right: Action Panel */}
@@ -34,9 +44,13 @@ export default async function PromptDetailsPage({ params }) {
           <div className="border-b border-[rgba(255,255,255,0.08)] px-6 lg:px-8 py-8">
             <div className="max-w-2xl">
               {/* Breadcrumb */}
-              <div className="flex items-center gap-2 mb-4 text-sm text-[#9CA3B8]">
-                <Link href="/categories" className="hover:text-[#F0EBE3] transition">
-                  Categories
+              <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-[#9CA3B8]">
+                <Link href="/" className="hover:text-[#F0EBE3] transition">
+                  Home
+                </Link>
+                <span>/</span>
+                <Link href="/prompts" className="hover:text-[#F0EBE3] transition">
+                  Prompts
                 </Link>
                 <span>/</span>
                 <Link
@@ -45,16 +59,21 @@ export default async function PromptDetailsPage({ params }) {
                 >
                   {prompt.category}
                 </Link>
+                <span>/</span>
+                <span className="text-white/70">{prompt.title}</span>
               </div>
 
               <h1 className="text-4xl font-clash font-bold text-[#F0EBE3] mb-4">
                 {prompt.title}
               </h1>
 
-              {/* Model Badge */}
-              <div className="inline-block px-3 py-1 rounded-full bg-[#1C2240] text-xs font-medium text-[#7C3AED] mb-6">
-                {prompt.modelLabel || prompt.platform}
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#1C2240] px-3 py-1 text-xs font-medium text-[#7C3AED] mb-6">
+                {prompt.modelLabel || prompt.platform || prompt.model}
               </div>
+
+              <p className="max-w-2xl text-base leading-8 text-[#CBD5E1]">
+                This prompt is crafted to help you generate polished, high-quality AI imagery with a modern, visually striking look. It works especially well for {prompt.category?.toLowerCase() || 'photo'} compositions and is tuned for use with {prompt.modelLabel || prompt.model || 'top AI image models'}. Use it when you want reliable, creative results without manual prompt experimentation.
+              </p>
             </div>
           </div>
 
@@ -68,6 +87,28 @@ export default async function PromptDetailsPage({ params }) {
                 pageUrl={`${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/prompt/${slug}`}
               />
             </div>
+
+            <section className="max-w-2xl space-y-6 text-[#CBD5E1]">
+              <h2 className="text-2xl font-semibold text-[#F0EBE3]">About this prompt</h2>
+              <p>
+                This prompt has been shaped to deliver crisp, high-impact visuals with clear subject focus and strong atmosphere. It works best when you want a refined creative output that retains consistent styling across multiple generations. The structure balances descriptive detail with flexible composition guidance, so you can adapt the prompt quickly for portraits, product shots, landscapes, or editorial scenes.
+              </p>
+              <p>
+                When you use this prompt, start with the recommended model and adjust the color emphasis or lighting keywords to match your desired mood. The prompt is ideal for {prompt.modelLabel || prompt.model || 'modern AI visual engines'}, since it gives you a strong base while leaving enough room for the model to interpret artistic flourishes and realistic textures.
+              </p>
+              <p>
+                The primary goal is to get a clean first pass that needs minimal revision. Use the prompt for concept art, stylized photo-realistic scenes, social media imagery, or marketing visuals. The prompt is especially useful when you need consistent results across multiple designs, because it prioritizes a reliable structure over random output.
+              </p>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h3 className="text-xl font-semibold text-[#F0EBE3] mb-3">Tips for best results</h3>
+                <ul className="list-inside list-disc space-y-3 text-[#CBD5E1]">
+                  <li>Use the prompt as a starting point and add one or two style modifiers like "cinematic lighting" or "soft film grain."</li>
+                  <li>Keep your subject and mood consistent across variations to maintain visual coherence.</li>
+                  <li>For more dramatic results, boost contrast with words like "moody shadows" or "high-end editorial."</li>
+                  <li>Adjust the model seed or prompt strength if your tool supports it to fine-tune detail and texture.</li>
+                </ul>
+              </div>
+            </section>
 
             {/* Tags */}
             {(prompt.displayTags || []).length > 0 && (

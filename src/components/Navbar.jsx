@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { FaBookmark, FaSearch } from "react-icons/fa";
 import GlobalSearch from "./GlobalSearch";
 
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { scrollY } = useScroll();
+  const py = useTransform(scrollY, [0, 80], ['1rem', '0.5rem']);
+  const bg = useTransform(scrollY, [0, 80], ['rgba(0,0,0,0)', 'rgba(10,10,20,0.85)']);
+  const blur = useTransform(scrollY, [0, 80], ['blur(0px)', 'blur(12px)']);
 
   // ⌘K keyboard shortcut
   useEffect(() => {
@@ -22,7 +27,10 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 border-b border-[rgba(255,255,255,0.08)] bg-[#0B0E1A]/95 backdrop-blur-md">
+      <motion.header
+        style={{ paddingTop: py, paddingBottom: py, backgroundColor: bg, backdropFilter: blur }}
+        className="fixed top-0 left-0 right-0 z-50 transition-shadow border-b border-[rgba(255,255,255,0.08)]"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
@@ -75,7 +83,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </nav>
+      </motion.header>
 
       {/* Global Search Modal */}
       <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />

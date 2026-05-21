@@ -2,10 +2,12 @@ import Link from "next/link";
 import { buildCollectionHighlights } from "@/src/lib/content";
 import { getPrompts } from "@/src/lib/data";
 
-export const metadata = {
-  title: "Collections - PhotoPromptsHub",
-  description: "Browse curated prompt collections for specific use cases and styles.",
-};
+export function generateMetadata() {
+  return {
+    title: "Collections - PhotoPromptsHub",
+    description: "Browse curated prompt collections for specific use cases and styles.",
+  };
+}
 
 export default async function CollectionsPage() {
   const prompts = await getPrompts();

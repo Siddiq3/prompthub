@@ -143,9 +143,12 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="group relative overflow-hidden rounded-[12px] bg-white border border-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+      initial={{ opacity: 0, y: 40, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      whileHover={{ scale: 1.03, y: -4 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      className="group relative overflow-hidden rounded-[12px] bg-white border border-slate-200 transition-all duration-300 hover:shadow-2xl"
     >
       <div className={`relative overflow-hidden bg-slate-100 ${aspectClass}`}>
         <div className="absolute inset-0 transition-transform duration-300 ease-[ease] group-hover:scale-105">

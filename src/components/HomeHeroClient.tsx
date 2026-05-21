@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { FiSearch } from 'react-icons/fi';
+import { AnimatedStat } from '@/src/components/AnimatedStat';
+import { fadeUp, staggerContainer } from '@/src/components/motion/variants';
 
 interface HomeHeroClientProps {
   totalPrompts: number;
@@ -48,21 +50,32 @@ export default function HomeHeroClient({ totalPrompts, totalModels }: HomeHeroCl
       />
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 px-4 sm:px-6 lg:px-8 xl:flex-row xl:items-center">
-        <div className="xl:w-[60%]">
-          <span className="inline-flex rounded-full bg-[#7C3AED]/20 px-3 py-1 text-sm font-semibold text-[#7C3AED]">
-            204+ Premium Prompts
-          </span>
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="xl:w-[60%]"
+        >
+          <motion.div variants={fadeUp}>
+            <span className="inline-flex rounded-full bg-[#7C3AED]/20 px-3 py-1 text-sm font-semibold text-[#7C3AED]">
+              204+ Premium Prompts
+            </span>
+          </motion.div>
 
-          <h1 className="mt-6 font-heading text-[80px] font-bold leading-[0.95] tracking-[-0.03em] text-[#F0EBE3] sm:text-[72px]">
-            Create stunning AI images —
-            <span className="block text-[#EC4899]">instantly.</span>
-          </h1>
+          <motion.div variants={fadeUp}>
+            <h1 className="mt-6 font-heading text-[80px] font-bold leading-[0.95] tracking-[-0.03em] text-[#F0EBE3] sm:text-[72px]">
+              Create stunning AI images —
+              <span className="block text-[#EC4899]">instantly.</span>
+            </h1>
+          </motion.div>
 
-          <p className="mt-5 max-w-2xl text-[18px] leading-8 text-[#9CA3B8]">
-            Curated prompts for Midjourney, Flux, DALL·E & Stable Diffusion. Copy, paste, create.
-          </p>
+          <motion.div variants={fadeUp}>
+            <p className="mt-5 max-w-2xl text-[18px] leading-8 text-[#9CA3B8]">
+              Curated prompts for Midjourney, Flux, DALL·E & Stable Diffusion. Copy, paste, create.
+            </p>
+          </motion.div>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-4">
             <Link
               href="/prompts"
               className="inline-flex h-12 items-center justify-center rounded-full bg-[#7C3AED] px-7 text-base font-semibold text-white shadow-lg shadow-[#7C3AED]/20 transition hover:bg-[#6D28D9]"
@@ -75,25 +88,29 @@ export default function HomeHeroClient({ totalPrompts, totalModels }: HomeHeroCl
             >
               View Categories
             </Link>
-          </div>
+          </motion.div>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-[18px] border border-white/[0.08] bg-white/5 px-5 py-6 text-white">
-              <div className="text-[40px] font-bold text-[#F0EBE3]">204</div>
-              <div className="mt-2 text-sm uppercase tracking-[0.24em] text-[#9CA3B8]">Prompts</div>
-            </div>
-            <div className="rounded-[18px] border border-white/[0.08] bg-white/5 px-5 py-6 text-white">
-              <div className="text-[40px] font-bold text-[#F0EBE3]">4</div>
-              <div className="mt-2 text-sm uppercase tracking-[0.24em] text-[#9CA3B8]">AI Models</div>
-            </div>
-            <div className="rounded-[18px] border border-white/[0.08] bg-white/5 px-5 py-6 text-white">
-              <div className="text-[40px] font-bold text-[#F0EBE3]">50K+</div>
-              <div className="mt-2 text-sm uppercase tracking-[0.24em] text-[#9CA3B8]">Creators</div>
-            </div>
-          </div>
-        </div>
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3"
+          >
+            <AnimatedStat value="204" label="Prompts" />
+            <AnimatedStat value="4" label="AI Models" />
+            <AnimatedStat value="50K+" label="Creators" />
+          </motion.div>
+        </motion.div>
 
         <div className="xl:w-[40%]">
+          <motion.div
+            className="hidden lg:flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          >
+            <div className="w-80 h-80 rounded-full bg-purple-600/20 blur-3xl animate-pulse" />
+          </motion.div>
+
+          {/* HERO PREVIEW CARDS — commented out, re-enable when images are fixed
           <div className="relative mx-auto h-[420px] w-full max-w-[360px]">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -119,7 +136,7 @@ export default function HomeHeroClient({ totalPrompts, totalModels }: HomeHeroCl
             >
               <img src={sampleImages[1]} alt="Flux preview" className="h-full w-full object-cover" />
               <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/90 to-transparent" />
-              <span className="absolute left-3 bottom-3 rounded-full bg-[#0D3D2E]/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#34D399]">
+              <span className="absolute left-3 bottom-3 rounded-full bg-[#0D3A5F]/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#34D399]">
                 Flux
               </span>
             </motion.div>
@@ -138,6 +155,7 @@ export default function HomeHeroClient({ totalPrompts, totalModels }: HomeHeroCl
               </span>
             </motion.div>
           </div>
+          */}
         </div>
       </div>
     </section>

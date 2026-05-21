@@ -1,34 +1,25 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
-import { FiSearch } from "react-icons/fi";
-import StatsCounter from "./StatsCounter";
+import { AnimatedStat } from "@/src/components/AnimatedStat";
+import { fadeUp, staggerContainer } from "@/src/components/motion/variants";
 
 export default function HomeHeroClient({ totalPrompts = 204 }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const mosaicRef = useRef(null);
-
-  const sampleImages = [
-    "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@latest/previews/p001.webp",
-    "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@latest/previews/p002.webp",
-    "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@latest/previews/p003.webp",
-  ];
+  const heroRef = useRef(null);
 
   useEffect(() => {
-    const el = mosaicRef.current;
+    const el = heroRef.current;
     if (!el) return;
 
     const handleMove = (e) => {
       const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / rect.width;
-      const dy = (e.clientY - cy) / rect.height;
-      const max = 10; // px
-
-      el.style.setProperty("--mx", `${-dx * max}px`);
-      el.style.setProperty("--my", `${-dy * max}px`);
+      const dx = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const dy = (e.clientY - rect.top - rect.height / 2) / rect.height;
+      const max = 10;
+      el.style.setProperty("--x-offset", `${dx * max}px`);
+      el.style.setProperty("--y-offset", `${dy * max}px`);
     };
 
     window.addEventListener("mousemove", handleMove);
@@ -36,65 +27,73 @@ export default function HomeHeroClient({ totalPrompts = 204 }) {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden py-12 bg-slate-50">
-      {/* Violet radial glow top-left */}
-      <div className="pointer-events-none absolute -left-36 -top-20 h-72 w-72 rounded-full" style={{ background: "rgba(124,58,237,0.15)", filter: 'blur(60px)' }} />
+    <section
+      ref={heroRef}
+      className="relative overflow-hidden bg-[#0B0E1A] py-16 sm:py-20"
+      style={{ "--x-offset": "0px", "--y-offset": "0px" }}
+    >
+      <div
+        className="pointer-events-none absolute -left-24 -top-20 h-72 w-72 rounded-full"
+        style={{ background: "rgba(124, 58, 237, 0.15)", filter: "blur(80px)" }}
+      />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[60%_40%] items-start">
-          {/* Left column */}
-          <div className="text-left">
-            <div className="inline-flex items-center gap-3">
-              <span className="inline-flex items-center rounded-full bg-[#7c3aed]/20 text-[#7c3aed] px-3 py-1 text-xs font-semibold">204+ Premium Prompts</span>
-            </div>
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-12 px-4 sm:px-6 lg:px-8 xl:flex-row xl:items-center">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="xl:w-[60%]"
+        >
+          <motion.div variants={fadeUp}>
+            <span className="inline-flex rounded-full bg-[#7C3AED]/20 px-3 py-1 text-sm font-semibold text-[#7C3AED]">
+              204+ Premium Prompts
+            </span>
+          </motion.div>
 
-            <h1 className="mt-6 font-heading font-bold text-[80px] leading-[0.95] text-slate-950">
+          <motion.div variants={fadeUp}>
+            <h1 className="mt-6 font-heading text-[80px] font-bold leading-[0.95] tracking-[-0.03em] text-[#F0EBE3] sm:text-[72px]">
               Create stunning AI images —
               <span className="block text-[#EC4899]">instantly.</span>
             </h1>
+          </motion.div>
 
-            <p className="mt-4 max-w-xl text-[18px] text-slate-600">
+          <motion.div variants={fadeUp}>
+            <p className="mt-5 max-w-2xl text-[18px] leading-8 text-[#9CA3B8]">
               Curated prompts for Midjourney, Flux, DALL·E & Stable Diffusion. Copy, paste, create.
             </p>
+          </motion.div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link href="/prompts" className="inline-flex h-12 items-center justify-center rounded-full bg-[#7c3aed] px-6 py-3 text-white text-lg font-semibold shadow-lg hover:bg-[#6d28d9] transition">
-                Browse Prompts <span className="ml-3">→</span>
-              </Link>
+          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/prompts"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-[#7C3AED] px-7 text-base font-semibold text-white shadow-lg shadow-[#7C3AED]/20 transition hover:bg-[#6D28D9]"
+            >
+              Browse Prompts →
+            </Link>
+            <Link
+              href="/categories"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-white/[0.08] bg-white/5 px-6 text-base font-semibold text-white transition hover:border-[#7C3AED] hover:bg-white/10"
+            >
+              View Categories
+            </Link>
+          </motion.div>
 
-              <Link href="/categories" className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 px-5 py-3 text-slate-900 text-lg font-medium hover:bg-slate-100 transition">
-                View Categories
-              </Link>
-            </div>
+          <motion.div variants={fadeUp} className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <AnimatedStat value="204" label="Prompts" />
+            <AnimatedStat value="4" label="AI Models" />
+            <AnimatedStat value="50K+" label="Creators" />
+          </motion.div>
+        </motion.div>
 
-            <div className="mt-8 w-full max-w-xl">
-              <StatsCounter />
-            </div>
-          </div>
-
-          {/* Right column - mosaic */}
-          <div className="relative" ref={mosaicRef} style={{ ['--mx']: '0px', ['--my']: '0px' }}>
-            <div className="relative h-full w-full" style={{ transform: 'translateZ(0)' }}>
-              <div className="absolute right-0 top-0 h-[320px] w-[260px]" style={{ transform: 'translate(var(--mx), var(--my))' }}>
-                <div className="relative h-full w-full">
-                  <div className="absolute -left-6 -top-6 h-44 w-32 rounded-[16px] overflow-hidden shadow-lg" style={{ transform: 'rotate(-2deg)' }}>
-                    <img src={sampleImages[0]} alt="preview-1" className="h-full w-full object-cover" />
-                    <span className="absolute left-2 bottom-2 rounded-md bg-[#2d1b69] px-2 py-1 text-xs text-[#a78bfa]">Midjourney</span>
-                  </div>
-
-                  <div className="absolute left-10 top-12 h-48 w-36 rounded-[16px] overflow-hidden shadow-2xl" style={{ transform: 'rotate(1deg)' }}>
-                    <img src={sampleImages[1]} alt="preview-2" className="h-full w-full object-cover" />
-                    <span className="absolute left-2 bottom-2 rounded-md bg-[#0d3d2e] px-2 py-1 text-xs text-[#34d399]">Flux</span>
-                  </div>
-
-                  <div className="absolute left-24 top-4 h-40 w-28 rounded-[16px] overflow-hidden shadow-lg" style={{ transform: 'rotate(-1deg)' }}>
-                    <img src={sampleImages[2]} alt="preview-3" className="h-full w-full object-cover" />
-                    <span className="absolute left-2 bottom-2 rounded-md bg-[#1e3a5f] px-2 py-1 text-xs text-[#60a5fa]">DALL·E</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="xl:w-[40%]">
+          <motion.div
+            className="hidden lg:flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+          >
+            <div className="w-80 h-80 rounded-full bg-purple-600/20 blur-3xl animate-pulse" />
+          </motion.div>
         </div>
       </div>
     </section>

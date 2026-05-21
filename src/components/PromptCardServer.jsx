@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { formatTagLabel } from "../lib/taxonomy";
@@ -37,11 +38,12 @@ export default function PromptCardServer({ prompt }) {
       <article className="flex flex-col h-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
         <div className="relative aspect-video overflow-hidden bg-slate-100 dark:bg-slate-700">
           {prompt.previewImage && (
-            <img
+            <Image
               src={prompt.previewImage}
               alt={prompt.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              loading="lazy"
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-300"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           )}
 

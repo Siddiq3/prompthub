@@ -18,10 +18,12 @@ const CATEGORY_EMOJI = {
 
 const EMAIL_ADDRESS = "hello@photopromptshub.com";
 
-export const metadata = {
-  title: "Categories - PhotoPromptsHub",
-  description: "Find the prompt categories that match your creative vision.",
-};
+export function generateMetadata() {
+  return {
+    title: "Categories - PhotoPromptsHub",
+    description: "Find the prompt categories that match your creative vision.",
+  };
+}
 
 const getPreviewImages = (category) => {
   return category.prompts.slice(0, 4).map((prompt) => prompt.previewImage);

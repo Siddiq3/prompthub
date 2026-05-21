@@ -1,5 +1,9 @@
+# *
 User-agent: *
 Allow: /
-Disallow: /saved
 
-Sitemap: https://photopromptshub.in/sitemap.xml
+# Host
+Host: https://www.photopromptshub.in
+
+# Sitemaps
+Sitemap: https://www.photopromptshub.in/sitemap.xml

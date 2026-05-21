@@ -2,10 +2,12 @@ import { getLatestPrompts } from "@/src/lib/content";
 import { getPrompts } from "@/src/lib/data";
 import PromptCard from "@/src/components/PromptCard";
 
-export const metadata = {
-  title: "Latest Prompts - PhotoPromptsHub",
-  description: "Latest AI image prompts added to PhotoPromptsHub.",
-};
+export function generateMetadata() {
+  return {
+    title: "Latest Prompts - PhotoPromptsHub",
+    description: "Latest AI image prompts added to PhotoPromptsHub.",
+  };
+}
 
 export default async function LatestPage() {
   const prompts = await getPrompts();

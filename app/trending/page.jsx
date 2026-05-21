@@ -2,10 +2,12 @@ import { getTrendingPrompts } from "@/src/lib/content";
 import { getPrompts } from "@/src/lib/data";
 import PromptCard from "@/src/components/PromptCard";
 
-export const metadata = {
-  title: "Trending Prompts - PhotoPromptsHub",
-  description: "The most popular and trending AI image prompts right now.",
-};
+export function generateMetadata() {
+  return {
+    title: "Trending Prompts - PhotoPromptsHub",
+    description: "The most popular and trending AI image prompts right now.",
+  };
+}
 
 export default async function TrendingPage() {
   const prompts = await getPrompts();

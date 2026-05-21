@@ -1,11 +1,14 @@
 "use client";
 
 import { Suspense } from "react";
+import { LazyMotion, domAnimation } from "framer-motion";
+import CookieConsent from "react-cookie-consent";
 import Navbar from "@/src/components/Navbar";
 import MobileBottomNav from "@/src/components/MobileBottomNav";
 import Footer from "@/src/components/Footer";
 import ScrollToTop from "@/src/components/ScrollToTop";
 import Toast from "@/src/components/Toast";
+import PageTransition from "@/src/components/PageTransition";
 
 function NavbarWithSuspense() {
   return (
@@ -30,12 +33,22 @@ export default function ClientLayout({ children }) {
         id="main-content"
         className="mx-auto w-full max-w-7xl px-4 pb-24 pt-8 sm:px-6 lg:pb-20 lg:px-8"
       >
-        {children}
+        <LazyMotion features={domAnimation}>
+          <PageTransition>{children}</PageTransition>
+        </LazyMotion>
       </main>
       <Footer />
       <MobileBottomNav />
       <ScrollToTop />
       <Toast />
+      <CookieConsent
+        location="bottom"
+        buttonText="Accept"
+        style={{ background: '#1a1a2e' }}
+        buttonStyle={{ background: '#7c3aed', color: '#fff', borderRadius: '8px' }}
+      >
+        This site uses cookies to improve your experience and serve relevant ads.
+      </CookieConsent>
     </>
   );
 }

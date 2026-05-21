@@ -1,7 +1,9 @@
-export const metadata = {
-  title: "DMCA - PhotoPromptsHub",
-  description: "DMCA notice and copyright information for PhotoPromptsHub.",
-};
+export function generateMetadata() {
+  return {
+    title: "DMCA Policy - PhotoPromptsHub",
+    description: "DMCA policy and copyright information for PhotoPromptsHub.",
+  };
+}
 
 export default function DmcaPage() {
   return (

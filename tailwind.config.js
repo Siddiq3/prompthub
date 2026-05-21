@@ -16,10 +16,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
-        heading: ["Clash Display", "Plus Jakarta Sans", "system-ui", "sans-serif"],
-        display: ["Clash Display", "system-ui", "sans-serif"],
-        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
+        sans: ['var(--font-sans)', 'sans-serif'],
+        heading: ['Clash Display', 'var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['Clash Display', 'system-ui', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
       },
       colors: {
         // Light-theme design tokens
