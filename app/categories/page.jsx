@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PRIMARY_CATEGORY_ORDER } from "@/src/lib/taxonomy";
 import { getCategories } from "@/src/lib/content";
 import { getPrompts } from "@/src/lib/data";
+import { SkeletonHeader, SkeletonCategoryGrid } from "@/src/components/SkeletonLoaders";
 
 const CATEGORY_EMOJI = {
   Portrait: "📸",
@@ -29,7 +31,7 @@ const getPreviewImages = (category) => {
   return category.prompts.slice(0, 4).map((prompt) => prompt.previewImage);
 };
 
-export default async function CategoriesPage() {
+async function CategoriesContent() {
   const prompts = await getPrompts();
   const categories = getCategories(prompts);
   const primaryCategorySet = new Set(PRIMARY_CATEGORY_ORDER);
@@ -37,17 +39,10 @@ export default async function CategoriesPage() {
   const otherCategories = categories.filter((category) => !primaryCategorySet.has(category.name));
 
   return (
-    <>
-      <div className="bg-white text-black py-16 sm:py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl font-clash font-bold mb-4 text-black">All categories</h1>
-          <p className="text-slate-700 text-lg leading-relaxed">Find the perfect prompts for your creative vision</p>
-        </div>
-      </div>
-
-      <div className="space-y-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12">
-        {categories.length > 0 ? (
+    <div className="space-y-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-12">
+      {categories.length > 0 ? (
         <div className="space-y-10">
+
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-violet-400">
               Featured categories
@@ -188,6 +183,29 @@ export default async function CategoriesPage() {
         </a>
       </section>
       </div>
+    );
+}
+
+export default function CategoriesPage() {
+  return (
+    <>
+      <div className="bg-white text-black py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl sm:text-5xl font-clash font-bold mb-4 text-black">All categories</h1>
+          <p className="text-slate-700 text-lg leading-relaxed">Find the perfect prompts for your creative vision</p>
+        </div>
+      </div>
+
+      <Suspense
+        fallback={
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <SkeletonHeader />
+            <SkeletonCategoryGrid count={8} />
+          </section>
+        }
+      >
+        <CategoriesContent />
+      </Suspense>
     </>
   );
 }
