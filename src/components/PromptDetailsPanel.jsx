@@ -117,9 +117,9 @@ export default function PromptDetailsPanel({ prompt, promptText, pageUrl }) {
         <button
           type="button"
           onClick={handleShare}
-          className={`inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-700 bg-transparent px-5 py-3 text-sm font-semibold text-slate-100 transition duration-200 hover:border-slate-500 hover:bg-slate-900`}
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-900 transition duration-200 hover:border-slate-400 hover:bg-slate-200`}
         >
-          <FaLink className="w-4 h-4" /> Share
+          <FaLink className="w-4 h-4" /> {linkCopied ? "Copied!" : "Share"}
         </button>
       </div>
 
