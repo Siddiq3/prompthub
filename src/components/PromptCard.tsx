@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { FiHeart } from 'react-icons/fi';
 import { Prompt } from '@/src/types';
 import { getPromptUrl } from '@/src/utils/prompts';
-import { useCopyCount } from '@/src/hooks/useCopyCount';
 
 interface PromptCardProps {
   prompt: Prompt;
@@ -42,7 +41,6 @@ const ASPECT_RATIO_MAP: Record<string, string> = {
 export default function PromptCard({ prompt, variant = 'grid', isSaved: externalSaved, onSave, savedPrompts }: PromptCardProps) {
   const [isSaved, setIsSaved] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { copyCount } = useCopyCount(prompt.id, prompt.copies || 0);
 
   useEffect(() => {
     const initializeCard = async () => {
@@ -135,7 +133,6 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
             >
               <FiHeart className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-slate-900'}`} />
             </button>
-            <span className="text-[11px] text-slate-500">{copyCount || 0} copies</span>
           </div>
         </div>
       </Link>
@@ -209,10 +206,6 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
               </span>
             )}
           </div>
-        </div>
-
-        <div className="border-t border-slate-200 px-4 py-4 bg-slate-50">
-          <span className="text-[11px] text-slate-500">{copyCount || 0} copies</span>
         </div>
       </motion.div>
     </Link>
