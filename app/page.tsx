@@ -17,19 +17,28 @@ export const dynamic = 'force-dynamic';
 
 export function generateMetadata() {
   return {
-    title: 'PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion',
+    title: 'PhotoPromptsHub - Trending AI Image Prompts for ChatGPT & Gemini',
+
     description:
-      'Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Get premium prompts optimized for cinematic results.',
+      'Discover trending AI image prompts for ChatGPT and Gemini, including cinematic portraits, Indian festival edits, fashion photography, viral social media styles, realistic AI portraits, couple poses, traditional looks, and creative photo ideas for Instagram, reels, and digital creators.',
+
     keywords: [
-      'AI prompts',
-      'Midjourney prompts',
-      'DALL-E prompts',
-      'Flux prompts',
-      'Stable Diffusion prompts',
-      'image generation',
-      'prompt engineering',
-      'AI art',
+      'AI image prompts',
+      'ChatGPT prompts',
+      'Gemini AI prompts',
+      'Indian AI prompts',
+      'trending AI prompts',
+      'viral photo prompts',
+      'AI photography prompts',
+      'Instagram AI prompts',
+      'traditional Indian AI prompts',
+      'fashion photography prompts',
+      'realistic AI portraits',
+      'couple photo prompts',
+      'festival AI prompts',
+      'creative AI image ideas',
     ],
+
   };
 }
 
@@ -54,9 +63,9 @@ async function LatestSection() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-[40px] font-black text-slate-900">Latest prompts</h2>
-            <p className="mt-2 text-lg text-slate-600 max-w-2xl">
+            {/* <p className="mt-2 text-lg text-slate-600 max-w-2xl">
               Discover the freshest prompt ideas for AI art, photography compositions, cinematic scenes, and product visuals.
-            </p>
+            </p> */}
           </div>
           <a href="/prompts" className="inline-flex h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-900 transition hover:border-[#7c3aed] hover:bg-slate-100">
             View all prompts →
@@ -120,9 +129,9 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* HERO CAROUSEL */}
-      <Suspense fallback={<SkeletonTrendingCarousel />}>
+      {/* <Suspense fallback={<SkeletonTrendingCarousel />}>
         <HeroSection />
-      </Suspense>
+      </Suspense> */}
 
       {/* LATEST PROMPTS SECTION */}
       <Suspense
