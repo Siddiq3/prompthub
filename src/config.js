@@ -1,53 +1,13 @@
-export const GITHUB_BOOTSTRAP_URL =
-  "https://raw.githubusercontent.com/Siddiq3/promtdata/main/latest.json";
+export const GITHUB_BOOTSTRAP_API_URL =
+  "https://api.github.com/repos/Siddiq3/promtdata/contents/latest.json";
 
-export const GITHUB_VERSION_URL = GITHUB_BOOTSTRAP_URL;
+export const GITHUB_VERSION_API_URL = GITHUB_BOOTSTRAP_API_URL;
 
-export const GITHUB_RAW_URL =
-  "https://raw.githubusercontent.com/Siddiq3/promtdata/main/promptdata.json";
+export const GITHUB_CONTENT_API_URL =
+  "https://api.github.com/repos/Siddiq3/promtdata/contents/promptdata.json";
 
 export const DEFAULT_PREVIEW_BASE_URL =
   "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/previews/";
-
-export const buildPromptDataUrl = (version = "") => {
-  const url = new URL(GITHUB_RAW_URL);
-
-  if (version) {
-    url.searchParams.set("v", String(version));
-  }
-
-  return url.toString();
-};
-
-export const fetchPromptDataManifest = async () => {
-  const response = await fetch(GITHUB_BOOTSTRAP_URL, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to load manifest: ${response.status}`);
-  }
-
-  return response.json();
-};
-
-export const resolvePromptDataUrl = async () => {
-  try {
-    const manifest = await fetchPromptDataManifest();
-    return manifest?.dataset?.cdnUrl || GITHUB_RAW_URL;
-  } catch {
-    return GITHUB_RAW_URL;
-  }
-};
-
-export const resolvePreviewBaseUrl = async () => {
-  try {
-    const manifest = await fetchPromptDataManifest();
-    return manifest?.previews?.cdnBaseUrl || DEFAULT_PREVIEW_BASE_URL;
-  } catch {
-    return DEFAULT_PREVIEW_BASE_URL;
-  }
-};
 
 export const SITE_NAME = "PhotoPromptsHub";
 export const SITE_DOMAIN = "photopromptshub.in";

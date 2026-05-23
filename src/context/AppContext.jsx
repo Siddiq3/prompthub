@@ -1,15 +1,9 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { GITHUB_RAW_URL } from "../config";
+import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 import { enrichPrompts, sortPromptsByDate } from "../lib/content";
 import { normalizePrompts } from "../utils/normalizePrompts";
-import {
-  fetchPromptData,
-  fetchPromptVersion,
-  getCachedPromptData,
-  setCachedPromptData
-} from "../utils/promptData";
+import { getCachedPromptData, setCachedPromptData } from "../utils/promptData";
 import {
   getCopyCounts,
   getSavedPrompts,
@@ -73,41 +67,37 @@ export function AppProvider({ children }) {
       setError("");
 
       try {
-        if (!GITHUB_RAW_URL || GITHUB_RAW_URL.includes("PASTE_YOUR_GITHUB_RAW_JSON_URL")) {
-          throw new Error(
-            "Configure src/config.js with your GitHub RAW JSON URL before loading prompts."
-          );
-        }
-
         const cached = getCachedPromptData();
         let data;
 
         try {
-          const latestVersion = await fetchPromptVersion(controller.signal);
+          const response = await fetch("/api/prompts", {
+            signal: controller.signal,
+            cache: "no-store",
+          });
 
-          if (cached?.version === latestVersion) {
-            data = cached.data;
-          } else {
-            data = await fetchPromptData(latestVersion, controller.signal);
-            setCachedPromptData(data, latestVersion);
+          if (!response.ok) {
+            throw new Error(`Failed to load prompts from server: ${response.status} ${response.statusText}`);
           }
-        } catch (versionError) {
-          if (versionError?.name === "AbortError") {
+
+          data = await response.json();
+          setCachedPromptData(data, "");
+        } catch (fetchError) {
+          if (fetchError?.name === "AbortError") {
             return;
           }
 
           if (cached?.data) {
             data = cached.data;
           } else {
-            data = await fetchPromptData("", controller.signal);
-            setCachedPromptData(data, "");
+            throw fetchError;
           }
         }
 
         const normalized = normalizePrompts(data);
 
         if (!Array.isArray(normalized)) {
-          throw new Error("Invalid JSON format. Expected array or { prompts: [] }.");
+          throw new Error("Invalid prompt payload format. Expected array or { prompts: [] }.");
         }
 
         if (!cancelled) {

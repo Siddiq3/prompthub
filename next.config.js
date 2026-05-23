@@ -2,13 +2,37 @@
 const nextConfig = {
   // Image optimization settings
   images: {
-    domains: [
-      "photopromptshub.in",
-      "images.unsplash.com",
-      "images.pexels.com",
-      "cdn.openai.com",
-      "cdn.jsdelivr.net",
-      "raw.githubusercontent.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "photopromptshub.in",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.openai.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        pathname: "/gh/**",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        pathname: "/**",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

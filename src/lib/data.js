@@ -4,9 +4,9 @@
  * This is more reliable and works correctly on Vercel
  */
 
-import { GITHUB_RAW_URL } from "../config";
 import { enrichPrompts, sortPromptsByDate } from "./content";
 import { normalizePrompts } from "../utils/normalizePrompts";
+import { fetchPromptData } from "./getPrompts";
 
 /**
  * Get all prompts with Next.js ISR caching
@@ -15,8 +15,7 @@ import { normalizePrompts } from "../utils/normalizePrompts";
  */
 export async function getPrompts() {
   try {
-    console.log("[getPrompts] Fetching prompts from GitHub...");
-    console.log(`[getPrompts] URL: ${GITHUB_RAW_URL}`);
+    console.log("[getPrompts] Fetching prompts from GitHub API...");
 
     // Add 30-second timeout to prevent indefinite loading
     const controller = new AbortController();
@@ -25,19 +24,9 @@ export async function getPrompts() {
       console.error("[getPrompts] Fetch timeout after 30 seconds");
     }, 30000);
 
-    const response = await fetch(GITHUB_RAW_URL, {
-      cache: 'no-store',
-      signal: controller.signal,
-    });
+    let data = await fetchPromptData("", controller.signal);
 
     clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      console.error(`[getPrompts] GitHub fetch failed: ${response.status} ${response.statusText}`);
-      throw new Error(`Failed to fetch prompts: ${response.status}`);
-    }
-
-    let data = await response.json();
     console.log(`[getPrompts] Raw data received, type: ${Array.isArray(data) ? "array" : "object"}`);
 
     // Handle both array and { prompts: [] } formats
