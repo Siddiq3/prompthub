@@ -109,7 +109,8 @@ export default async function PromptDetailsPage({ params }) {
                 src={prompt.previewImage}
                 alt={prompt.title}
                 fill
-                className="object-cover"
+                className="object-contain"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-slate-100 text-slate-500">
