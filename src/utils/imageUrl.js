@@ -44,6 +44,36 @@ const toRawFromJsDelivr = (value) => {
   return `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${path}`;
 };
 
+const toGitHubProxyUrl = (value) => {
+  const clean = stripQueryHash(value);
+
+  const jsDelivrMatch = clean.match(
+    /^https?:\/\/cdn\.jsdelivr\.net\/gh\/([^/]+)\/([^@/]+)@([^/]+)\/(.+)$/i
+  );
+
+  if (jsDelivrMatch) {
+    const [, owner, repo, ref, path] = jsDelivrMatch;
+    if (owner === "Siddiq3" && repo === "promtdata") {
+      return `/api/github-image?path=${encodeURIComponent(path)}&ref=${encodeURIComponent(ref)}`;
+    }
+
+    return "";
+  }
+
+  const rawMatch = clean.match(
+    /^https?:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)$/i
+  );
+
+  if (rawMatch) {
+    const [, owner, repo, ref, path] = rawMatch;
+    if (owner === "Siddiq3" && repo === "promtdata") {
+      return `/api/github-image?path=${encodeURIComponent(path)}&ref=${encodeURIComponent(ref)}`;
+    }
+  }
+
+  return "";
+};
+
 const toJsDelivrFromRaw = (value) => {
   const clean = stripQueryHash(value);
   const match = clean.match(/^https?:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)$/i);
@@ -86,7 +116,13 @@ export const normalizeImageUrl = (value) => {
 
   const httpsUrl = toHttpsUrl(trimmed);
 
-  return toGoogleDriveDirect(httpsUrl) || toJsDelivrFromGithubBlob(httpsUrl) || toJsDelivrFromRaw(httpsUrl) || httpsUrl;
+  return (
+    toGoogleDriveDirect(httpsUrl) ||
+    toGitHubProxyUrl(httpsUrl) ||
+    toJsDelivrFromGithubBlob(httpsUrl) ||
+    toJsDelivrFromRaw(httpsUrl) ||
+    httpsUrl
+  );
 };
 
 export const getImageCandidates = (value) => {
