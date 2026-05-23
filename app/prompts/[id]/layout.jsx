@@ -1,18 +1,22 @@
-import { getPromptById, getAllPromptIds } from "@/src/lib/data";
+import { getPromptById, getPromptBySlug, getAllPromptIdentifiers } from "@/src/lib/data";
 import { SITE_URL } from "@/src/config";
 
 export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
-  const ids = await getAllPromptIds();
-  return ids.map((id) => ({
+  const identifiers = await getAllPromptIdentifiers();
+  return identifiers.map((id) => ({
     id: String(id),
   }));
 }
 
 export async function generateMetadata({ params }) {
   try {
-    const prompt = await getPromptById(params.id);
+    const identifier = params.id;
+    let prompt = await getPromptById(identifier);
+    if (!prompt) {
+      prompt = await getPromptBySlug(identifier);
+    }
 
     if (!prompt) {
       return {
@@ -49,7 +53,6 @@ export async function generateMetadata({ params }) {
         description: (prompt.prompt || "").substring(0, 120),
         images: [image],
       },
-      // Point canonical to the slug-based URL
       canonical: canonicalUrl,
     };
   } catch (error) {

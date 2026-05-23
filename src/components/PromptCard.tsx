@@ -40,12 +40,9 @@ const ASPECT_RATIO_MAP: Record<string, string> = {
 
 export default function PromptCard({ prompt, variant = 'grid', isSaved: externalSaved, onSave, savedPrompts }: PromptCardProps) {
   const [isSaved, setIsSaved] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const initializeCard = async () => {
-      setMounted(true);
-
       // Handle saved prompts
       let saved = false;
       if (Array.isArray(savedPrompts)) {
@@ -92,8 +89,6 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
       onSave(prompt.id, nextState);
     }
   };
-
-  if (!mounted) return null;
 
   const modelColor = MODEL_COLORS[prompt.model] || { bg: '#6B7280', text: 'white' };
   const aspectClass = ASPECT_RATIO_MAP[prompt.aspectRatio] || 'aspect-[3/4]';

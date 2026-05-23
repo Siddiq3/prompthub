@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import PromptCard from '@/src/components/PromptCard';
 import { Prompt } from '@/src/types';
 
@@ -16,16 +15,7 @@ export default function PromptGrid({
   variant = 'grid',
   isLoading = false,
 }: PromptGridProps) {
-  const [displayPrompts, setDisplayPrompts] = useState(prompts);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <LoadingGrid />;
-  }
+  const displayPrompts = prompts;
 
   if (isLoading) {
     return <LoadingGrid />;

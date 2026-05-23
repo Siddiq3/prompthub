@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import { getPrompts } from "@/src/lib/data";
 import PromptsClientPage from "./client";
-import { PromptsSkeleton } from "@/src/components/PromptsSkeleton";
 
 export const dynamic = 'force-dynamic';
 
@@ -24,9 +22,5 @@ export function generateMetadata() {
 export default async function PromptsPage() {
   const prompts = await getPrompts();
 
-  return (
-    <Suspense fallback={<PromptsSkeleton />}>
-      <PromptsClientPage initialPrompts={prompts} />
-    </Suspense>
-  );
+  return <PromptsClientPage initialPrompts={prompts} />;
 }

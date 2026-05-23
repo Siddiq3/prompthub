@@ -1,26 +1,28 @@
 import { redirect, notFound } from "next/navigation";
-import { getPromptById } from "@/src/lib/data";
+import PromptDetailsPage from "../../prompt/[slug]/page.jsx";
+import { getPromptById, getPromptBySlug } from "@/src/lib/data";
 
 /**
- * /prompts/[id] Page - Redirects to canonical slug-based URL
- * 
- * This page handles ID-based URLs and redirects them to the canonical
- * slug-based URLs for optimal SEO. All actual content rendering happens
- * at /prompt/[slug] which is the canonical URL.
+ * /prompts/[id] Page - Supports both ID-based and slug-based prompt URLs.
+ *
+ * This page renders prompt content for /prompts/{slug} and redirects
+ * canonical ID-based URLs to /prompt/{slug}.
  */
-export default async function PromptIdPage({ params }) {
-  const prompt = await getPromptById(params.id);
+export default async function PromptDetailsAliasPage({ params }) {
+  const identifier = params.id;
+  const promptById = await getPromptById(identifier);
 
-  if (!prompt) {
+  if (promptById) {
+    if (promptById.slug) {
+      redirect(`/prompt/${promptById.slug}`);
+    }
     notFound();
   }
 
-  // Redirect to canonical slug-based URL for better SEO
-  // e.g., /prompts/p0200 → /prompt/ipl-style-cricket-jersey-portrait
-  if (prompt.slug) {
-    redirect(`/prompt/${prompt.slug}`);
+  const promptBySlug = await getPromptBySlug(identifier);
+  if (promptBySlug) {
+    return <PromptDetailsPage params={{ slug: promptBySlug.slug }} />;
   }
 
-  // Fallback: if no slug available, show 404
-  return notFound();
+  notFound();
 }

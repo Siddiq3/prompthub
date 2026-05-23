@@ -86,6 +86,40 @@ export async function getPromptById(id) {
   }
 }
 
+export async function getPromptByIdentifier(identifier) {
+  try {
+    const prompts = await getPrompts();
+    const promptById = prompts.find((p) => p.id === identifier);
+    if (promptById) return promptById;
+
+    const promptBySlug = prompts.find((p) => p.slug === identifier);
+    if (promptBySlug) return promptBySlug;
+
+    console.warn(`[getPromptByIdentifier] Prompt not found: ${identifier}`);
+    return undefined;
+  } catch (error) {
+    console.error(`[getPromptByIdentifier] Error fetching prompt by identifier "${identifier}":`, error);
+    return undefined;
+  }
+}
+
+export async function getAllPromptIdentifiers() {
+  try {
+    const prompts = await getPrompts();
+    const identifiers = Array.from(
+      new Set([
+        ...prompts.map((p) => p.id).filter(Boolean),
+        ...prompts.map((p) => p.slug).filter(Boolean),
+      ]),
+    );
+    console.log(`[getAllPromptIdentifiers] Generated ${identifiers.length} identifiers`);
+    return identifiers;
+  } catch (error) {
+    console.error("[getAllPromptIdentifiers] Error generating prompt identifiers:", error);
+    return [];
+  }
+}
+
 /**
  * Get all prompt slugs for generateStaticParams
  */
