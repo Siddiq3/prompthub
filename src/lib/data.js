@@ -1,7 +1,6 @@
 /**
  * Build-time data fetching for Next.js App Router
- * Uses Next.js built-in caching instead of module-level cache
- * This is more reliable and works correctly on Vercel
+ * Uses Next.js built-in caching and a single JSON source from GitHub.
  */
 
 import { enrichPrompts, sortPromptsByDate } from "./content";
@@ -10,26 +9,23 @@ import { fetchPromptData } from "./getPrompts";
 
 /**
  * Get all prompts with Next.js ISR caching
- * Uses next: { revalidate } instead of module-level cache
- * Safe for Vercel production builds
+ * Returns an empty array on failure and never crashes.
  */
 export async function getPrompts() {
   try {
-    console.log("[getPrompts] Fetching prompts from GitHub API...");
+    console.log("[getPrompts] Fetching prompts from GitHub raw JSON...");
 
-    // Add 30-second timeout to prevent indefinite loading
     const controller = new AbortController();
     const timeoutId = setTimeout(() => {
       controller.abort();
       console.error("[getPrompts] Fetch timeout after 30 seconds");
     }, 30000);
 
-    let data = await fetchPromptData("", controller.signal);
-
+    let data = await fetchPromptData(controller.signal);
     clearTimeout(timeoutId);
+
     console.log(`[getPrompts] Raw data received, type: ${Array.isArray(data) ? "array" : "object"}`);
 
-    // Handle both array and { prompts: [] } formats
     if (Array.isArray(data)) {
       console.log(`[getPrompts] Data is array with ${data.length} items`);
     } else if (data?.prompts && Array.isArray(data.prompts)) {
@@ -37,10 +33,9 @@ export async function getPrompts() {
       data = data.prompts;
     } else {
       console.error("[getPrompts] Invalid data format. Expected array or { prompts: [] }");
-      throw new Error("Invalid data format. Expected array or { prompts: [] }");
+      return [];
     }
 
-    // Process the data
     const normalized = normalizePrompts(data);
     console.log(`[getPrompts] Normalized: ${normalized.length} items`);
 
@@ -53,7 +48,7 @@ export async function getPrompts() {
     return sorted;
   } catch (error) {
     console.error("[getPrompts] Fatal error:", error instanceof Error ? error.message : String(error));
-    throw error;
+    return [];
   }
 }
 
@@ -70,7 +65,7 @@ export async function getPromptBySlug(slug) {
     return prompt;
   } catch (error) {
     console.error(`[getPromptBySlug] Error fetching prompt by slug "${slug}":`, error);
-    throw error;
+    return undefined;
   }
 }
 
@@ -87,7 +82,7 @@ export async function getPromptById(id) {
     return prompt;
   } catch (error) {
     console.error(`[getPromptById] Error fetching prompt by ID "${id}":`, error);
-    throw error;
+    return undefined;
   }
 }
 
@@ -102,7 +97,7 @@ export async function getAllPromptSlugs() {
     return slugs;
   } catch (error) {
     console.error("[getAllPromptSlugs] Error generating slugs:", error);
-    throw error;
+    return [];
   }
 }
 
@@ -117,6 +112,6 @@ export async function getAllPromptIds() {
     return ids;
   } catch (error) {
     console.error("[getAllPromptIds] Error generating IDs:", error);
-    throw error;
+    return [];
   }
 }

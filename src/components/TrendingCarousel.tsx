@@ -46,8 +46,8 @@ export default function TrendingCarousel({ prompts }: TrendingCarouselProps) {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="mb-8">
-        <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">🔥 Trending</h2>
-        <p className="text-lg text-slate-400">Most loved and shared prompts right now</p>
+        <h2 className="text-4xl sm:text-5xl font-black text-slate-950 mb-4">🔥 Trending</h2>
+        <p className="text-lg text-slate-600">Most loved and shared prompts right now</p>
       </div>
 
       {/* Main Carousel Container */}

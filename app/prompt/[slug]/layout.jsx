@@ -19,33 +19,39 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  // C-02: Ensure canonical URL uses correct domain from environment
   const canonicalDomain = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
-  const url = `${canonicalDomain}/prompt/${prompt.slug}`;
+  const pageUrl = `${canonicalDomain}/prompt/${prompt.slug}`;
+  const keywords = prompt.seo?.keywords || prompt.tags || [];
   const description =
+    prompt.seo?.metaDescription ||
     prompt.seoIntro ||
-    `${prompt.title} is a ${prompt.category.toLowerCase()} prompt for ${prompt.modelLabel}, ideal for creating polished photo-style imagery with vivid detail.`;
+    `${prompt.title} is a ${prompt.category.toLowerCase()} prompt for ${prompt.modelLabel || prompt.model}, ideal for creating polished photo-style imagery with vivid detail.`;
 
   return {
-    title: `${prompt.title} — ${prompt.modelLabel} prompt`,
+    title: prompt.seo?.metaTitle || `${prompt.title} — ${prompt.modelLabel || prompt.model} prompt`,
     description,
+    keywords: keywords.join(", "),
     alternates: {
-      canonical: url,
+      canonical: pageUrl,
     },
     openGraph: {
-      title: `${prompt.title} — ${prompt.modelLabel}`,
+      title: prompt.seo?.metaTitle || `${prompt.title} — ${prompt.modelLabel || prompt.model}`,
       description,
-      url,
+      url: pageUrl,
+      type: "article",
       images: [
         {
           url: prompt.previewImage || FALLBACK_OG_IMAGE,
           alt: prompt.title,
         },
       ],
+      publishedTime: prompt.createdAt,
+      modifiedTime: prompt.updatedAt || prompt.createdAt,
+      tags: keywords.slice(0, 5),
     },
     twitter: {
       card: "summary_large_image",
-      title: `${prompt.title} — ${prompt.modelLabel}`,
+      title: prompt.seo?.metaTitle || `${prompt.title} — ${prompt.modelLabel || prompt.model}`,
       description,
       images: [prompt.previewImage || FALLBACK_OG_IMAGE],
     },

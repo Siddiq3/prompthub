@@ -46,6 +46,31 @@ const pickBoolean = (value, fallback = false) => {
   return fallback;
 };
 
+const parseBadges = (badges) => {
+  if (!Array.isArray(badges)) return [];
+
+  return badges
+    .filter(Boolean)
+    .map((badge) => {
+      const label = String(badge).trim();
+      const normalized = label.toLowerCase();
+      let type = "popular";
+
+      if (normalized.includes("trending")) type = "trending";
+      else if (normalized.includes("new")) type = "new";
+      else if (normalized.includes("featured")) type = "featured";
+      else if (normalized.includes("premium")) type = "premium";
+      else if (normalized.includes("creator")) type = "creator-pick";
+      else if (normalized.includes("viral")) type = "viral";
+
+      return {
+        type,
+        label,
+      };
+    })
+    .filter(Boolean);
+};
+
 const pickImageValue = (raw = {}) => {
   const candidates = [
     raw?.previewImage,
@@ -58,7 +83,7 @@ const pickImageValue = (raw = {}) => {
     raw?.coverImage,
     raw?.cover,
     raw?.photo,
-    raw?.img
+    raw?.img,
   ];
 
   const found = candidates.find(
@@ -79,12 +104,43 @@ const normalizePrompt = (raw, index) => {
     prompt: pickString(raw?.prompt),
     negativePrompt: pickString(raw?.negativePrompt),
     tags: parseTags(raw?.tags),
+    displayTags: parseTags(raw?.displayTags) || parseTags(raw?.tags),
     category: pickString(raw?.category, "General"),
+    occasion: pickString(raw?.occasion),
+    audience: pickString(raw?.audience),
     model: pickString(raw?.model, "Any Model"),
+    modelLabel: pickString(raw?.modelLabel) || pickString(raw?.model),
     aspectRatio: pickString(raw?.aspectRatio, "Flexible"),
     createdAt: pickString(raw?.createdAt, new Date().toISOString()),
-    featured: pickBoolean(raw?.featured, false),
-    previewImage: normalizeImageUrl(pickImageValue(raw))
+    updatedAt: pickString(raw?.updatedAt, raw?.createdAt),
+    previewImage: normalizeImageUrl(pickImageValue(raw)),
+    badges: parseBadges(raw?.badges),
+    seo: {
+      metaTitle: pickString(raw?.seo?.metaTitle),
+      metaDescription: pickString(raw?.seo?.metaDescription),
+      keywords: parseTags(raw?.seo?.keywords),
+    },
+    seoIntro: pickString(raw?.seoIntro),
+    author: pickString(raw?.author),
+    compatibleModels: parseTags(raw?.compatibleModels),
+    howToSteps: Array.isArray(raw?.howToSteps)
+      ? raw.howToSteps.map((step) => pickString(step)).filter(Boolean)
+      : [],
+    tips: Array.isArray(raw?.tips) ? raw.tips.map((tip) => pickString(tip)).filter(Boolean) : [],
+    faqItems: Array.isArray(raw?.faqItems)
+      ? raw.faqItems
+          .filter((item) => item && (item.question || item.answer))
+          .map((item) => ({
+            question: pickString(item.question),
+            answer: pickString(item.answer),
+          }))
+      : [],
+    relatedSlugs: Array.isArray(raw?.relatedSlugs)
+      ? raw.relatedSlugs.map((slug) => pickString(slug)).filter(Boolean)
+      : [],
+    wordCount: Number.isFinite(raw?.wordCount) ? raw.wordCount : 0,
+    copies: Number.isFinite(raw?.copies) ? raw.copies : 0,
+    isTrending: pickBoolean(raw?.isTrending, false),
   };
 };
 

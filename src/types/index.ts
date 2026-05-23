@@ -22,6 +22,14 @@ export interface Badge {
 }
 
 // ============================================
+// FAQ TYPE
+// ============================================
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+// ============================================
 // SEO TYPE
 // ============================================
 export interface SEO {
@@ -40,19 +48,32 @@ export interface Prompt {
   prompt: string;
   negativePrompt: string;
   tags: string[];
+  displayTags?: string[];
   category: PromptCategory;
-  model: AIModel;
+  occasion?: string;
+  audience?: string;
+  model: AIModel | string;
+  modelLabel?: string;
   aspectRatio: AspectRatio;
   createdAt: string;
+  updatedAt?: string;
   previewImage: string;
-  badges: Badge[];
+  badges?: Badge[];
   seo: SEO;
+  seoIntro?: string;
+  author?: string;
+  compatibleModels?: string[];
+  howToSteps?: string[];
+  tips?: string[];
+  faqItems?: FaqItem[];
+  relatedSlugs?: string[];
+  wordCount?: number;
+  copies?: number;
+  isTrending?: boolean;
   
   // Optional fields for enrichment
   saves?: number;
-  copies?: number;
   views?: number;
-  isTrending?: boolean;
   isNew?: boolean;
 }
 
@@ -74,7 +95,8 @@ export type PromptCategory =
   | 'Illustration'
   | 'Photography'
   | 'Cinematic'
-  | 'Other';
+  | 'Other'
+  | string;
 
 // ============================================
 // AI MODEL TYPE
@@ -95,12 +117,14 @@ export type AIModel =
 export type AspectRatio = 
   | '1:1'
   | '4:3'
+  | '4:5'
   | '16:9'
   | '9:16'
   | '3:2'
   | '2:3'
   | '3:4'
-  | '21:9';
+  | '21:9'
+  | string;
 
 // ============================================
 // RELATED PROMPTS TYPE
