@@ -6,7 +6,7 @@ import { generateCategorySEO, generateBreadcrumbSchema } from '@/src/utils/promp
 import type { Prompt } from '@/src/types';
 import CategoryPromptBrowser from '@/src/components/CategoryPromptBrowser';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: {

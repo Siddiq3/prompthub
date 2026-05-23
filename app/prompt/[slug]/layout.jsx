@@ -1,8 +1,8 @@
 import { getPromptBySlug, getAllPromptSlugs } from "@/src/lib/data";
 import { FALLBACK_OG_IMAGE, SITE_URL } from "@/src/config";
 
-// C-01: Static generation with ISR revalidation for 200+ prompt pages
-export const revalidate = 86400; // Revalidate once daily
+// C-01: Force dynamic rendering for prompt pages
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   const slugs = await getAllPromptSlugs();

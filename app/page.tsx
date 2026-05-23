@@ -15,7 +15,7 @@ import {
   SkeletonCategoryGrid,
 } from '@/src/components/SkeletonLoaders';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 export function generateMetadata() {
   return {

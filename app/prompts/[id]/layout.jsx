@@ -1,7 +1,7 @@
 import { getPromptById, getAllPromptIds } from "@/src/lib/data";
 import { SITE_URL } from "@/src/config";
 
-export const revalidate = 86400; // Revalidate daily
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   const ids = await getAllPromptIds();

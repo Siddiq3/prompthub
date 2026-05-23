@@ -26,7 +26,7 @@ export async function getPrompts() {
     }, 30000);
 
     const response = await fetch(GITHUB_RAW_URL, {
-      next: { revalidate: 3600 }, // Revalidate every hour
+      cache: 'no-store',
       signal: controller.signal,
     });
 

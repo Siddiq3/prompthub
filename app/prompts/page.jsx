@@ -3,8 +3,7 @@ import { getPrompts } from "@/src/lib/data";
 import PromptsClientPage from "./client";
 import { PromptsSkeleton } from "@/src/components/PromptsSkeleton";
 
-// C-01: Enable ISR (revalidate every hour) for SEO indexing
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 export function generateMetadata() {
   return {
