@@ -1,14 +1,12 @@
 import { Suspense } from 'react';
 import { getPrompts } from '@/src/lib/data';
-import { sortPrompts, getPromptStats } from '@/src/utils/prompts';
+import { sortPrompts } from '@/src/utils/prompts';
 import type { Prompt } from '@/src/types';
-import HomeHeroClient from '@/src/components/HomeHeroClient';
 import TrendingCarousel from '@/src/components/TrendingCarousel';
 import PromptGrid from '@/src/components/PromptGrid';
 import CategoryShowcase from '@/src/components/CategoryShowcase';
 import NewsletterCTA from '@/src/components/NewsletterCTA';
 import {
-  SkeletonHeroSection,
   SkeletonTrendingCarousel,
   SkeletonHeader,
   SkeletonGrid,
@@ -37,17 +35,11 @@ export function generateMetadata() {
 
 async function HeroSection() {
   const prompts = await getPrompts();
-  const stats = getPromptStats(prompts);
-  return <HomeHeroClient totalPrompts={stats.total} totalModels={stats.models} />;
-}
-
-async function TrendingSection() {
-  const prompts = await getPrompts();
   const trendingPrompts = sortPrompts(
     prompts.filter((p) => p.isTrending),
     'trending',
   ).slice(0, 6);
-  
+
   if (trendingPrompts.length === 0) return null;
   return <TrendingCarousel prompts={trendingPrompts} />;
 }
@@ -127,14 +119,9 @@ async function CategorySection() {
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* HERO SECTION */}
-      <Suspense fallback={<SkeletonHeroSection />}>
-        <HeroSection />
-      </Suspense>
-
-      {/* TRENDING CAROUSEL */}
+      {/* HERO CAROUSEL */}
       <Suspense fallback={<SkeletonTrendingCarousel />}>
-        <TrendingSection />
+        <HeroSection />
       </Suspense>
 
       {/* LATEST PROMPTS SECTION */}
