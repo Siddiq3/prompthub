@@ -22,12 +22,12 @@ const EMAIL_ADDRESS = "photopromptshub@gmail.com";
 
 export function generateMetadata() {
   return {
-    title: "AI Prompt Categories - PhotoPromptsHub | Browse All Prompt Types",
-    description: "Explore our complete collection of AI image prompt categories including portrait prompts, fashion prompts, cinematic prompts, and more for Midjourney, DALL·E, Flux & Stable Diffusion.",
-    keywords: "ai prompt categories, midjourney prompts, fashion prompts, portrait prompts, cinematic ai prompts, prompt templates, ai image generation",
+    title: "Photography Prompt Categories - ChatGPT & Gemini | Browse by Type",
+    description: "Browse photography prompt categories including portraits, fashion, cinematic, lifestyle, and more. Organized for ChatGPT and Gemini AI image generation.",
+    keywords: "photography prompts, portrait prompts, fashion prompts, cinematic prompts, lifestyle prompts, ChatGPT prompts, Gemini prompts, prompt categories",
     robots: "index, follow",
     openGraph: {
-      title: "AI Prompt Categories - PhotoPromptsHub",
+      title: "Photography Prompt Categories - ChatGPT & Gemini",
       description: "Browse thousands of AI prompts organized by category and style.",
       type: "website",
     },

@@ -2,44 +2,26 @@ const hasTag = (prompt, tag) => prompt.tagSlugs.includes(tag);
 
 export const COLLECTION_DEFINITIONS = [
   {
-    slug: "midjourney-photo-prompts",
-    title: "Midjourney Photo Prompts",
+    slug: "chatgpt-photo-prompts",
+    title: "ChatGPT Photography Prompts",
     description:
-      "Browse Midjourney prompts for portraits, cinematic scenes, weddings, sports, and story-driven images.",
+      "Curated photography prompts optimized for ChatGPT image generation. Portraits, fashion, cinematic scenes, and lifestyle photography.",
     intro:
-      "This collection brings together prompts labeled for Midjourney, making it easier to find portraits, editorial scenes, and stronger visual starting points in one place.",
-    matcher: (prompt) => prompt.model === "Midjourney"
+      "These prompts are specifically written for ChatGPT's image generation capabilities. Include clear visual direction, mood, and photographic references for best results.",
+    matcher: (prompt) => prompt.model === "ChatGPT" || !prompt.model
   },
   {
-    slug: "dalle-photo-prompts",
-    title: "DALL·E Photo Prompts",
+    slug: "gemini-photo-prompts",
+    title: "Gemini AI Photography Prompts",
     description:
-      "Explore DALL·E prompts for polished portraits, beauty work, romantic scenes, and commercial-style images.",
+      "Photography prompts tailored for Gemini AI image generation. Explore cinematic portraits, fashion editorials, and creative visual storytelling.",
     intro:
-      "Use this collection when you want DALL·E prompts with clear structure and enough detail to start working quickly.",
-    matcher: (prompt) => prompt.model === "Dalle"
-  },
-  {
-    slug: "flux-photo-prompts",
-    title: "Flux Photo Prompts",
-    description:
-      "Discover Flux prompts for fashion editorials, cinematic portraits, wedding moments, and polished photo work.",
-    intro:
-      "Flux shows up heavily across the library, so this collection is one of the easiest places to browse portraits, fashion work, and story-led images.",
-    matcher: (prompt) => prompt.model === "Flux"
-  },
-  {
-    slug: "stable-diffusion-photo-prompts",
-    title: "Stable Diffusion Photo Prompts",
-    description:
-      "Find Stable Diffusion prompts for street, portrait, sports, and wedding ideas with clear creative direction.",
-    intro:
-      "These prompts give Stable Diffusion users a more useful starting point when they want clear framing, mood, and styling cues.",
-    matcher: (prompt) => prompt.model === "StableDiffusion"
+      "These prompts are optimized for Gemini's image generation. Each includes specific photographic direction, mood, and visual reference points.",
+    matcher: (prompt) => prompt.model === "Gemini"
   },
   {
     slug: "cinematic-photo-prompts",
-    title: "Cinematic Photo Prompts",
+    title: "Cinematic Photography Prompts",
     description:
       "A collection of cinematic prompts built around moody light, film-inspired scenes, and story-driven compositions.",
     intro:
@@ -47,8 +29,17 @@ export const COLLECTION_DEFINITIONS = [
     matcher: (prompt) => prompt.category === "Cinematic" || prompt.rawCategory === "Cinematic" || hasTag(prompt, "cinematic")
   },
   {
+    slug: "portrait-photography-prompts",
+    title: "Portrait Photography Prompts",
+    description:
+      "Professional portrait prompts for headshots, editorial portraits, character studies, and expressive face photography.",
+    intro:
+      "These prompts focus on capturing compelling human faces and expressions. Includes direction for lighting, mood, and visual style.",
+    matcher: (prompt) => prompt.category === "Portrait" || prompt.rawCategory === "Portrait" || hasTag(prompt, "portrait")
+  },
+  {
     slug: "fashion-editorial-photo-prompts",
-    title: "Fashion Editorial Photo Prompts",
+    title: "Fashion Editorial Photography Prompts",
     description:
       "Browse fashion and editorial prompts centered on styling direction, beauty cues, and polished visual references.",
     intro:
@@ -56,8 +47,17 @@ export const COLLECTION_DEFINITIONS = [
     matcher: (prompt) => prompt.category === "Fashion" || prompt.rawCategory === "Fashion" || hasTag(prompt, "editorial")
   },
   {
+    slug: "lifestyle-photo-prompts",
+    title: "Lifestyle Photography Prompts",
+    description:
+      "Lifestyle and everyday photography prompts for natural moments, cultural scenes, and human-centered storytelling.",
+    intro:
+      "Use these prompts to capture moments that feel lived-in and real—everyday scenes with photographic depth and narrative.",
+    matcher: (prompt) => prompt.category === "Lifestyle" || hasTag(prompt, "lifestyle") || hasTag(prompt, "everyday")
+  },
+  {
     slug: "candid-photo-prompts",
-    title: "Candid Photo Prompts",
+    title: "Candid Photography Prompts",
     description:
       "Explore candid prompts for natural expressions, documentary-style framing, and scenes that feel unstaged.",
     intro:
@@ -65,12 +65,12 @@ export const COLLECTION_DEFINITIONS = [
     matcher: (prompt) => hasTag(prompt, "candid") || hasTag(prompt, "documentary")
   },
   {
-    slug: "romantic-photo-prompts",
-    title: "Romantic Photo Prompts",
+    slug: "romantic-wedding-photo-prompts",
+    title: "Wedding & Romantic Photography Prompts",
     description:
-      "A focused collection of romantic prompts for wedding scenes, couple portraits, and softer cinematic storytelling.",
+      "A focused collection of romantic and wedding prompts for couple portraits, celebration scenes, and softer cinematic storytelling.",
     intro:
-      "Use these prompts when you want warmth, closeness, or celebratory couple imagery for weddings and story-led scenes.",
+      "Use these prompts when you want warmth, closeness, or celebratory couple imagery for weddings and story-led romantic scenes.",
     matcher: (prompt) => prompt.category === "Wedding" || prompt.rawCategory === "Wedding" || hasTag(prompt, "romantic")
   }
 ];

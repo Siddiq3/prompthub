@@ -7,11 +7,8 @@ import { FaChevronDown, FaTimes } from "react-icons/fa";
 
 const FILTER_OPTIONS = {
   tool: [
-    { value: "midjourney", label: "Midjourney" },
-    { value: "dall-e", label: "DALL·E" },
-    { value: "flux", label: "Flux" },
-    { value: "stable-diffusion", label: "Stable Diffusion" },
-    { value: "adobe-firefly", label: "Adobe Firefly" },
+    { value: "ChatGPT", label: "ChatGPT" },
+    { value: "Gemini", label: "Gemini" },
   ],
   style: [
     { value: "photorealistic", label: "Photorealistic" },
@@ -46,6 +43,23 @@ const SORT_OPTIONS = [
   { value: "popular", label: "Most Popular" },
   { value: "trending", label: "Trending" },
 ];
+
+const normalizeToolValue = (tool) => {
+  const lower = String(tool || "").trim().toLowerCase();
+  if (lower.includes("gemini")) return "Gemini";
+  if (lower.includes("chatgpt") || lower.includes("gpt")) return "ChatGPT";
+  if (
+    lower.includes("midjourney") ||
+    lower.includes("dall") ||
+    lower.includes("flux") ||
+    lower.includes("stable") ||
+    lower.includes("adobe") ||
+    lower.includes("firefly")
+  ) {
+    return "ChatGPT";
+  }
+  return String(tool || "").trim();
+};
 
 function FilterSection({ title, options, selectedValues, onChange, isOpen, onToggle }) {
   return (
@@ -236,7 +250,10 @@ export default function SearchAndFilter({
   // Parse URL params
   const [filters, setFilters] = useState({
     search: searchParams.get("q") || "",
-    tools: (searchParams.get("tools") || "").split(",").filter(Boolean),
+    tools: (searchParams.get("tools") || "")
+      .split(",")
+      .filter(Boolean)
+      .map(normalizeToolValue),
     styles: (searchParams.get("styles") || "").split(",").filter(Boolean),
     moods: (searchParams.get("moods") || "").split(",").filter(Boolean),
     palettes: (searchParams.get("palettes") || "").split(",").filter(Boolean),

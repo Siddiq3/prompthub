@@ -7,7 +7,7 @@ import { FiFilter } from 'react-icons/fi';
 import PromptCard from '@/src/components/PromptCard';
 import type { Prompt, PromptCategory } from '@/src/types';
 
-const MODEL_FILTERS = ['All', 'Midjourney', 'Flux', 'DALL-E', 'Stable Diffusion'] as const;
+const MODEL_FILTERS = ['All', 'ChatGPT', 'Gemini'] as const;
 const GENDER_FILTERS = ['All', 'Men', 'Women'] as const;
 const ASPECT_FILTERS = ['All', '1:1', '4:5', '3:4', '2:3'] as const;
 const SORT_OPTIONS = [

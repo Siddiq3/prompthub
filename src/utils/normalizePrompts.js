@@ -93,9 +93,31 @@ const pickImageValue = (raw = {}) => {
   return found || "";
 };
 
+const normalizeModel = (value) => {
+  const rawModel = pickString(value).toLowerCase();
+
+  if (rawModel.includes("gemini")) return "Gemini";
+  if (rawModel.includes("chatgpt") || rawModel.includes("gpt")) return "ChatGPT";
+
+  if (
+    rawModel.includes("midjourney") ||
+    rawModel.includes("dall") ||
+    rawModel.includes("flux") ||
+    rawModel.includes("stable") ||
+    rawModel.includes("adobe") ||
+    rawModel.includes("firefly")
+  ) {
+    return "ChatGPT";
+  }
+
+  return pickString(value, "ChatGPT");
+};
+
 const normalizePrompt = (raw, index) => {
   const id = pickString(raw?.id, `prompt-${index + 1}`);
   const title = pickString(raw?.title, "Untitled Prompt");
+  const normalizedModel = normalizeModel(raw?.model);
+  const normalizedModelLabel = normalizeModel(raw?.modelLabel || raw?.model);
 
   return {
     id,
@@ -108,8 +130,8 @@ const normalizePrompt = (raw, index) => {
     category: pickString(raw?.category, "General"),
     occasion: pickString(raw?.occasion),
     audience: pickString(raw?.audience),
-    model: pickString(raw?.model, "Any Model"),
-    modelLabel: pickString(raw?.modelLabel) || pickString(raw?.model),
+    model: normalizedModel,
+    modelLabel: normalizedModelLabel,
     aspectRatio: pickString(raw?.aspectRatio, "Flexible"),
     createdAt: pickString(raw?.createdAt, new Date().toISOString()),
     updatedAt: pickString(raw?.updatedAt, raw?.createdAt),

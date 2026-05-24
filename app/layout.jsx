@@ -11,9 +11,9 @@ const font = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  title: "PhotoPromptsHub - AI Image Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
-  description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, Stable Diffusion & more. Browse by category, model, and style. Get trending prompts, celebrity looks, movie styles, and viral AI art prompts.",
-  keywords: "ai prompts, midjourney prompts, dall-e prompts, flux prompts, stable diffusion prompts, ai image generation, prompt engineering, trending ai prompts, celebrity ai prompts, movie style prompts",
+  title: "AI Photography Prompts for ChatGPT & Gemini - Creative Image Generation",
+  description: "Curated photography prompts for ChatGPT and Gemini AI image generation. Browse cinematic portraits, fashion editorials, lifestyle photography, and creative inspiration. Copy prompts for stunning AI-generated images.",
+  keywords: "AI photography prompts, ChatGPT image generation, Gemini AI prompts, AI portrait prompts, cinematic photography prompts, fashion photography AI, AI image inspiration",
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   metadataBase: new URL("https://photopromptshub.in"),
   alternates: {
@@ -24,8 +24,8 @@ export const metadata = {
     locale: "en_US",
     url: "https://photopromptshub.in",
     siteName: "PhotoPromptsHub",
-    title: "PhotoPromptsHub - AI Image Prompts",
-    description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, Stable Diffusion & more.",
+    title: "AI Photography Prompts for ChatGPT & Gemini",
+    description: "Curated photography prompts for ChatGPT and Gemini AI image generation. Browse cinematic portraits, fashion editorials, lifestyle photography, and creative inspiration.",
     images: [
       {
         url: "https://photopromptshub.in/og-image.jpg",
@@ -37,8 +37,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PhotoPromptsHub - AI Image Prompts",
-    description: "Discover thousands of curated AI image prompts for Midjourney, DALL·E, Flux, Stable Diffusion & more.",
+    title: "AI Photography Prompts for ChatGPT & Gemini",
+    description: "Curated photography prompts for ChatGPT and Gemini AI image generation. Browse creative inspiration for portraits, fashion, and cinematic photography.",
     images: ["https://photopromptshub.in/og-image.jpg"],
   },
 };

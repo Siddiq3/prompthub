@@ -97,7 +97,7 @@ export default function DopamineHeroSection({ totalPrompts = 0, totalAiTools = 0
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              Copy. Customize. Create stunning AI visuals instantly with professionally crafted prompts for Midjourney, DALL·E, Flux & more.
+              Copy. Customize. Create stunning AI visuals instantly with professionally crafted prompts for ChatGPT and Gemini.
             </p>
 
             {/* Trending badges carousel */}

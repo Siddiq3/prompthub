@@ -5,15 +5,15 @@ export const dynamic = 'force-dynamic';
 
 export function generateMetadata() {
   return {
-    title: "Browse AI Prompts - PhotoPromptsHub | Search Thousands of Prompts",
-    description: "Explore and search our collection of thousands of AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Filter by category, model, style, and tags.",
-    keywords: "search ai prompts, browse prompts, midjourney search, flux prompts, dall-e search, stable diffusion prompts, prompt search engine",
+    title: "AI Photography Prompts - ChatGPT & Gemini | Browse & Search",
+    description: "Browse and search photography prompts optimized for ChatGPT and Gemini AI image generation. Filter by category, style, mood, and creative direction.",
+    keywords: "AI photography prompts, ChatGPT prompts, Gemini prompts, portrait prompts, fashion photography, cinematic prompts, lifestyle AI, prompt search",
     alternates: {
       canonical: "https://photopromptshub.in/prompts",
     },
     openGraph: {
-      title: "Browse AI Prompts - PhotoPromptsHub",
-      description: "Search and filter thousands of AI image prompts",
+      title: "AI Photography Prompts - ChatGPT & Gemini",
+      description: "Search photography prompts optimized for ChatGPT and Gemini AI image generation",
       type: "website",
     },
   };

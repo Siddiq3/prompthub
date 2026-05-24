@@ -254,7 +254,7 @@ function FeaturedCard({ prompt }) {
 
           {/* Tags */}
           <div className="flex gap-2 flex-wrap">
-            <Badge text={prompt.model || "Midjourney"} color="blue" />
+            <Badge text={prompt.model || "ChatGPT"} color="blue" />
             {prompt.category && <Badge text={prompt.category} color="purple" />}
             <motion.div
               animate={{ scale: [1, 1.05, 1] }}

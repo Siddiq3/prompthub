@@ -144,7 +144,7 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
         {/* Category tags */}
         <div className="flex flex-wrap gap-2">
           <span className="text-xs px-2 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-blue-300">
-            {prompt.model || "Midjourney"}
+            {prompt.modelLabel || prompt.model || "ChatGPT"}
           </span>
           {prompt.category && (
             <span className="text-xs px-2 py-1 bg-purple-600/20 border border-purple-500/30 rounded-full text-purple-300">

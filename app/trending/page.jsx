@@ -4,20 +4,20 @@ import PromptCard from "@/src/components/PromptCard";
 
 export function generateMetadata() {
   return {
-    title: "Trending AI Prompts - Most Popular Prompts for Midjourney & Flux",
-    description: "Browse the most popular and trending AI image prompts right now. Discover viral prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Updated daily.",
-    keywords: "trending ai prompts, popular prompts, viral ai prompts, trending midjourney, most used prompts, best ai prompts, top prompts",
+    title: "Trending Photography Prompts - ChatGPT & Gemini",
+    description: "Browse trending photography prompts right now. Discover popular ideas for ChatGPT and Gemini AI image generation. Updated daily.",
+    keywords: "trending photography prompts, popular AI prompts, ChatGPT trending, Gemini trending, best photography prompts, viral prompts",
     alternates: {
       canonical: "https://photopromptshub.in/trending",
     },
     openGraph: {
-      title: "Trending AI Prompts - Most Popular Prompts",
-      description: "Discover the most popular and trending AI image prompts",
+      title: "Trending Photography Prompts - ChatGPT & Gemini",
+      description: "Discover the most popular and trending photography prompts",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "Trending AI Prompts",
+      title: "Trending Photography Prompts",
       description: "Most popular prompts from our community",
     },
   };

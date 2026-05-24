@@ -17,14 +17,8 @@ interface PromptCardProps {
 }
 
 const MODEL_COLORS: Record<string, { bg: string; text: string }> = {
-  Midjourney: { bg: '#7C3AED', text: 'white' },
-  Flux: { bg: '#10B981', text: 'white' },
-  'DALL-E': { bg: '#3B82F6', text: 'white' },
-  'Stable Diffusion': { bg: '#F97316', text: 'white' },
-  'Adobe Firefly': { bg: '#8B5CF6', text: 'white' },
-  Ideogram: { bg: '#EC4899', text: 'white' },
-  Leonardo: { bg: '#06B6D4', text: 'white' },
-  Replicate: { bg: '#14B8A6', text: 'white' },
+  ChatGPT: { bg: '#10A37F', text: 'white' },
+  Gemini: { bg: '#4285F4', text: 'white' },
 };
 
 const ASPECT_RATIO_MAP: Record<string, string> = {
@@ -90,7 +84,8 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
     }
   };
 
-  const modelColor = MODEL_COLORS[prompt.model] || { bg: '#6B7280', text: 'white' };
+  const modelLabel = prompt.modelLabel || prompt.model || 'ChatGPT';
+  const modelColor = MODEL_COLORS[modelLabel] || { bg: '#6B7280', text: 'white' };
   const aspectClass = ASPECT_RATIO_MAP[prompt.aspectRatio] || 'aspect-[3/4]';
   const tags = Array.isArray(prompt.tags) ? prompt.tags : [];
 
@@ -110,7 +105,7 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
             <div className="mt-3 flex flex-wrap gap-2">
               <span className="text-[10px] rounded-full bg-slate-100 px-2 py-1 text-slate-700">{prompt.category}</span>
               <span className="text-[10px] rounded-full px-2 py-1 font-semibold" style={{ backgroundColor: modelColor.bg, color: modelColor.text }}>
-                {prompt.model}
+                {modelLab}
               </span>
             </div>
           </div>
@@ -154,7 +149,7 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
               className="inline-flex rounded px-2 py-1 text-[10px] font-semibold"
               style={{ backgroundColor: modelColor.bg, color: modelColor.text }}
             >
-              {prompt.model}
+              {modelLabel}
             </span>
           </div>
 

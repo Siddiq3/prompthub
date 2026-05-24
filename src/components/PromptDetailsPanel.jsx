@@ -6,11 +6,8 @@ import { FaBookmark, FaCheck, FaChevronDown, FaChevronUp, FaCopy, FaLink, FaRegB
 import { useCopyCount } from "@/src/hooks/useCopyCount";
 
 const modelColors = {
-  "Midjourney": "bg-purple-600",
-  "DALL-E": "bg-pink-600",
-  "Stable Diffusion": "bg-blue-600",
-  "Flux": "bg-orange-600",
-  "Adobe Firefly": "bg-red-600",
+  "ChatGPT": "bg-green-600",
+  "Gemini": "bg-blue-600",
 };
 
 const getSizeLabel = (aspectRatio) => {

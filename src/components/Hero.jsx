@@ -111,7 +111,7 @@ function Hero({
                 onChange={onSearchChange}
                 onSubmit={onSearchSubmit}
                 buttonLabel="Search"
-                placeholder="Search portrait, wedding, studio, Flux..."
+                placeholder="Search portrait, wedding, studio, ChatGPT..."
               />
             </div>
 
@@ -212,7 +212,7 @@ function Hero({
               onChange={onSearchChange}
               onSubmit={onSearchSubmit}
               buttonLabel="Search prompts"
-              placeholder="Search portrait, wedding, editorial, studio, Flux..."
+              placeholder="Search portrait, wedding, editorial, studio, ChatGPT..."
             />
           </div>
 

@@ -26,13 +26,10 @@ function PromptCard({ prompt, priority = false, onSave, savedPrompts = [] }) {
   const truncatedPrompt = promptText.length > 100 ? promptText.substring(0, 100) + "..." : promptText;
 
   const getToolBadge = () => {
-    const platform = prompt.modelLabel || prompt.platform || "Unknown";
+    const platform = prompt.modelLabel || prompt.platform || "ChatGPT";
     const badgeStyles = {
-      "Midjourney": "bg-[#7C3AED] text-white",
-      "DALL-E": "bg-[#3B82F6] text-white",
-      "Stable Diffusion": "bg-[#F97316] text-white",
-      "Flux": "bg-[#10B981] text-white",
-      "Adobe Firefly": "bg-[#F87171] text-white",
+      ChatGPT: "bg-[#10A37F] text-white",
+      Gemini: "bg-[#4285F4] text-white",
     };
     return badgeStyles[platform] || "bg-[#9CA3B8] text-white";
   };

@@ -38,15 +38,15 @@ export async function generateMetadata({ params }) {
     const keywords = [
       `${collection.title} ai prompts`,
       `${collection.title} prompt collection`,
-      `${collection.title} midjourney`,
-      `${collection.title} flux prompts`,
+      `${collection.title} ChatGPT prompts`,
+      `${collection.title} Gemini prompts`,
       "ai prompt collection",
       "curated prompts",
     ];
 
     return {
       title: `${collection.title} - Curated AI Prompt Collection | PhotoPromptsHub`,
-      description: `${collection.description} Browse ${collectionPrompts.length} professional AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Curated collection.`,
+      description: `${collection.description} Browse ${collectionPrompts.length} professional AI image prompts for ChatGPT and Gemini. Curated collection.`,
       keywords: keywords.join(", "),
       alternates: {
         canonical: `https://photopromptshub.in/collection/${slug}`,

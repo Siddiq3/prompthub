@@ -102,14 +102,8 @@ export type PromptCategory =
 // AI MODEL TYPE
 // ============================================
 export type AIModel = 
-  | 'Midjourney'
-  | 'DALL-E'
-  | 'Stable Diffusion'
-  | 'Flux'
-  | 'Adobe Firefly'
-  | 'Ideogram'
-  | 'Leonardo'
-  | 'Replicate';
+  | 'ChatGPT'
+  | 'Gemini';
 
 // ============================================
 // ASPECT RATIO TYPE

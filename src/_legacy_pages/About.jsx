@@ -85,7 +85,7 @@ function About() {
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
           <h2 className="font-heading text-2xl font-semibold text-brand-ink">What this website is not</h2>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            {SITE_NAME} is an independent project. It is not an official product of Midjourney, OpenAI, Stability AI, or any other model provider, and it does not promise that the same prompt will give identical results across different tools or future versions.
+            {SITE_NAME} is an independent project focused on photography prompts for ChatGPT and Gemini AI image generation. It is not affiliated with OpenAI or Google, and we do not promise that the same prompt will produce identical results across different versions or future updates of these platforms.
           </p>
         </div>
       </section>

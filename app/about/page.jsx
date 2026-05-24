@@ -1,7 +1,7 @@
 export function generateMetadata() {
   return {
-    title: "About Us | PhotoPromptsHub",
-    description: "Learn about PhotoPromptsHub, our mission, and how we curate AI image prompts for creators.",
+    title: "About Us | PhotoPromptsHub - AI Photography Prompts",
+    description: "Learn about PhotoPromptsHub, a curated library of photography prompts for ChatGPT and Gemini AI image generation.",
   };
 }
 
@@ -20,30 +20,30 @@ export default function AboutPage() {
           <section>
             <h2 className="text-3xl font-clash font-bold text-slate-900 mb-4">What We Do</h2>
             <p className="text-slate-700 leading-8 text-lg">
-              PhotoPromptsHub is the comprehensive resource for photographers, designers, and AI artists who want better image generation outcomes without guesswork. We organize and maintain a fast, searchable library of prompts for Midjourney, DALL·E, Flux, Stable Diffusion, and more. Every prompt is selected for clarity, creative impact, and ease of use.
+              PhotoPromptsHub is a curated library of photography prompts for ChatGPT and Gemini AI image generation. We focus on creating practical, creative prompts designed for photographers, designers, and visual creators who want professional results without guesswork. Every prompt is tested and selected for clarity, visual impact, and effectiveness.
             </p>
             <p className="text-slate-700 leading-8 text-lg mt-4">
-              Our site exists because prompt engineering should feel simple, not overwhelming. We provide structured prompt examples so you can copy, paste, and refine outputs quickly. Whether you are creating editorial photography, cinematic scenes, digital illustrations, or product visuals, our library is designed to help you get there faster.
+              Our site exists because great AI image results come from great prompts. We provide structured, copy-ready examples so you can generate stunning images quickly—whether you're creating portraits, fashion editorials, cinematic scenes, or lifestyle photography.
             </p>
           </section>
 
           <section>
             <h2 className="text-3xl font-clash font-bold text-slate-900 mb-4">Our Mission</h2>
             <p className="text-slate-700 leading-8 text-lg">
-              We believe that the best AI image prompts are clear, dependable, and adaptable. Our mission is to make prompt discovery effortless for creators at every skill level. We update prompts regularly so the library stays relevant with the latest model improvements and visual trends.
+              Our mission is to make photography prompt discovery effortless for creators using ChatGPT and Gemini. We believe the best prompts are clear, reliable, and immediately usable. We organize photography ideas by category, mood, style, and creative direction so you can find exactly what you need.
             </p>
             <p className="text-slate-700 leading-8 text-lg mt-4">
-              At PhotoPromptsHub, we care about quality, accessibility, and practical creativity. This means organizing prompts by category, model, theme, and use case so you can find the right setup for any project.
+              At PhotoPromptsHub, we care about quality, accessibility, and practical creativity. This means curating every prompt with a photographer's eye and organizing them in ways that make sense for visual creators.
             </p>
           </section>
 
           <section>
             <h2 className="text-3xl font-clash font-bold text-slate-900 mb-4">How This Site Works</h2>
             <p className="text-slate-700 leading-8 text-lg">
-              We curate prompts in categories like portrait, landscape, product, sci-fi, and more. Each prompt includes helpful tags, an AI model recommendation, and copy-ready text. Our advanced filtering system helps you narrow down prompts by model, mood, palette, and subject matter.
+              We curate photography prompts in categories like portraits, fashion, cinematic, lifestyle, and more. Each prompt is ready to copy and includes helpful tags, photography direction, and mood guidance. Search or filter by style, subject, or creative intent.
             </p>
             <p className="text-slate-700 leading-8 text-lg mt-4">
-              PhotoPromptsHub is built for creative flow. The interface is designed to be lightweight and fast, with search, categories, and saved prompts available instantly so you can stay in the creative zone.
+              PhotoPromptsHub is built for creative flow. The interface is lightweight and fast, with instant access to search, categories, trending ideas, and saved prompts—so you stay in the creative zone.
             </p>
           </section>
 

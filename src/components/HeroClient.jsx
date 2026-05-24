@@ -114,7 +114,7 @@ export default function HeroClient({
               <SearchBar
                 onSubmit={handleSearch}
                 buttonLabel="Search"
-                placeholder="Search portrait, wedding, studio, Flux..."
+                placeholder="Search portrait, wedding, studio, ChatGPT..."
               />
             </div>
 
@@ -218,7 +218,7 @@ export default function HeroClient({
             <SearchBar
               onSubmit={handleSearch}
               buttonLabel="Search prompts"
-              placeholder="Search portrait, wedding, editorial, studio, Flux..."
+              placeholder="Search portrait, wedding, editorial, studio, ChatGPT..."
             />
           </div>
 

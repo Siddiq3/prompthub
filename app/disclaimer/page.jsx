@@ -34,7 +34,7 @@ export default function DisclaimerPage() {
           <section>
             <h2 className="text-3xl font-clash font-bold text-slate-900 mb-4">Third-Party Services</h2>
             <p className="text-slate-700 leading-8 text-lg">
-              PhotoPromptsHub is not affiliated with Midjourney, OpenAI, Flux, Stable Diffusion, or any other AI vendor. References to these services are for informational purposes only.
+              PhotoPromptsHub is not affiliated with any third-party AI platform. References to external AI services are provided for informational purposes only.
             </p>
           </section>
 

@@ -59,15 +59,15 @@ function Home() {
   return (
     <>
       <Seo
-        title="AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion"
-        description="Browse AI photo prompts through clear categories, helpful tags, and prompt pages that are easy to understand."
+        title="AI Photography Prompts for ChatGPT & Gemini"
+        description="Curated photography prompts for ChatGPT and Gemini AI image generation. Browse by category, style, and mood. Copy and customize prompts for creative AI photography."
         path="/"
         image={defaultOgImage}
         schema={[
           buildWebPageSchema({
-            title: "AI Photo Prompts for Midjourney, DALL·E, Flux & Stable Diffusion",
+            title: "AI Photography Prompts for ChatGPT & Gemini",
             description:
-              "Browse AI photo prompts by category first, then refine with search, filters, and collections.",
+              "Discover photography prompts optimized for ChatGPT and Gemini. Browse by category, explore trending ideas, and find the perfect starting point for your next image.",
             path: "/"
           }),
           buildWebSiteSchema(),

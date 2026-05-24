@@ -17,11 +17,8 @@ export default function PromptCardServer({ prompt }) {
   const getToolBadge = () => {
     const platform = prompt.modelLabel || prompt.platform || "Unknown";
     const badgeStyles = {
-      "Midjourney": "bg-purple-600 text-white",
-      "DALL-E": "bg-pink-600 text-white",
-      "Stable Diffusion": "bg-blue-600 text-white",
-      "Flux": "bg-orange-600 text-white",
-      "Adobe Firefly": "bg-red-600 text-white",
+      ChatGPT: "bg-emerald-600 text-white",
+      Gemini: "bg-sky-600 text-white",
     };
     return badgeStyles[platform] || "bg-slate-600 text-white";
   };

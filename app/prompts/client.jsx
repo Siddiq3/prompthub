@@ -69,11 +69,8 @@ const parsePage = (value) => {
 const mapModelToTool = (model) => {
   if (!model) return null;
   const lowerModel = model.toLowerCase();
-  if (lowerModel.includes("midjourney")) return "midjourney";
-  if (lowerModel.includes("dall-e") || lowerModel.includes("dall-e")) return "dall-e";
-  if (lowerModel.includes("flux")) return "flux";
-  if (lowerModel.includes("stable")) return "stable-diffusion";
-  if (lowerModel.includes("adobe") || lowerModel.includes("firefly")) return "adobe-firefly";
+  if (lowerModel.includes("gemini")) return "Gemini";
+  if (lowerModel.includes("chatgpt") || lowerModel.includes("gpt")) return "ChatGPT";
   return null;
 };
 

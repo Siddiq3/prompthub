@@ -65,8 +65,8 @@ export const generateCategorySEO = (category: PromptCategory, count: number): SE
 
   return {
     title: `${category} AI Prompts | ${count} Prompts | PhotoPromptsHub`,
-    description: `Discover ${count} premium ${category.toLowerCase()} prompts for Midjourney, DALL-E, Flux & Stable Diffusion. Get cinematic results instantly.`,
-    keywords: [category, 'AI prompts', 'Midjourney', 'DALL-E', 'Flux', 'image generation'],
+    description: `Discover ${count} premium ${category.toLowerCase()} prompts for ChatGPT and Gemini. Get cinematic results instantly.`,
+    keywords: [category, 'AI prompts', 'ChatGPT', 'Gemini', 'image generation'],
     canonicalUrl,
     ogType: 'website',
     twitterCard: 'summary_large_image',

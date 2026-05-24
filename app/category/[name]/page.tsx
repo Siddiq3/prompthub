@@ -82,7 +82,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     "@type": "CollectionPage",
     "@id": categoryUrl,
     "name": `${category.name} AI Prompts - PhotoPromptsHub`,
-    "description": `Browse ${categoryPrompts.length} ${category.name.toLowerCase()} AI image prompts for Midjourney, DALL·E, Flux, and Stable Diffusion. Find the perfect ${category.name.toLowerCase()} prompt for your creative project.`,
+    "description": `Browse ${categoryPrompts.length} ${category.name.toLowerCase()} AI photography prompts for ChatGPT and Gemini image generation. Find the perfect ${category.name.toLowerCase()} prompt to inspire your next creative project.`,
     "url": categoryUrl,
     "mainEntity": {
       "@type": "ItemList",

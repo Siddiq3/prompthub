@@ -12,10 +12,8 @@ import {
 import { encodePathSegment, slugify } from "./slug.js";
 
 const MODEL_LABELS = {
-  Dalle: "DALL·E",
-  Flux: "Flux",
-  Midjourney: "Midjourney",
-  StableDiffusion: "Stable Diffusion"
+  ChatGPT: "ChatGPT",
+  Gemini: "Gemini AI"
 };
 
 const getTimestamp = (value) => {

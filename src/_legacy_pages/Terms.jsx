@@ -38,7 +38,7 @@ function Terms() {
       <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
         <h2 className="font-heading text-2xl font-semibold text-brand-ink">Website Purpose</h2>
         <p className="mt-3 text-sm leading-7 text-slate-600">
-          PhotoPromptsHub is a discovery platform that curates AI photo prompts, example images, and creative inspiration for AI image generation tools such as Midjourney, DALL·E, Stable Diffusion, Flux, and related systems.
+          PhotoPromptsHub is a photography prompt library designed for creative use with ChatGPT and Gemini AI image generation platforms.
         </p>
       </section>
 
@@ -67,7 +67,7 @@ function Terms() {
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
           <h2 className="font-heading text-2xl font-semibold text-brand-ink">Third-Party Platforms</h2>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            AI tools referenced on the website, including Midjourney, DALL·E, Stable Diffusion, Flux, and similar services, are independent third-party platforms. Their features, terms, moderation systems, and output rules are separate from PhotoPromptsHub.
+            ChatGPT (OpenAI) and Gemini (Google) are independent third-party platforms. Their features, terms, moderation systems, and output capabilities are separate from PhotoPromptsHub. We recommend reviewing their terms of service directly.
           </p>
         </div>
       </section>

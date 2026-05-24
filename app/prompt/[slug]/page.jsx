@@ -12,37 +12,22 @@ import { formatDate } from "@/src/utils/prompts";
 export const revalidate = 3600;
 
 const TOOL_EMOJI = {
-  "Flux AI": "⚡",
-  Midjourney: "🎨",
   ChatGPT: "🤖",
-  "Stable Diffusion": "🖼️",
-  "Leonardo AI": "🦁",
+  Gemini: "🔮",
 };
 
 const getToolDescription = (tool) => {
   const normalized = String(tool || "").trim();
 
-  if (normalized.includes("Flux")) {
-    return "Fast, modern AI generation that handles creative fashion and lifestyle prompts with crisp detail.";
-  }
-
-  if (normalized.includes("Midjourney")) {
-    return "A versatile image engine for artistic, stylized outputs with strong color and composition control.";
-  }
-
   if (normalized.includes("ChatGPT")) {
-    return "Great for prompt crafting, step-by-step guidance, and quick idea refinement before image generation.";
+    return "ChatGPT's image generation excels with detailed photographic prompts, consistent character descriptions, and refined visual direction.";
   }
 
-  if (normalized.includes("Stable Diffusion")) {
-    return "Ideal for flexible image edits, photo-realistic rendering, and high-quality generated visuals.";
+  if (normalized.includes("Gemini")) {
+    return "Gemini AI image generation delivers photorealistic imagery and handles complex scene composition with excellent detail and creativity.";
   }
 
-  if (normalized.includes("Leonardo")) {
-    return "A strong artist-focused tool for polished concept imagery with expressive lighting and texture.";
-  }
-
-  return "A reliable AI tool for generating high-quality imagery with modern styling and creative detail.";
+  return "A powerful AI image generation tool that works best with detailed descriptive prompts and clear visual direction.";
 };
 
 const formatList = (items = []) => {
