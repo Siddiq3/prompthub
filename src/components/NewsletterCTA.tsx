@@ -88,7 +88,7 @@ export default function NewsletterCTA() {
           {/* Form */}
           <motion.form
             onSubmit={handleSubmit}
-            className="flex gap-3 max-w-md"
+            className="flex flex-col gap-3 max-w-full sm:max-w-md sm:flex-row"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -100,7 +100,7 @@ export default function NewsletterCTA() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email..."
               disabled={status === 'loading'}
-              className="flex-1 px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition disabled:opacity-50"
+              className="w-full px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition disabled:opacity-50"
             />
 
             <motion.button
@@ -108,7 +108,7 @@ export default function NewsletterCTA() {
               disabled={status === 'loading' || status === 'success'}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-lg bg-white text-blue-600 font-bold flex items-center gap-2 hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-blue-600 font-bold flex justify-center items-center gap-2 hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === 'loading' ? (
                 <motion.div

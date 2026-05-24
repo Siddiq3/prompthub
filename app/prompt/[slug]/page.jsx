@@ -277,6 +277,54 @@ export default async function PromptDetailsPage({ params }) {
               </p>
             </section>
 
+            <section className="max-w-2xl space-y-4 text-slate-700 mb-8">
+              <h2 className="text-2xl font-semibold text-slate-900">Join & Follow</h2>
+              <p className="text-sm text-slate-600">Stay connected with PhotoPromptsHub across Instagram, WhatsApp and Telegram.</p>
+              <div className="space-y-3">
+                <a
+                  href="https://www.instagram.com/photosprompthub?igsh=MTNoNzJvYmxraG1meQ=="
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group flex items-center gap-4 w-full rounded-3xl bg-gradient-to-r from-fuchsia-500 via-pink-500 to-orange-400 px-5 py-4 text-white shadow-sm transition hover:from-fuchsia-600 hover:via-pink-600 hover:to-orange-500"
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-fuchsia-600 transition group-hover:bg-fuchsia-100">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.977.24 2.436.403a4.92 4.92 0 011.675.98 4.918 4.918 0 01.981 1.674c.163.459.347 1.266.403 2.436.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.977-.403 2.436a4.906 4.906 0 01-.98 1.675 4.906 4.906 0 01-1.675.981c-.459.163-1.266.347-2.436.403-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.977-.24-2.436-.403a4.92 4.92 0 01-1.675-.98 4.92 4.92 0 01-.981-1.675c-.163-.459-.347-1.266-.403-2.436C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.977.403-2.436a4.918 4.918 0 01.98-1.674 4.918 4.918 0 011.675-.981c.459-.163 1.266-.347 2.436-.403C8.416 2.175 8.796 2.163 12 2.163zm0 1.838c-3.17 0-3.553.012-4.805.069-1.038.048-1.599.217-1.972.363a3.14 3.14 0 00-1.147.748 3.14 3.14 0 00-.749 1.147c-.146.373-.315.934-.363 1.972-.057 1.252-.069 1.635-.069 4.805s.012 3.553.069 4.805c.048 1.038.217 1.599.363 1.972.175.446.405.828.749 1.147.318.317.7.548 1.147.749.373.146.934.315 1.972.363 1.252.057 1.635.069 4.805.069s3.553-.012 4.805-.069c1.038-.048 1.599-.217 1.972-.363a3.132 3.132 0 001.147-.749 3.132 3.132 0 00.749-1.147c.146-.373.315-.934.363-1.972.057-1.252.069-1.635.069-4.805s-.012-3.553-.069-4.805c-.048-1.038-.217-1.599-.363-1.972a3.14 3.14 0 00-.748-1.147 3.14 3.14 0 00-1.147-.749c-.373-.146-.934-.315-1.972-.363-1.252-.057-1.635-.069-4.805-.069z" />
+                      <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a3.999 3.999 0 110-7.998 3.999 3.999 0 010 7.998z" />
+                      <circle cx="18.406" cy="5.594" r="1.44" />
+                    </svg>
+                  </span>
+                  <span>Follow on Instagram</span>
+                </a>
+                <a
+                  href="https://whatsapp.com/channel/0029VbCfYa9002TAlsIdh71m"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group flex items-center gap-4 w-full rounded-3xl bg-[#25D366] px-5 py-4 text-white shadow-sm transition hover:bg-[#1EB954]"
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#25D366] transition group-hover:bg-green-100">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                      <path d="M20.52 3.48C18.4 1.36 15.6 0 12.48 0 5.73 0 .4 5.33.4 11.98c0 2.1.62 4.16 1.79 5.96L0 24l6.38-1.68A11.93 11.93 0 0012 24c6.75 0 12.08-5.32 12.08-11.98 0-3.12-1.36-5.92-3.74-8.45zm-2.74 13.3c-.2.56-1.22 1.1-1.68 1.17-.42.07-1.02.1-1.58-.12-.6-.22-1.57-.65-2.73-1.84-1.16-1.19-1.9-2.37-2.12-2.93-.23-.56-.02-.87.16-1.12.17-.23.39-.6.53-.77.14-.17.18-.27.26-.44.08-.16.04-.31-.02-.43-.06-.12-.64-1.46-.88-2.01-.23-.56-.47-.49-.64-.5-.16-.01-.35-.01-.54-.01-.18 0-.45.03-.68.31-.23.27-.88.99-.88 2.42 0 1.43.73 2.79.83 2.99.1.19 1.48 2.89 3.9 4.98 1.06.92 1.96 1.25 2.4 1.38.62.18 1.2.15 1.65.09.5-.07 1.22-.5 1.56-1.09.34-.58.38-1.04.27-1.14-.11-.1-.4-.16-.82-.28z"/>
+                    </svg>
+                  </span>
+                  <span>Join on WhatsApp</span>
+                </a>
+                <a
+                  href="https://t.me/photopromptshub"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group flex items-center gap-4 w-full rounded-3xl bg-[#2AABEE] px-5 py-4 text-white shadow-sm transition hover:bg-[#22A0E8]"
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#2AABEE] transition group-hover:bg-sky-100">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+                      <path d="M21 3L3 10l5.14 1.9L8 19l4.56-2.86L20 21 21 3z" />
+                    </svg>
+                  </span>
+                  <span>Join on Telegram</span>
+                </a>
+              </div>
+            </section>
+
             <div className="border-t border-slate-200 px-6 lg:px-8 py-8">
               <div className="max-w-full">
                 <h2 className="text-xl font-clash font-bold text-slate-900 mb-6">

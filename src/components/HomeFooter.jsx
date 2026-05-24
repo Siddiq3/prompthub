@@ -16,18 +16,7 @@ export default function HomeFooter({ popularCategories }) {
             </p>
             <div className="flex gap-4 pt-2">
               <a
-                href="https://twitter.com/photopromptshub"
-                className="text-slate-400 hover:text-white transition-colors"
-                aria-label="Twitter"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7" />
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com/photopromptshub/"
+                href="https://www.instagram.com/photosprompthub?igsh=MTNoNzJvYmxraG1meQ=="
                 className="text-slate-400 hover:text-white transition-colors"
                 aria-label="Instagram"
                 target="_blank"
@@ -37,6 +26,29 @@ export default function HomeFooter({ popularCategories }) {
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" strokeWidth="2" />
                   <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" fill="none" stroke="currentColor" strokeWidth="2" />
                   <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" />
+                </svg>
+              </a>
+              <a
+                href="https://whatsapp.com/channel/0029VbCfYa9002TAlsIdh71m"
+                className="text-slate-400 hover:text-white transition-colors"
+                aria-label="WhatsApp"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.198.297-.765.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.787-1.48-1.761-1.654-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.52.149-.173.198-.298.298-.497.099-.198.05-.372-.025-.52-.075-.149-.672-1.612-.92-2.21-.242-.579-.487-.5-.672-.51-.173-.01-.372-.01-.57-.01-.198 0-.52.074-.792.372-.273.297-1.04 1.016-1.04 2.475 0 1.459 1.065 2.873 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.693.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.124-.27-.198-.567-.347z" />
+                  <path d="M20.52 3.48C18.398 1.36 15.6 0 12.478 0 5.727 0 .4 5.325.4 11.98c0 2.1.62 4.16 1.792 5.96L0 24l6.38-1.668c1.74 1.03 3.7 1.584 5.8 1.584 6.75 0 12.08-5.324 12.08-11.98 0-3.124-1.36-5.922-3.74-8.452z" />
+                </svg>
+              </a>
+              <a
+                href="https://t.me/photopromptshub"
+                className="text-slate-400 hover:text-white transition-colors"
+                aria-label="Telegram"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M21 3L3 10l5.14 1.9L8 19l4.56-2.86L20 21 21 3z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
             </div>
