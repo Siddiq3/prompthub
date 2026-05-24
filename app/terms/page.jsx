@@ -27,7 +27,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-3xl font-clash font-bold text-slate-900 mb-4">Website Purpose</h2>
             <p className="text-slate-700 leading-8 text-lg">
-              PhotoPromptsHub is designed to help creators discover and use AI image generation prompts. We provide a curated library of prompts optimized for ChatGPT and Gemini. The prompts are provided as inspiration and starting points for your creative projects.
+              PhotoPromptsHub is designed to help creators discover and use AI image generation prompts. We provide a curated library of AI photography prompts and creative inspiration designed for ChatGPT and Gemini image generation.
             </p>
           </section>
 
@@ -56,7 +56,7 @@ export default function TermsPage() {
                 </li>
               </ul>
               <p className="text-slate-700 leading-8 text-lg mt-6">
-                You agree to use prompts in compliance with the terms of the AI platforms you choose to use, such as ChatGPT or Gemini.
+                You agree to use prompts responsibly and in compliance with the terms of the AI platforms you choose to use, including ChatGPT and Gemini.
               </p>
             </div>
           </section>

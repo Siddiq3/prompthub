@@ -67,7 +67,7 @@ function Terms() {
         <div className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
           <h2 className="font-heading text-2xl font-semibold text-brand-ink">Third-Party Platforms</h2>
           <p className="mt-3 text-sm leading-7 text-slate-600">
-            ChatGPT (OpenAI) and Gemini (Google) are independent third-party platforms. Their features, terms, moderation systems, and output capabilities are separate from PhotoPromptsHub. We recommend reviewing their terms of service directly.
+            ChatGPT and Gemini are independent third-party platforms. Their features, terms, moderation systems, and output capabilities are separate from PhotoPromptsHub. We recommend reviewing each platform's terms of service directly.
           </p>
         </div>
       </section>
