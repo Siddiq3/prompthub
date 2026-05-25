@@ -2,10 +2,11 @@
 
 import { motion } from 'framer-motion';
 import PromptCard from '@/src/components/PromptCard';
-import { Prompt } from '@/src/types';
+import { HomepageContentItem, Prompt } from '@/src/types';
+import { WorkflowCard } from '@/src/components/video-workflows';
 
 interface PromptGridProps {
-  prompts: Prompt[];
+  prompts: Array<Prompt | HomepageContentItem>;
   variant?: 'grid' | 'masonry' | 'list';
   isLoading?: boolean;
 }
@@ -53,7 +54,11 @@ export default function PromptGrid({
           }}
           className={variant === 'masonry' ? 'break-inside-avoid mb-6' : ''}
         >
-          <PromptCard prompt={prompt} variant={variant === 'list' ? 'list' : 'grid'} />
+          {prompt.type === 'video-workflow' ? (
+            <WorkflowCard workflow={prompt} />
+          ) : (
+            <PromptCard prompt={prompt as Prompt} variant={variant === 'list' ? 'list' : 'grid'} />
+          )}
         </motion.div>
       ))}
     </motion.div>

@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 import { getPrompts } from '@/src/lib/data';
+import { getVideoWorkflows } from '@/src/lib/videoWorkflows';
 import { sortPrompts } from '@/src/utils/prompts';
-import type { Prompt } from '@/src/types';
+import type { HomepageContentItem } from '@/src/types';
 import TrendingCarousel from '@/src/components/TrendingCarousel';
 import PromptGrid from '@/src/components/PromptGrid';
 import CategoryShowcase from '@/src/components/CategoryShowcase';
@@ -13,7 +14,7 @@ import {
   SkeletonCategoryGrid,
 } from '@/src/components/SkeletonLoaders';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export function generateMetadata() {
   return {
@@ -54,15 +55,21 @@ async function HeroSection() {
 }
 
 async function LatestSection() {
-  const prompts = await getPrompts();
-  const latestPrompts = sortPrompts(prompts, 'newest').slice(0, 16);
+  const [prompts, videoWorkflows] = await Promise.all([getPrompts(), getVideoWorkflows()]);
+  const imageItems: HomepageContentItem[] = prompts.map((prompt) => ({
+    ...prompt,
+    type: 'image',
+  }));
+  const latestItems = [...imageItems, ...videoWorkflows].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="mb-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-[40px] font-black text-slate-900">Latest prompts</h2>
+            <h2 className="text-[40px] font-black text-slate-900">Latest prompts & workflows</h2>
             {/* <p className="mt-2 text-lg text-slate-600 max-w-2xl">
               Discover the freshest prompt ideas for AI art, photography compositions, cinematic scenes, and product visuals.
             </p> */}
@@ -73,7 +80,7 @@ async function LatestSection() {
         </div>
       </div>
 
-      <PromptGrid prompts={latestPrompts.slice(0, 9)} variant="grid" />
+      <PromptGrid prompts={latestItems.slice(0, 9)} variant="grid" />
 
       <div className="mt-10 flex justify-center">
         <a href="/prompts" className="inline-flex h-14 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] px-8 text-base font-semibold text-white shadow-lg shadow-[#7C3AED]/20 transition hover:opacity-95">

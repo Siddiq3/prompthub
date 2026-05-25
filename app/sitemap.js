@@ -1,6 +1,7 @@
 import { getPrompts, getAllPromptSlugs, getAllPromptIds } from "@/src/lib/data";
 import { getCategories, getCollections } from "@/src/lib/content";
 import { STATIC_INDEXABLE_ROUTES } from "@/src/lib/routes";
+import { getVideoWorkflows } from "@/src/lib/videoWorkflows";
 
 export default async function sitemap() {
   const baseUrl = "https://photopromptshub.in";
@@ -9,6 +10,7 @@ export default async function sitemap() {
     const prompts = await getPrompts();
     const categories = getCategories(prompts);
     const collections = getCollections(prompts);
+    const videoWorkflows = await getVideoWorkflows();
     const slugs = await getAllPromptSlugs();
     const ids = await getAllPromptIds();
 
@@ -36,6 +38,14 @@ export default async function sitemap() {
       priority: 0.85,
     }));
 
+    // Dynamic video workflow routes
+    const videoWorkflowRoutes = videoWorkflows.map((workflow) => ({
+      url: `${baseUrl}/video-prompts/${workflow.slug}`,
+      lastModified: workflow.updatedAt ? new Date(workflow.updatedAt) : new Date(workflow.createdAt),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }));
+
     // Category routes
     const categoryRoutes = categories.map((cat) => ({
       url: `${baseUrl}/category/${encodeURIComponent(cat.name.toLowerCase())}`,
@@ -52,7 +62,7 @@ export default async function sitemap() {
       priority: 0.7,
     }));
 
-    return [...staticRoutes, ...promptRoutes, ...promptIdRoutes, ...categoryRoutes, ...collectionRoutes];
+    return [...staticRoutes, ...promptRoutes, ...promptIdRoutes, ...videoWorkflowRoutes, ...categoryRoutes, ...collectionRoutes];
   } catch (error) {
     console.error("Error generating sitemap:", error);
     return [];

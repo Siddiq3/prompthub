@@ -105,7 +105,7 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
             <div className="mt-3 flex flex-wrap gap-2">
               <span className="text-[10px] rounded-full bg-slate-100 px-2 py-1 text-slate-700">{prompt.category}</span>
               <span className="text-[10px] rounded-full px-2 py-1 font-semibold" style={{ backgroundColor: modelColor.bg, color: modelColor.text }}>
-                {modelLab}
+                {modelLabel}
               </span>
             </div>
           </div>

@@ -42,6 +42,7 @@ export interface SEO {
 // PROMPT TYPE (Main)
 // ============================================
 export interface Prompt {
+  type?: 'image';
   id: string;
   title: string;
   slug: string;
@@ -238,6 +239,59 @@ export interface CreativeWorkSchema {
 export type PromptWithInteraction = Prompt & {
   userInteraction?: UserInteraction;
 };
+
+// ============================================
+// VIDEO WORKFLOW TYPES
+// ============================================
+export interface VideoWorkflowStep {
+  stepNumber: number;
+  step?: number;
+  title: string;
+  platform: string;
+  model: string;
+  prompt: string;
+  tips?: string[];
+}
+
+export interface VideoWorkflow {
+  type: 'video-workflow';
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  workflowTitle?: string;
+  category?: string;
+  tags?: string[];
+  displayTags?: string[];
+  duration: string;
+  aspectRatio: AspectRatio;
+  resolution?: string;
+  toolsUsed: string[];
+  thumbnail: string;
+  previewImage?: string;
+  previewVideo?: string;
+  badges?: Badge[];
+  trendingBadges?: Badge[];
+  steps: VideoWorkflowStep[];
+  workflowSteps?: VideoWorkflowStep[];
+  createdAt: string;
+  updatedAt?: string;
+  seo: SEO;
+  modelLabel?: string;
+  copies?: number;
+  isTrending?: boolean;
+  seoIntro?: string;
+  author?: string;
+  compatibleModels?: string[];
+  howToSteps?: string[];
+  tips?: string[];
+  faqItems?: FaqItem[];
+  relatedWorkflowSlugs?: string[];
+  relatedSlugs?: string[];
+  wordCount?: number;
+}
+
+export type HomepageContentItem = (Prompt & { type: 'image' }) | VideoWorkflow;
 
 export type PromptCardProps = {
   prompt: Prompt;

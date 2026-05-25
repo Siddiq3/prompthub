@@ -3,7 +3,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN?.trim();
 const isAllowedPath = (path) => {
   if (!path) return false;
   if (path.includes("..")) return false;
-  if (!/^previews\/[a-zA-Z0-9._\-/]+$/.test(path)) return false;
+  if (!/^(previews|video-preview|video-clips)\/[a-zA-Z0-9._\-/]+$/.test(path)) return false;
   return true;
 };
 
