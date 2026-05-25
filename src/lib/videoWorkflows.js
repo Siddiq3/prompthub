@@ -168,11 +168,31 @@ export const normalizeVideoWorkflow = (workflow, index = 0) => {
     : Array.isArray(workflow.workflowSteps)
       ? workflow.workflowSteps.map(normalizeStep)
       : [];
+  const rawTags = Array.isArray(workflow.tags)
+    ? workflow.tags.map((tag) => String(tag).trim()).filter(Boolean)
+    : [];
+  const displayTags = Array.isArray(workflow.displayTags)
+    ? workflow.displayTags.map((tag) => String(tag).trim()).filter(Boolean)
+    : rawTags;
+  const model = Array.isArray(workflow.toolsUsed) && workflow.toolsUsed.length > 0
+    ? workflow.toolsUsed.find((tool) => /chatgpt|gemini/i.test(String(tool))) || workflow.toolsUsed[0]
+    : "";
 
   return {
     ...workflow,
     type: "video-workflow",
     sourceIndex: Number.isFinite(workflow.sourceIndex) ? workflow.sourceIndex : index,
+    model,
+    prompt: workflow.description || workflow.seoIntro || "",
+    negativePrompt: "",
+    rawCategory: workflow.category || "",
+    rawTags,
+    displayTags,
+    styleTags: displayTags,
+    subjectTags: [],
+    createdTimestamp: Number.isFinite(new Date(workflow.createdAt).getTime())
+      ? new Date(workflow.createdAt).getTime()
+      : 0,
     thumbnail: normalizeImageUrl(workflow.thumbnail || workflow.previewImage || ""),
     previewImage: normalizeImageUrl(workflow.previewImage || workflow.thumbnail || ""),
     previewVideo: normalizeImageUrl(workflow.previewVideo || ""),

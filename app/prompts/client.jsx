@@ -7,7 +7,7 @@ import AdSlot from "@/src/components/AdSlot";
 import Breadcrumbs from "@/src/components/Breadcrumbs";
 import FilterBar from "@/src/components/FilterBar";
 import SearchAndFilter from "@/src/components/SearchAndFilter";
-import MasonryGrid from "@/src/components/MasonryGrid";
+import PromptGrid from "@/src/components/PromptGrid";
 import Pagination from "@/src/components/Pagination";
 import PromptCard from "@/src/components/PromptCard";
 import PageHeader from "@/src/components/PageHeader";
@@ -284,11 +284,7 @@ export default function PromptsClientPage({ initialPrompts }) {
           {/* Prompts Grid */}
           {paginatedPrompts.length > 0 ? (
             <>
-              <MasonryGrid>
-                {paginatedPrompts.map((prompt) => (
-                  <PromptCard key={prompt.id} prompt={prompt} />
-                ))}
-              </MasonryGrid>
+              <PromptGrid prompts={paginatedPrompts} variant="grid" />
 
               {/* Pagination */}
               {totalPages > 1 && (

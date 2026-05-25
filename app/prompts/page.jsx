@@ -1,4 +1,5 @@
 import { getPrompts } from "@/src/lib/data";
+import { getVideoWorkflows } from "@/src/lib/videoWorkflows";
 import PromptsClientPage from "./client";
 
 export const dynamic = 'force-dynamic';
@@ -20,7 +21,10 @@ export function generateMetadata() {
 }
 
 export default async function PromptsPage() {
-  const prompts = await getPrompts();
+  const [prompts, videoWorkflows] = await Promise.all([getPrompts(), getVideoWorkflows()]);
+  const initialPrompts = [...prompts, ...videoWorkflows].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
-  return <PromptsClientPage initialPrompts={prompts} />;
+  return <PromptsClientPage initialPrompts={initialPrompts} />;
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PRIMARY_CATEGORY_ORDER } from "@/src/lib/taxonomy";
 import { getCategories } from "@/src/lib/content";
 import { getPrompts } from "@/src/lib/data";
+import { getVideoWorkflows } from "@/src/lib/videoWorkflows";
 import { SkeletonHeader, SkeletonCategoryGrid } from "@/src/components/SkeletonLoaders";
 
 const CATEGORY_EMOJI = {
@@ -39,8 +40,8 @@ const getPreviewImages = (category) => {
 };
 
 async function CategoriesContent() {
-  const prompts = await getPrompts();
-  const categories = getCategories(prompts);
+  const [prompts, videoWorkflows] = await Promise.all([getPrompts(), getVideoWorkflows()]);
+  const categories = getCategories([...prompts, ...videoWorkflows]);
   const primaryCategorySet = new Set(PRIMARY_CATEGORY_ORDER);
   const featuredCategories = categories.filter((category) => primaryCategorySet.has(category.name));
   const otherCategories = categories.filter((category) => !primaryCategorySet.has(category.name));
