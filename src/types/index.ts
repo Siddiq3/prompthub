@@ -68,6 +68,7 @@ export interface Prompt {
   who_is_it_for?: string;
   prompt_tips?: string[];
   what_is_paragraph?: string;
+  what_is_closing_paragraph?: string;
   faq?: FaqItem[];
   author?: string;
   compatibleModels?: string[];

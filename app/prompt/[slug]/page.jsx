@@ -30,11 +30,6 @@ const getToolDescription = (tool) => {
   return "A powerful AI image generation tool that works best with detailed descriptive prompts and clear visual direction.";
 };
 
-const formatList = (items = []) => {
-  const trimmed = Array.isArray(items) ? items.filter(Boolean) : [];
-  return trimmed.slice(0, 3).join(", ");
-};
-
 const cleanTextArray = (items = []) =>
   Array.isArray(items)
     ? items.map((item) => String(item || "").trim()).filter(Boolean)
@@ -66,10 +61,6 @@ export default async function PromptDetailsPage({ params }) {
   const compatibleModels = Array.isArray(prompt.compatibleModels) && prompt.compatibleModels.length > 0 ? prompt.compatibleModels : [prompt.modelLabel || prompt.model || "AI model"];
   const primaryModel = compatibleModels[0];
   const otherModels = compatibleModels.slice(1);
-  const previewTags = formatList(prompt.tags || prompt.displayTags || []);
-  const audienceSentence = prompt.occasion
-    ? `This prompt is perfect for ${prompt.occasion} themed content and is designed for ${prompt.audience || "your audience"}.`
-    : "";
   const authorName = prompt.author || 'SiddiqKolimi';
   const authorBio = `${authorName} is a software developer and AI content creator specializing in modern web applications, SEO-focused platforms, and AI-powered workflows. His platforms provide easy-to-use AI prompts for creating professional-quality photos, cinematic visuals, and creative digital content.`;
   const howToSteps = prompt.howToSteps?.length
@@ -108,7 +99,14 @@ export default async function PromptDetailsPage({ params }) {
         },
       ];
   const introText = prompt.intro || `This prompt is crafted to help you generate polished, high-quality AI imagery with a modern, visually striking look. It works especially well for ${prompt.category?.toLowerCase() || 'photo'} compositions and is tuned for use with ${prompt.modelLabel || prompt.model || 'top AI image models'}. Use it when you want reliable, creative results without manual prompt experimentation.`;
-  const whatIsParagraph = prompt.what_is_paragraph || seoIntro;
+  const whatIsParagraph =
+    typeof prompt.what_is_paragraph === "string" ? prompt.what_is_paragraph.trim() : "";
+  const whatIsClosingParagraph =
+    typeof prompt.what_is_closing_paragraph === "string"
+      ? prompt.what_is_closing_paragraph.trim()
+      : "";
+  const hasWhatIsIntro = whatIsParagraph.length > 0;
+  const hasWhatIsClosing = whatIsClosingParagraph.length > 0;
   const pageTags = prompt.tags?.length ? prompt.tags : prompt.displayTags || [];
 
   return (
@@ -241,18 +239,13 @@ export default async function PromptDetailsPage({ params }) {
                 </ul>
               </section>
 
-              <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">What Are {categoryLabel} Prompts?</h2>
-                <p>{whatIsParagraph}</p>
-                <p>
-                  This {categoryLabel} prompt works best with {primaryModel}
-                  {otherModels.length > 0 ? ` and is also compatible with ${otherModels.join(", ")}` : ""}.
-                  {previewTags
-                    ? ` It produces ${previewTags} style images optimized for Instagram, YouTube Shorts, and social media.`
-                    : " It is optimized for social media-ready imagery."}
-                </p>
-                {audienceSentence ? <p>{audienceSentence}</p> : null}
-              </section>
+              {hasWhatIsIntro ? (
+                <section className="space-y-6 text-slate-700">
+                  <h2 className="text-2xl font-semibold text-slate-900">What Are {categoryLabel} Prompts?</h2>
+                  <p>{whatIsParagraph}</p>
+                  {hasWhatIsClosing ? <p>{whatIsClosingParagraph}</p> : null}
+                </section>
+              ) : null}
 
               <section className="space-y-6 text-slate-700">
                 <h2 className="text-2xl font-semibold text-slate-900">How to Use This Prompt</h2>

@@ -165,6 +165,7 @@ const normalizePrompt = (raw, index) => {
       ? raw.prompt_tips.map((tip) => pickString(tip)).filter(Boolean)
       : [],
     what_is_paragraph: pickString(raw?.what_is_paragraph),
+    what_is_closing_paragraph: pickString(raw?.what_is_closing_paragraph),
     author: pickString(raw?.author),
     compatibleModels: parseTags(raw?.compatibleModels),
     howToSteps: Array.isArray(raw?.howToSteps)
