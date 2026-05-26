@@ -35,6 +35,22 @@ const formatList = (items = []) => {
   return trimmed.slice(0, 3).join(", ");
 };
 
+const cleanTextArray = (items = []) =>
+  Array.isArray(items)
+    ? items.map((item) => String(item || "").trim()).filter(Boolean)
+    : [];
+
+const cleanFaqItems = (items = []) =>
+  Array.isArray(items)
+    ? items
+        .filter((item) => item && (item.question || item.answer))
+        .map((item) => ({
+          question: String(item.question || "").trim(),
+          answer: String(item.answer || "").trim(),
+        }))
+        .filter((item) => item.question || item.answer)
+    : [];
+
 export default async function PromptDetailsPage({ params }) {
   const { slug } = params;
   const prompt = await getPromptBySlug(slug);
@@ -65,15 +81,22 @@ export default async function PromptDetailsPage({ params }) {
         `Generate the image and review the first result.`,
         `Tweak the prompt or aspect ratio until the composition matches your vision.`,
       ];
-  const tips = prompt.tips?.length
-    ? prompt.tips
+  const aboutParagraphs = cleanTextArray(prompt.about_paragraphs);
+  const promptTips = cleanTextArray(prompt.prompt_tips);
+  const legacyTips = cleanTextArray(prompt.tips);
+  const tips = promptTips.length
+    ? promptTips
+    : legacyTips.length
+      ? legacyTips
     : [
         `Run the prompt multiple times and pick the best result.`,
         `Add “ultra HD, 8K resolution” for sharper output when your tool supports it.`,
         `Try different aspect ratios to discover the most compelling composition.`,
       ];
-  const faqItems = prompt.faqItems?.length
-    ? prompt.faqItems
+  const faqItems = cleanFaqItems(prompt.faq).length
+    ? cleanFaqItems(prompt.faq)
+    : cleanFaqItems(prompt.faqItems).length
+      ? cleanFaqItems(prompt.faqItems)
     : [
         {
           question: `What is the best way to use this ${categoryLabel} prompt?`,
@@ -84,6 +107,8 @@ export default async function PromptDetailsPage({ params }) {
           answer: `Yes, it works well with ${compatibleModels.join(", ")} and can be adjusted slightly for each platform.`,
         },
       ];
+  const introText = prompt.intro || `This prompt is crafted to help you generate polished, high-quality AI imagery with a modern, visually striking look. It works especially well for ${prompt.category?.toLowerCase() || 'photo'} compositions and is tuned for use with ${prompt.modelLabel || prompt.model || 'top AI image models'}. Use it when you want reliable, creative results without manual prompt experimentation.`;
+  const whatIsParagraph = prompt.what_is_paragraph || seoIntro;
   const pageTags = prompt.tags?.length ? prompt.tags : prompt.displayTags || [];
 
   return (
@@ -148,7 +173,7 @@ export default async function PromptDetailsPage({ params }) {
               </div>
 
               <p className="max-w-2xl text-base leading-8 text-slate-600">
-                This prompt is crafted to help you generate polished, high-quality AI imagery with a modern, visually striking look. It works especially well for {prompt.category?.toLowerCase() || 'photo'} compositions and is tuned for use with {prompt.modelLabel || prompt.model || 'top AI image models'}. Use it when you want reliable, creative results without manual prompt experimentation.
+                {introText}
               </p>
             </div>
           </div>
@@ -165,31 +190,60 @@ export default async function PromptDetailsPage({ params }) {
             </div>
 
             <section className="max-w-2xl space-y-6 text-slate-700">
-              <h2 className="text-2xl font-semibold text-slate-900">About this prompt</h2>
-              <p>
-                This prompt has been shaped to deliver crisp, high-impact visuals with clear subject focus and strong atmosphere. It works best when you want a refined creative output that retains consistent styling across multiple generations. The structure balances descriptive detail with flexible composition guidance, so you can adapt the prompt quickly for portraits, product shots, landscapes, or editorial scenes.
-              </p>
-              <p>
-                When you use this prompt, start with the recommended model and adjust the color emphasis or lighting keywords to match your desired mood. The prompt is ideal for {prompt.modelLabel || prompt.model || 'modern AI visual engines'}, since it gives you a strong base while leaving enough room for the model to interpret artistic flourishes and realistic textures.
-              </p>
-              <p>
-                The primary goal is to get a clean first pass that needs minimal revision. Use the prompt for concept art, stylized photo-realistic scenes, social media imagery, or marketing visuals. The prompt is especially useful when you need consistent results across multiple designs, because it prioritizes a reliable structure over random output.
-              </p>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">Tips for best results</h3>
-                <ul className="list-inside list-disc space-y-3 text-slate-700">
-                  <li>Use the prompt as a starting point and add one or two style modifiers like "cinematic lighting" or "soft film grain."</li>
-                  <li>Keep your subject and mood consistent across variations to maintain visual coherence.</li>
-                  <li>For more dramatic results, boost contrast with words like "moody shadows" or "high-end editorial."</li>
-                  <li>Adjust the model seed or prompt strength if your tool supports it to fine-tune detail and texture.</li>
-                </ul>
-              </div>
+              <h2 className="text-2xl font-semibold text-slate-900">About This Prompt</h2>
+              {aboutParagraphs.length ? (
+                aboutParagraphs.map((paragraph, index) => (
+                  <p key={`about-${index}`} className="leading-8">
+                    {paragraph}
+                  </p>
+                ))
+              ) : (
+                <>
+                  <p>
+                    This prompt has been shaped to deliver crisp, high-impact visuals with clear subject focus and strong atmosphere. It works best when you want a refined creative output that retains consistent styling across multiple generations. The structure balances descriptive detail with flexible composition guidance, so you can adapt the prompt quickly for portraits, product shots, landscapes, or editorial scenes.
+                  </p>
+                  <p>
+                    When you use this prompt, start with the recommended model and adjust the color emphasis or lighting keywords to match your desired mood. The prompt is ideal for {prompt.modelLabel || prompt.model || 'modern AI visual engines'}, since it gives you a strong base while leaving enough room for the model to interpret artistic flourishes and realistic textures.
+                  </p>
+                  <p>
+                    The primary goal is to get a clean first pass that needs minimal revision. Use the prompt for concept art, stylized photo-realistic scenes, social media imagery, or marketing visuals. The prompt is especially useful when you need consistent results across multiple designs, because it prioritizes a reliable structure over random output.
+                  </p>
+                </>
+              )}
             </section>
+
+            {prompt.how_it_works ? (
+              <section className="max-w-2xl space-y-4 text-slate-700">
+                <h2 className="text-2xl font-semibold text-slate-900">How This Prompt Works</h2>
+                <p className="leading-8">{prompt.how_it_works}</p>
+              </section>
+            ) : null}
+
+            {prompt.who_is_it_for ? (
+              <section className="max-w-2xl space-y-4 text-slate-700">
+                <h2 className="text-2xl font-semibold text-slate-900">Who This Prompt Is For</h2>
+                <p className="leading-8">{prompt.who_is_it_for}</p>
+              </section>
+            ) : null}
 
             <article className="max-w-4xl mx-auto px-4 mt-12 space-y-12">
               <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">What is {categoryLabel} AI Prompt?</h2>
-                <p>{seoIntro}</p>
+                <h2 className="text-2xl font-semibold text-slate-900">Prompt Tips</h2>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {tips.map((tip, index) => (
+                    <li
+                      key={index}
+                      className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700"
+                    >
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className="space-y-6 text-slate-700">
+                <h2 className="text-2xl font-semibold text-slate-900">What Are {categoryLabel} Prompts?</h2>
+                <p>{whatIsParagraph}</p>
                 <p>
                   This {categoryLabel} prompt works best with {primaryModel}
                   {otherModels.length > 0 ? ` and is also compatible with ${otherModels.join(", ")}` : ""}.
@@ -227,18 +281,6 @@ export default async function PromptDetailsPage({ params }) {
                     </div>
                   ))}
                 </div>
-              </section>
-
-              <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">Tips to Get Better Results</h2>
-                <ul className="space-y-3 text-slate-700">
-                  {tips.map((tip, index) => (
-                    <li key={index} className="flex gap-3 text-sm leading-7">
-                      <span className="text-emerald-600">✅</span>
-                      <span>{tip}</span>
-                    </li>
-                  ))}
-                </ul>
               </section>
 
               <section className="space-y-6 text-slate-700">

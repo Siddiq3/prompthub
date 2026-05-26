@@ -62,6 +62,13 @@ export interface Prompt {
   badges?: Badge[];
   seo: SEO;
   seoIntro?: string;
+  intro?: string;
+  about_paragraphs?: string[];
+  how_it_works?: string;
+  who_is_it_for?: string;
+  prompt_tips?: string[];
+  what_is_paragraph?: string;
+  faq?: FaqItem[];
   author?: string;
   compatibleModels?: string[];
   howToSteps?: string[];

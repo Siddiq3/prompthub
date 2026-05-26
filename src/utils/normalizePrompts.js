@@ -71,6 +71,18 @@ const parseBadges = (badges) => {
     .filter(Boolean);
 };
 
+const parseFaqItems = (items) => {
+  if (!Array.isArray(items)) return [];
+
+  return items
+    .filter((item) => item && (item.question || item.answer))
+    .map((item) => ({
+      question: pickString(item.question),
+      answer: pickString(item.answer),
+    }))
+    .filter((item) => item.question || item.answer);
+};
+
 const pickImageValue = (raw = {}) => {
   const candidates = [
     raw?.previewImage,
@@ -143,20 +155,24 @@ const normalizePrompt = (raw, index) => {
       keywords: parseTags(raw?.seo?.keywords),
     },
     seoIntro: pickString(raw?.seoIntro),
+    intro: pickString(raw?.intro),
+    about_paragraphs: Array.isArray(raw?.about_paragraphs)
+      ? raw.about_paragraphs.map((paragraph) => pickString(paragraph)).filter(Boolean)
+      : [],
+    how_it_works: pickString(raw?.how_it_works),
+    who_is_it_for: pickString(raw?.who_is_it_for),
+    prompt_tips: Array.isArray(raw?.prompt_tips)
+      ? raw.prompt_tips.map((tip) => pickString(tip)).filter(Boolean)
+      : [],
+    what_is_paragraph: pickString(raw?.what_is_paragraph),
     author: pickString(raw?.author),
     compatibleModels: parseTags(raw?.compatibleModels),
     howToSteps: Array.isArray(raw?.howToSteps)
       ? raw.howToSteps.map((step) => pickString(step)).filter(Boolean)
       : [],
     tips: Array.isArray(raw?.tips) ? raw.tips.map((tip) => pickString(tip)).filter(Boolean) : [],
-    faqItems: Array.isArray(raw?.faqItems)
-      ? raw.faqItems
-          .filter((item) => item && (item.question || item.answer))
-          .map((item) => ({
-            question: pickString(item.question),
-            answer: pickString(item.answer),
-          }))
-      : [],
+    faq: parseFaqItems(raw?.faq),
+    faqItems: parseFaqItems(raw?.faqItems),
     relatedSlugs: Array.isArray(raw?.relatedSlugs)
       ? raw.relatedSlugs.map((slug) => pickString(slug)).filter(Boolean)
       : [],

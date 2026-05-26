@@ -164,7 +164,7 @@ export const enrichPrompts = (prompts) => {
       formattedDate: formatDate(prompt.createdAt),
       tagSlugs: rawTags.map((tag) => slugify(tag)),
       shortDescription,
-      seoIntro: `${prompt.title} is a ${category.toLowerCase()} prompt for ${modelLabel}. It works well for ${formatHumanList(
+      seoIntro: prompt.seoIntro || `${prompt.title} is a ${category.toLowerCase()} prompt for ${modelLabel}. It works well for ${formatHumanList(
         displayTags.slice(0, 3).map((tag) => formatTagLabel(tag))
       ) || `${category.toLowerCase()} scenes`} and is framed for a ${prompt.aspectRatio} composition.`,
       bestFor: dedupeById(
