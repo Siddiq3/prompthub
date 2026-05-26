@@ -32,7 +32,8 @@ const VIDEO_WORKFLOW_DATA = [
     updatedAt: "2026-05-25T22:00:00Z",
     previewImage: "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/video-preview/v0001.webp",
     previewVideo: "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/video-clips/v0001.mp4",
-    slug: "ipl-stadium-crowd-cam-ai-video-v0001",
+    slug: "ipl-stadium-crowd-cam-ai-video-prompt-realistic",
+    aliases: ["ipl-stadium-crowd-cam-ai-video-v0001"],
     badges: ["🔥 Viral", "🏏 IPL Style"],
     workflowSteps: [
       {
@@ -216,7 +217,12 @@ export async function getVideoWorkflows() {
 
 export async function getVideoWorkflowBySlug(slug) {
   const workflows = await getVideoWorkflows();
-  return workflows.find((workflow) => workflow.slug === slug || workflow.id === slug);
+  return workflows.find(
+    (workflow) =>
+      workflow.slug === slug ||
+      workflow.id === slug ||
+      (Array.isArray(workflow.aliases) && workflow.aliases.includes(slug))
+  );
 }
 
 export async function getAllVideoWorkflowSlugs() {
