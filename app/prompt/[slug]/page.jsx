@@ -3,36 +3,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPromptBySlug, getPrompts } from "@/src/lib/data";
 import { getRelatedPrompts } from "@/src/lib/content";
-import PromptCard from "@/src/components/PromptCard";
-import PromptDetailsPanel from "@/src/components/PromptDetailsPanel";
-import FaqAccordion from "@/src/components/FaqAccordion";
+import { PromptCopyButton, ShareButtons } from "@/src/components/PromptArticleActions";
 import { SITE_URL } from "@/src/config";
 import { formatDate } from "@/src/utils/prompts";
 
 export const revalidate = 3600;
 
-const TOOL_EMOJI = {
-  ChatGPT: "🤖",
-  Gemini: "🔮",
-};
-
-const getToolDescription = (tool) => {
-  const normalized = String(tool || "").trim();
-
-  if (normalized.includes("ChatGPT")) {
-    return "ChatGPT's image generation excels with detailed photographic prompts, consistent character descriptions, and refined visual direction.";
-  }
-
-  if (normalized.includes("Gemini")) {
-    return "Gemini AI image generation delivers photorealistic imagery and handles complex scene composition with excellent detail and creativity.";
-  }
-
-  return "A powerful AI image generation tool that works best with detailed descriptive prompts and clear visual direction.";
-};
+const cleanText = (value) => (typeof value === "string" ? value.trim() : "");
 
 const cleanTextArray = (items = []) =>
   Array.isArray(items)
-    ? items.map((item) => String(item || "").trim()).filter(Boolean)
+    ? items.map((item) => cleanText(item)).filter(Boolean)
     : [];
 
 const cleanFaqItems = (items = []) =>
@@ -40,343 +21,343 @@ const cleanFaqItems = (items = []) =>
     ? items
         .filter((item) => item && (item.question || item.answer))
         .map((item) => ({
-          question: String(item.question || "").trim(),
-          answer: String(item.answer || "").trim(),
+          question: cleanText(item.question),
+          answer: cleanText(item.answer),
         }))
-        .filter((item) => item.question || item.answer)
+        .filter((item) => item.question && item.answer)
     : [];
+
+const countWords = (items = []) =>
+  items
+    .filter(Boolean)
+    .join(" ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+function AdSlot({ id, compact = false }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">Advertisement</p>
+      <div
+        id={id}
+        className={[
+          "ad-slot flex w-full items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50 text-xs text-slate-400",
+          compact ? "max-w-[320px]" : "max-w-[320px] sm:max-w-none",
+          compact ? "min-h-[250px]" : "min-h-[120px] sm:min-h-[160px]",
+        ].join(" ")}
+      >
+        {/* Google AdSense unit here */}
+      </div>
+    </div>
+  );
+}
+
+function getExplicitRelatedPrompts(allPrompts, prompt, limit = 3) {
+  const relatedKeys = Array.isArray(prompt.relatedSlugs) ? prompt.relatedSlugs : [];
+  const explicit = relatedKeys
+    .map((key) => allPrompts.find((item) => item.slug === key || item.id === key))
+    .filter(Boolean);
+  const fallback = getRelatedPrompts(allPrompts, prompt, limit).filter(
+    (item) => !explicit.some((related) => related.id === item.id)
+  );
+
+  return [...explicit, ...fallback].slice(0, limit);
+}
 
 export default async function PromptDetailsPage({ params }) {
   const { slug } = params;
   const prompt = await getPromptBySlug(slug);
-  
+
   if (!prompt) notFound();
 
   const allPrompts = await getPrompts();
-  const relatedPrompts = getRelatedPrompts(allPrompts, prompt, 6);
-  const trimmedPrompt = prompt.prompt || prompt.text || "";
-  const pageUrl = `${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/prompt/${slug}`;
-  const seoIntro = prompt.seoIntro || prompt.seo?.metaDescription || prompt.prompt || prompt.title;
-  const categoryLabel = prompt.category || "AI";
-  const compatibleModels = Array.isArray(prompt.compatibleModels) && prompt.compatibleModels.length > 0 ? prompt.compatibleModels : [prompt.modelLabel || prompt.model || "AI model"];
-  const primaryModel = compatibleModels[0];
-  const otherModels = compatibleModels.slice(1);
-  const authorName = prompt.author || 'SiddiqKolimi';
-  const authorBio = `${authorName} is a software developer and AI content creator specializing in modern web applications, SEO-focused platforms, and AI-powered workflows. His platforms provide easy-to-use AI prompts for creating professional-quality photos, cinematic visuals, and creative digital content.`;
-  const howToSteps = prompt.howToSteps?.length
-    ? prompt.howToSteps
-    : [
-        `Copy the prompt above using the Copy button and open ${primaryModel}.`,
-        `Paste the prompt into the image input field or chat box.`,
-        `If your tool supports it, add a negative prompt for cleaner output.`,
-        `Generate the image and review the first result.`,
-        `Tweak the prompt or aspect ratio until the composition matches your vision.`,
-      ];
+  const relatedPrompts = getExplicitRelatedPrompts(allPrompts, prompt, 3);
+  const canonicalBase = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL || "https://photopromptshub.in";
+  const pageUrl = `${canonicalBase}/prompt/${prompt.slug}`;
+
+  const title = prompt.title;
+  const category = prompt.category || "AI Prompts";
+  const author = prompt.author || "SiddiqKolimi";
+  const updatedAt = prompt.updatedAt || prompt.createdAt;
+  const badges = Array.isArray(prompt.badges) ? prompt.badges : [];
+  const compatibleModels =
+    Array.isArray(prompt.compatibleModels) && prompt.compatibleModels.length
+      ? prompt.compatibleModels
+      : [prompt.modelLabel || prompt.model || "AI model"];
+  const intro = cleanText(prompt.intro || prompt.seoIntro);
   const aboutParagraphs = cleanTextArray(prompt.about_paragraphs);
-  const promptTips = cleanTextArray(prompt.prompt_tips);
-  const legacyTips = cleanTextArray(prompt.tips);
-  const tips = promptTips.length
-    ? promptTips
-    : legacyTips.length
-      ? legacyTips
-    : [
-        `Run the prompt multiple times and pick the best result.`,
-        `Add “ultra HD, 8K resolution” for sharper output when your tool supports it.`,
-        `Try different aspect ratios to discover the most compelling composition.`,
-      ];
-  const faqItems = cleanFaqItems(prompt.faq).length
-    ? cleanFaqItems(prompt.faq)
-    : cleanFaqItems(prompt.faqItems).length
-      ? cleanFaqItems(prompt.faqItems)
-    : [
-        {
-          question: `What is the best way to use this ${categoryLabel} prompt?`,
-          answer: `Use it with ${primaryModel} and tailor the scene details for your subject to get cleaner results.`,
-        },
-        {
-          question: `Can I use this prompt with other AI tools?`,
-          answer: `Yes, it works well with ${compatibleModels.join(", ")} and can be adjusted slightly for each platform.`,
-        },
-      ];
-  const introText = prompt.intro || `This prompt is crafted to help you generate polished, high-quality AI imagery with a modern, visually striking look. It works especially well for ${prompt.category?.toLowerCase() || 'photo'} compositions and is tuned for use with ${prompt.modelLabel || prompt.model || 'top AI image models'}. Use it when you want reliable, creative results without manual prompt experimentation.`;
-  const whatIsParagraph =
-    typeof prompt.what_is_paragraph === "string" ? prompt.what_is_paragraph.trim() : "";
-  const whatIsClosingParagraph =
-    typeof prompt.what_is_closing_paragraph === "string"
-      ? prompt.what_is_closing_paragraph.trim()
-      : "";
-  const hasWhatIsIntro = whatIsParagraph.length > 0;
-  const hasWhatIsClosing = whatIsClosingParagraph.length > 0;
-  const pageTags = prompt.tags?.length ? prompt.tags : prompt.displayTags || [];
-
+  const whatIsParagraph = cleanText(prompt.what_is_paragraph);
+  const whatIsClosingParagraph = cleanText(prompt.what_is_closing_paragraph);
+  const promptText = cleanText(prompt.prompt);
+  const negativePrompt = cleanText(prompt.negativePrompt);
+  const howToSteps = cleanTextArray(prompt.howToSteps);
+  const tips = cleanTextArray(prompt.tips?.length ? prompt.tips : prompt.prompt_tips);
+  const whoIsItFor = cleanText(prompt.who_is_it_for);
+  const howItWorks = cleanText(prompt.how_it_works);
+  const faqItems = cleanFaqItems(prompt.faqItems).length
+    ? cleanFaqItems(prompt.faqItems)
+    : cleanFaqItems(prompt.faq);
+  const tags = cleanTextArray(prompt.tags);
+  const displayTags = cleanTextArray(prompt.displayTags);
+  const renderedWordCount = countWords([
+    title,
+    intro,
+    ...aboutParagraphs,
+    whatIsParagraph,
+    whatIsClosingParagraph,
+    promptText,
+    negativePrompt,
+    ...howToSteps,
+    ...tips,
+    whoIsItFor,
+    howItWorks,
+    ...faqItems.flatMap((item) => [item.question, item.answer]),
+  ]);
+  const readMinutes = Math.max(1, Math.ceil(renderedWordCount / 200));
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
-        {/* Left: Full-height Image */}
-        <div className="relative lg:sticky lg:top-16 h-80 sm:h-96 lg:h-[calc(100vh-64px)] bg-slate-100 flex items-center justify-center overflow-hidden">
-          <div className="relative h-full w-full">
-            {prompt.previewImage ? (
-              <Image
-                src={prompt.previewImage}
-                alt={prompt.title}
-                fill
-                className="object-contain"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center bg-slate-100 text-slate-500">
-                No preview available
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Right: Action Panel */}
-        <div className="flex flex-col lg:overflow-y-auto lg:h-[calc(100vh-64px)]">
-          {/* Header Section */}
-          <div className="border-b border-slate-200 px-6 lg:px-8 py-8">
-            <div className="max-w-2xl">
-              {/* Breadcrumb */}
-              <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-slate-500">
-                <Link href="/" className="hover:text-slate-900 transition">
+    <main className="bg-white text-slate-900">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.68fr)_minmax(280px,0.3fr)] lg:px-8">
+        <article className="min-w-0 space-y-10">
+          <nav aria-label="breadcrumb" className="text-sm text-slate-500">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-slate-900">
                   Home
                 </Link>
-                <span>/</span>
-                <Link href="/prompts" className="hover:text-slate-900 transition">
-                  Prompts
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link href={`/category/${encodeURIComponent(String(category).toLowerCase())}`} className="hover:text-slate-900">
+                  {category}
                 </Link>
-                <span>/</span>
-                <Link
-                  href={`/category/${prompt.category?.toLowerCase()}`}
-                  className="hover:text-slate-900 transition"
-                >
-                  {prompt.category}
-                </Link>
-                <span>/</span>
-                <span className="text-slate-500">{prompt.title}</span>
-              </div>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li className="text-slate-700">{title}</li>
+            </ol>
+          </nav>
 
-              <h1 className="text-4xl font-clash font-bold text-slate-900 mb-4">
-                {prompt.title}
-              </h1>
-
-              <div className="flex flex-wrap items-center gap-3 text-sm text-blue-600 mb-4">
-                <span>By {authorName}</span>
-                <span>/</span>
-                <span>{prompt.createdAt ? formatDate(prompt.createdAt) : 'Unknown date'}</span>
-              </div>
-
-              <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 mb-6">
-                {prompt.modelLabel || prompt.platform || prompt.model}
-              </div>
-
-              <p className="max-w-2xl text-base leading-8 text-slate-600">
-                {introText}
+          <header className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,360px)] lg:items-start">
+            <div className="space-y-5">
+              <h1 className="text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">{title}</h1>
+              <p className="text-sm leading-6 text-slate-500">
+                {author} · Updated {updatedAt ? formatDate(updatedAt) : "recently"} · {category} · {readMinutes} min read
               </p>
-            </div>
-          </div>
 
-          {/* Main Content */}
-          <div className="flex-1 px-6 lg:px-8 py-8 space-y-8">
-            {/* Actions */}
-            <div className="space-y-3 max-w-2xl">
-              <PromptDetailsPanel
-                prompt={prompt}
-                promptText={trimmedPrompt}
-                pageUrl={`${process.env.NEXT_PUBLIC_SITE_URL || "https://photopromptshub.in"}/prompt/${slug}`}
-              />
-            </div>
-
-            <section className="max-w-2xl space-y-6 text-slate-700">
-              <h2 className="text-2xl font-semibold text-slate-900">About This Prompt</h2>
-              {aboutParagraphs.length ? (
-                aboutParagraphs.map((paragraph, index) => (
-                  <p key={`about-${index}`} className="leading-8">
-                    {paragraph}
-                  </p>
-                ))
-              ) : (
-                <>
-                  <p>
-                    This prompt has been shaped to deliver crisp, high-impact visuals with clear subject focus and strong atmosphere. It works best when you want a refined creative output that retains consistent styling across multiple generations. The structure balances descriptive detail with flexible composition guidance, so you can adapt the prompt quickly for portraits, product shots, landscapes, or editorial scenes.
-                  </p>
-                  <p>
-                    When you use this prompt, start with the recommended model and adjust the color emphasis or lighting keywords to match your desired mood. The prompt is ideal for {prompt.modelLabel || prompt.model || 'modern AI visual engines'}, since it gives you a strong base while leaving enough room for the model to interpret artistic flourishes and realistic textures.
-                  </p>
-                  <p>
-                    The primary goal is to get a clean first pass that needs minimal revision. Use the prompt for concept art, stylized photo-realistic scenes, social media imagery, or marketing visuals. The prompt is especially useful when you need consistent results across multiple designs, because it prioritizes a reliable structure over random output.
-                  </p>
-                </>
-              )}
-            </section>
-
-            {prompt.how_it_works ? (
-              <section className="max-w-2xl space-y-4 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">How This Prompt Works</h2>
-                <p className="leading-8">{prompt.how_it_works}</p>
-              </section>
-            ) : null}
-
-            {prompt.who_is_it_for ? (
-              <section className="max-w-2xl space-y-4 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">Who This Prompt Is For</h2>
-                <p className="leading-8">{prompt.who_is_it_for}</p>
-              </section>
-            ) : null}
-
-            <article className="max-w-4xl mx-auto px-4 mt-12 space-y-12">
-              <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">Prompt Tips</h2>
-                <ul className="grid gap-3 sm:grid-cols-2">
-                  {tips.map((tip, index) => (
-                    <li
-                      key={index}
-                      className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700"
-                    >
-                      {tip}
-                    </li>
+              {badges.length ? (
+                <div className="flex flex-wrap gap-2">
+                  {badges.map((badge, index) => (
+                    <span key={`${badge.label || badge}-${index}`} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
+                      {badge.label || badge}
+                    </span>
                   ))}
-                </ul>
-              </section>
-
-              {hasWhatIsIntro ? (
-                <section className="space-y-6 text-slate-700">
-                  <h2 className="text-2xl font-semibold text-slate-900">What Are {categoryLabel} Prompts?</h2>
-                  <p>{whatIsParagraph}</p>
-                  {hasWhatIsClosing ? <p>{whatIsClosingParagraph}</p> : null}
-                </section>
+                </div>
               ) : null}
 
-              <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">How to Use This Prompt</h2>
-                <ol className="space-y-4">
-                  {howToSteps.map((step, index) => (
-                    <li key={index} className="flex items-start gap-4">
-                      <span className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-violet-600 text-sm font-semibold text-white">
-                        {index + 1}
-                      </span>
-                      <span className="text-sm leading-7 text-slate-700">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-
-              <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">Best AI Tools for This Prompt</h2>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {compatibleModels.map((tool) => (
-                    <div key={tool} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{TOOL_EMOJI[tool] || "✨"}</span>
-                        <span className="font-semibold text-slate-900">{tool}</span>
-                      </div>
-                      <p className="mt-3 text-sm leading-7 text-slate-600">{getToolDescription(tool)}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              <section className="space-y-6 text-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900">Frequently Asked Questions</h2>
-                <FaqAccordion faqItems={faqItems} />
-              </section>
-
-              {pageTags.length > 0 && (
-                <section className="space-y-4">
-                  <h2 className="text-xl font-semibold text-slate-900">🏷️ Related Tags</h2>
-                  <div className="flex flex-wrap gap-2">
-                    {pageTags.map((tag) => (
-                      <Link
-                        key={tag}
-                        href={`/prompts?tag=${encodeURIComponent(tag)}`}
-                        className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 transition hover:bg-slate-200"
-                      >
-                        {tag}
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              )}
-
-              <section>
-                <div className="w-full h-24 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-sm">
-                  Advertisement
-                </div>
-              </section>
-            </article>
-
-            <section className="rounded-3xl border border-slate-200 bg-slate-50 p-6 lg:mx-6 lg:px-8 lg:py-8 mb-8">
-              <h2 className="text-xl font-semibold text-slate-900 mb-3">About the author</h2>
-              <p className="text-sm leading-7 text-slate-700">
-                {authorName} is a software developer and AI content creator specializing in modern web applications, SEO-focused platforms, and AI-powered workflows. His platforms provide easy-to-use AI prompts for creating professional-quality photos, cinematic visuals, and creative digital content.
+              <p className="text-sm font-semibold text-slate-700">
+                Works with: {compatibleModels.join(" · ")}
               </p>
-            </section>
-
-            <section className="max-w-2xl space-y-4 text-slate-700 mb-8">
-              <h2 className="text-2xl font-semibold text-slate-900">Join & Follow</h2>
-              <p className="text-sm text-slate-600">Stay connected with PhotoPromptsHub across Instagram, WhatsApp and Telegram.</p>
-              <div className="space-y-3">
-                <a
-                  href="https://www.instagram.com/photosprompthub?igsh=MTNoNzJvYmxraG1meQ=="
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="group flex items-center gap-4 w-full rounded-3xl bg-gradient-to-r from-fuchsia-500 via-pink-500 to-orange-400 px-5 py-4 text-white shadow-sm transition hover:from-fuchsia-600 hover:via-pink-600 hover:to-orange-500"
-                >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-fuchsia-600 transition group-hover:bg-fuchsia-100">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.056 1.977.24 2.436.403a4.92 4.92 0 011.675.98 4.918 4.918 0 01.981 1.674c.163.459.347 1.266.403 2.436.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.977-.403 2.436a4.906 4.906 0 01-.98 1.675 4.906 4.906 0 01-1.675.981c-.459.163-1.266.347-2.436.403-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.977-.24-2.436-.403a4.92 4.92 0 01-1.675-.98 4.92 4.92 0 01-.981-1.675c-.163-.459-.347-1.266-.403-2.436C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.85c.056-1.17.24-1.977.403-2.436a4.918 4.918 0 01.98-1.674 4.918 4.918 0 011.675-.981c.459-.163 1.266-.347 2.436-.403C8.416 2.175 8.796 2.163 12 2.163zm0 1.838c-3.17 0-3.553.012-4.805.069-1.038.048-1.599.217-1.972.363a3.14 3.14 0 00-1.147.748 3.14 3.14 0 00-.749 1.147c-.146.373-.315.934-.363 1.972-.057 1.252-.069 1.635-.069 4.805s.012 3.553.069 4.805c.048 1.038.217 1.599.363 1.972.175.446.405.828.749 1.147.318.317.7.548 1.147.749.373.146.934.315 1.972.363 1.252.057 1.635.069 4.805.069s3.553-.012 4.805-.069c1.038-.048 1.599-.217 1.972-.363a3.132 3.132 0 001.147-.749 3.132 3.132 0 00.749-1.147c.146-.373.315-.934.363-1.972.057-1.252.069-1.635.069-4.805s-.012-3.553-.069-4.805c-.048-1.038-.217-1.599-.363-1.972a3.14 3.14 0 00-.748-1.147 3.14 3.14 0 00-1.147-.749c-.373-.146-.934-.315-1.972-.363-1.252-.057-1.635-.069-4.805-.069z" />
-                      <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a3.999 3.999 0 110-7.998 3.999 3.999 0 010 7.998z" />
-                      <circle cx="18.406" cy="5.594" r="1.44" />
-                    </svg>
-                  </span>
-                  <span>Follow on Instagram</span>
-                </a>
-                <a
-                  href="https://whatsapp.com/channel/0029VbCfYa9002TAlsIdh71m"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="group flex items-center gap-4 w-full rounded-3xl bg-[#25D366] px-5 py-4 text-white shadow-sm transition hover:bg-[#1EB954]"
-                >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#25D366] transition group-hover:bg-green-100">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                      <path d="M20.52 3.48C18.4 1.36 15.6 0 12.48 0 5.73 0 .4 5.33.4 11.98c0 2.1.62 4.16 1.79 5.96L0 24l6.38-1.68A11.93 11.93 0 0012 24c6.75 0 12.08-5.32 12.08-11.98 0-3.12-1.36-5.92-3.74-8.45zm-2.74 13.3c-.2.56-1.22 1.1-1.68 1.17-.42.07-1.02.1-1.58-.12-.6-.22-1.57-.65-2.73-1.84-1.16-1.19-1.9-2.37-2.12-2.93-.23-.56-.02-.87.16-1.12.17-.23.39-.6.53-.77.14-.17.18-.27.26-.44.08-.16.04-.31-.02-.43-.06-.12-.64-1.46-.88-2.01-.23-.56-.47-.49-.64-.5-.16-.01-.35-.01-.54-.01-.18 0-.45.03-.68.31-.23.27-.88.99-.88 2.42 0 1.43.73 2.79.83 2.99.1.19 1.48 2.89 3.9 4.98 1.06.92 1.96 1.25 2.4 1.38.62.18 1.2.15 1.65.09.5-.07 1.22-.5 1.56-1.09.34-.58.38-1.04.27-1.14-.11-.1-.4-.16-.82-.28z"/>
-                    </svg>
-                  </span>
-                  <span>Join on WhatsApp</span>
-                </a>
-                <a
-                  href="https://t.me/photopromptshub"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="group flex items-center gap-4 w-full rounded-3xl bg-[#2AABEE] px-5 py-4 text-white shadow-sm transition hover:bg-[#22A0E8]"
-                >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#2AABEE] transition group-hover:bg-sky-100">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                      <path d="M21 3L3 10l5.14 1.9L8 19l4.56-2.86L20 21 21 3z" />
-                    </svg>
-                  </span>
-                  <span>Join on Telegram</span>
-                </a>
-              </div>
-            </section>
-
-            <div className="border-t border-slate-200 px-6 lg:px-8 py-8">
-              <div className="max-w-full">
-                <h2 className="text-xl font-clash font-bold text-slate-900 mb-6">
-                  You Might Also Like
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {relatedPrompts.slice(0, 3).map((p) => (
-                    <PromptCard key={p.id} prompt={p} priority={false} />
-                  ))}
-                </div>
-              </div>
             </div>
 
-        </div>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+              {prompt.previewImage ? (
+                <Image
+                  src={prompt.previewImage}
+                  alt={title}
+                  fill
+                  loading="lazy"
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 360px"
+                />
+              ) : null}
+            </div>
+          </header>
+
+          <AdSlot id="ad-top" />
+
+          {(intro || aboutParagraphs.length) ? (
+            <section className="space-y-5 text-base leading-8 text-slate-700">
+              {intro ? <p>{intro}</p> : null}
+              {aboutParagraphs.map((paragraph, index) => (
+                <p key={`about-${index}`}>{paragraph}</p>
+              ))}
+            </section>
+          ) : null}
+
+          {(whatIsParagraph || whatIsClosingParagraph) ? (
+            <section className="space-y-5 text-base leading-8 text-slate-700">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">What is {title}?</h2>
+              {whatIsParagraph ? <p>{whatIsParagraph}</p> : null}
+              {whatIsClosingParagraph ? <p>{whatIsClosingParagraph}</p> : null}
+            </section>
+          ) : null}
+
+          <section className="space-y-5">
+            <h2 className="text-3xl font-bold leading-tight text-slate-950">The Prompt</h2>
+            <div className="flex flex-wrap gap-2">
+              {prompt.aspectRatio ? (
+                <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">
+                  Aspect ratio: {prompt.aspectRatio}
+                </span>
+              ) : null}
+              {prompt.model ? (
+                <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">
+                  Best for: {prompt.model}
+                </span>
+              ) : null}
+            </div>
+            <div className="relative rounded-lg border border-slate-200 border-l-violet-600 border-l-4 bg-slate-50 p-4 pt-14">
+              <PromptCopyButton text={promptText} />
+              <pre className="whitespace-pre-wrap break-words font-mono text-sm leading-7 text-slate-800">{promptText}</pre>
+            </div>
+            {negativePrompt ? (
+              <details className="rounded-lg border border-slate-200 bg-white p-4">
+                <summary className="cursor-pointer text-sm font-semibold text-slate-900">Negative prompt (optional)</summary>
+                <p className="mt-4 whitespace-pre-wrap break-words font-mono text-sm leading-7 text-slate-700">{negativePrompt}</p>
+              </details>
+            ) : null}
+          </section>
+
+          <AdSlot id="ad-mid" />
+
+          {howToSteps.length ? (
+            <section className="space-y-5">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">How to use this prompt</h2>
+              <ol className="list-decimal space-y-3 pl-5 text-base leading-8 text-slate-700">
+                {howToSteps.map((step, index) => (
+                  <li key={`step-${index}`}>{step}</li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
+
+          {tips.length ? (
+            <section className="space-y-5">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">Tips for better results</h2>
+              <ul className="list-disc space-y-3 pl-5 text-base leading-8 text-slate-700">
+                {tips.map((tip, index) => (
+                  <li key={`tip-${index}`}>{tip}</li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
+
+          {whoIsItFor ? (
+            <section className="space-y-5 text-base leading-8 text-slate-700">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">Who is this prompt for?</h2>
+              <p>{whoIsItFor}</p>
+            </section>
+          ) : null}
+
+          {howItWorks ? (
+            <section className="space-y-5 text-base leading-8 text-slate-700">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">How this prompt works</h2>
+              <p>{howItWorks}</p>
+            </section>
+          ) : null}
+
+          <AdSlot id="ad-before-faq" />
+
+          {faqItems.length ? (
+            <section className="space-y-5">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">Frequently asked questions</h2>
+              <div className="space-y-3">
+                {faqItems.map((item, index) => (
+                  <details key={`${item.question}-${index}`} className="group rounded-lg border border-slate-200 bg-white p-4 transition-all open:shadow-sm">
+                    <summary className="cursor-pointer text-base font-semibold text-slate-900">{item.question}</summary>
+                    <p className="mt-3 text-sm leading-7 text-slate-700">{item.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <div className="space-y-8 lg:hidden">
+            <AdSlot id="ad-mobile-sidebar-top" compact />
+            {displayTags.length ? (
+              <SidebarTags tags={displayTags} />
+            ) : null}
+            <SidebarShare title={title} url={pageUrl} />
+            <AdSlot id="ad-mobile-sidebar-bottom" compact />
+          </div>
+
+          {tags.length ? (
+            <section className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/tag/${encodeURIComponent(tag)}`}
+                  className="rounded-full border border-slate-200 px-3 py-1 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </section>
+          ) : null}
+
+          {relatedPrompts.length ? (
+            <section className="space-y-5">
+              <h2 className="text-3xl font-bold leading-tight text-slate-950">You might also like</h2>
+              <div className="grid gap-5 sm:grid-cols-3">
+                {relatedPrompts.map((item) => (
+                  <Link key={item.id} href={`/prompt/${item.slug}`} className="group overflow-hidden rounded-lg border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg">
+                    <div className="relative aspect-[4/5] bg-slate-100">
+                      {item.previewImage ? (
+                        <Image src={item.previewImage} alt={item.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 220px" />
+                      ) : null}
+                    </div>
+                    <div className="space-y-2 p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{item.category}</p>
+                      <h3 className="line-clamp-2 text-sm font-bold leading-6 text-slate-950">{item.title}</h3>
+                      <span className="inline-flex text-sm font-semibold text-violet-700 group-hover:text-violet-900">View Prompt →</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
+        </article>
+
+        <aside className="hidden lg:block">
+          <div className="sticky top-24 space-y-8">
+            <AdSlot id="ad-sidebar-top" compact />
+            {displayTags.length ? <SidebarTags tags={displayTags} /> : null}
+            <SidebarShare title={title} url={pageUrl} />
+            <AdSlot id="ad-sidebar-bottom" compact />
+          </div>
+        </aside>
       </div>
-    </div>
-  </div>
+    </main>
+  );
+}
+
+function SidebarTags({ tags }) {
+  return (
+    <section className="rounded-xl border border-slate-200 bg-white p-5">
+      <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Popular tags</h2>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <Link
+            key={tag}
+            href={`/tag/${encodeURIComponent(tag)}`}
+            className="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+          >
+            {tag}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SidebarShare({ title, url }) {
+  return (
+    <section className="rounded-xl border border-slate-200 bg-white p-5">
+      <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Share this prompt</h2>
+      <div className="mt-4">
+        <ShareButtons title={title} url={url} />
+      </div>
+    </section>
   );
 }
 
