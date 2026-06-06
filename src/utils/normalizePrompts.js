@@ -1,4 +1,5 @@
 import { normalizeImageUrl } from "./imageUrl.js";
+import { normalizeApprovalStatus, normalizeContentSource } from "../lib/contentApproval.js";
 
 const parseTags = (tags) => {
   if (Array.isArray(tags)) {
@@ -44,6 +45,24 @@ const pickBoolean = (value, fallback = false) => {
   }
 
   return fallback;
+};
+
+const pickApprovalStatus = (raw = {}) => {
+  const explicitStatus = normalizeApprovalStatus(raw?.approvalStatus || raw?.contentStatus);
+
+  if (explicitStatus) return explicitStatus;
+  if (pickBoolean(raw?.approved, false) || pickBoolean(raw?.humanApproved, false)) return "approved";
+  if (raw?.approved === false || raw?.humanApproved === false) return "pending";
+
+  return "";
+};
+
+const pickHumanWritten = (raw = {}) => {
+  if (raw?.isHumanWritten !== undefined) return pickBoolean(raw.isHumanWritten, false);
+  if (raw?.humanWritten !== undefined) return pickBoolean(raw.humanWritten, false);
+  if (raw?.humanApproved !== undefined) return pickBoolean(raw.humanApproved, false);
+
+  return normalizeContentSource(raw?.contentSource || raw?.sourceType) === "human";
 };
 
 const parseBadges = (badges) => {
@@ -136,6 +155,7 @@ const normalizePrompt = (raw, index) => {
     title,
     sourceIndex: index,
     prompt: pickString(raw?.prompt),
+    shortDescription: pickString(raw?.shortDescription || raw?.short_description),
     negativePrompt: pickString(raw?.negativePrompt),
     tags: parseTags(raw?.tags),
     displayTags: parseTags(raw?.displayTags) || parseTags(raw?.tags),
@@ -148,6 +168,11 @@ const normalizePrompt = (raw, index) => {
     createdAt: pickString(raw?.createdAt, new Date().toISOString()),
     updatedAt: pickString(raw?.updatedAt, raw?.createdAt),
     previewImage: normalizeImageUrl(pickImageValue(raw)),
+    approvalStatus: pickApprovalStatus(raw),
+    contentSource: normalizeContentSource(raw?.contentSource || raw?.sourceType),
+    isHumanWritten: pickHumanWritten(raw),
+    approvedBy: pickString(raw?.approvedBy),
+    approvedAt: pickString(raw?.approvedAt),
     badges: parseBadges(raw?.badges),
     seo: {
       metaTitle: pickString(raw?.seo?.metaTitle),

@@ -1,4 +1,5 @@
 import { getPromptBySlug, getAllPromptSlugs } from "@/src/lib/data";
+import { isHumanApprovedContent } from "@/src/lib/contentApproval";
 import { FALLBACK_OG_IMAGE, SITE_URL } from "@/src/config";
 
 // C-01: Force dynamic rendering for prompt pages
@@ -22,10 +23,10 @@ export async function generateMetadata({ params }) {
   const canonicalDomain = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
   const pageUrl = `${canonicalDomain}/prompt/${prompt.slug}`;
   const keywords = prompt.seo?.keywords || prompt.tags || [];
-  const description =
-    prompt.seo?.metaDescription ||
-    prompt.seoIntro ||
-    `${prompt.title} is a ${prompt.category.toLowerCase()} prompt for ${prompt.modelLabel || prompt.model}, ideal for creating polished photo-style imagery with vivid detail.`;
+  const hasApprovedEditorial = isHumanApprovedContent(prompt);
+  const description = hasApprovedEditorial
+    ? prompt.seo?.metaDescription || prompt.seoIntro || prompt.title
+    : prompt.title;
 
   return {
     title: prompt.seo?.metaTitle || `${prompt.title} — ${prompt.modelLabel || prompt.model} prompt`,

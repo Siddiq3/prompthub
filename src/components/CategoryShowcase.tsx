@@ -37,43 +37,30 @@ export default function CategoryShowcase({ category, count, image }: CategorySho
   return (
     <Link href={getCategoryUrl(category)}>
       <motion.div
-        whileHover={{ y: -6, scale: 1.02 }}
-        className="relative overflow-hidden rounded-[20px] bg-white transition-all duration-300 cursor-pointer group border border-slate-200 shadow-sm hover:border-[#7c3aed] hover:shadow-[0_20px_60px_-30px_rgba(124,58,237,0.15)]"
-        style={{ minHeight: '220px' }}
+        whileHover={{ y: -2 }}
+        className="group relative flex min-h-[132px] cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white transition hover:border-slate-300 hover:shadow-sm"
       >
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${image || ''})` }}
-        />
+        {image ? (
+          <div
+            className="w-24 shrink-0 bg-cover bg-center sm:w-28"
+            style={{ backgroundImage: `url(${image})` }}
+          />
+        ) : null}
 
-        {/* Light overlay */}
-        <div className="absolute inset-0 bg-slate-950/10" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-[#7c3aed]/10 opacity-0 transition duration-500 group-hover:opacity-100" />
-
-        {/* Content overlay */}
-        <div className="relative z-10 h-full p-4 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-3">
-              <div className="text-[18px] font-bold text-slate-900 flex items-center gap-2">
-                <span className="text-lg">{emoji}</span>
-                <span>{category}</span>
-              </div>
+        <div className="flex min-w-0 flex-1 flex-col justify-between p-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-base">{emoji}</span>
+              <h3 className="truncate text-lg font-bold text-slate-950 group-hover:text-[#2271b1]">{category}</h3>
             </div>
+            <p className="text-sm text-slate-500">Browse all posts in this topic.</p>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="inline-flex items-center gap-2">
-              <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-900 px-3 py-1 text-sm font-semibold">{count.toLocaleString()} prompts</span>
-            </div>
-
-            <div className="opacity-0 group-hover:opacity-100 transition">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </div>
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-semibold text-slate-700">{count.toLocaleString()} prompts</span>
+            <span className="font-semibold text-[#2271b1]">View</span>
           </div>
         </div>
-
-        <div className="absolute inset-0 pointer-events-none group-hover" style={{ boxShadow: 'inset 0 0 0 1px rgba(124,58,237,0.0)' }} />
       </motion.div>
     </Link>
   );

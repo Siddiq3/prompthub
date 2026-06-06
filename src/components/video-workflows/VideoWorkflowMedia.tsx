@@ -51,7 +51,7 @@ export default function VideoWorkflowMedia({
   const mediaFitClass = !isHero && isHorizontal ? 'object-contain' : 'object-cover';
 
   const containerClass = [
-    'relative overflow-hidden bg-slate-950',
+    'relative overflow-hidden bg-slate-100',
     isHero ? `${getAspectClass(workflow.aspectRatio)} max-h-[760px] w-full` : 'h-full w-full',
     className,
   ]

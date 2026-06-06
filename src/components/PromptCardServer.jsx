@@ -27,9 +27,9 @@ const getAspectRatioClass = (aspectRatio) => {
 export default function PromptCardServer({ prompt }) {
   if (!prompt) return null;
 
-  const truncatedPrompt = prompt.promptText && prompt.promptText.length > 100 
-    ? prompt.promptText.substring(0, 100) + "..." 
-    : prompt.promptText || prompt.shortDescription || "";
+  const truncatedPrompt = prompt.shortDescription && prompt.shortDescription.length > 100
+    ? `${prompt.shortDescription.substring(0, 100)}...`
+    : prompt.shortDescription || "";
 
   const getToolBadge = () => {
     const platform = prompt.modelLabel || prompt.platform || "Unknown";
@@ -89,9 +89,11 @@ export default function PromptCardServer({ prompt }) {
             )}
           </div>
 
-          <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 flex-1">
-            {truncatedPrompt}
-          </p>
+          {truncatedPrompt ? (
+            <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 flex-1">
+              {truncatedPrompt}
+            </p>
+          ) : null}
 
           {visibleTags.length > 0 && (
             <div className="flex flex-wrap gap-1">

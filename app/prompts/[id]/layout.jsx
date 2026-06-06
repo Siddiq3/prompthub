@@ -1,4 +1,5 @@
 import { getPromptById, getPromptBySlug, getAllPromptIdentifiers } from "@/src/lib/data";
+import { isHumanApprovedContent } from "@/src/lib/contentApproval";
 import { SITE_URL } from "@/src/config";
 
 export const dynamic = 'force-dynamic';
@@ -26,7 +27,10 @@ export async function generateMetadata({ params }) {
 
     const canonicalUrl = prompt.slug ? `${SITE_URL}/prompt/${prompt.slug}` : `${SITE_URL}/prompts/${prompt.id}`;
     const title = `${prompt.title} | ${prompt.model} Prompt - PhotoPromptsHub`;
-    const description = `${prompt.title} - Copy this ${prompt.model} prompt for ${prompt.category}. ${(prompt.prompt || "").substring(0, 100)}...`;
+    const hasApprovedEditorial = isHumanApprovedContent(prompt);
+    const description = hasApprovedEditorial
+      ? prompt.seo?.metaDescription || prompt.shortDescription || prompt.title
+      : prompt.title;
     const image = prompt.previewImage || `${SITE_URL}/og-image.jpg`;
 
     return {
@@ -35,7 +39,7 @@ export async function generateMetadata({ params }) {
       keywords: [...(prompt.tags || []), prompt.model, prompt.category].join(", "),
       openGraph: {
         title: prompt.title,
-        description: (prompt.prompt || "").substring(0, 160),
+        description,
         images: [
           {
             url: image,
@@ -50,7 +54,7 @@ export async function generateMetadata({ params }) {
       twitter: {
         card: "summary_large_image",
         title: prompt.title,
-        description: (prompt.prompt || "").substring(0, 120),
+        description,
         images: [image],
       },
       canonical: canonicalUrl,

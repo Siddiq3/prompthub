@@ -37,12 +37,13 @@ html {
 }
 
 body {
-  @apply bg-white text-slate-900 font-sans;
+  @apply bg-[#f6f7f8] text-slate-900 font-sans;
 }
 
 /* ========== TYPOGRAPHY ========== */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-clash font-bold;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
 }
 
 .font-clash {
@@ -148,7 +149,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ========== FOCUS STATES ========== */
 a, button {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0E1A];
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2271b1] focus-visible:ring-offset-2 focus-visible:ring-offset-white;
 }
 
 /* ========== SMOOTH TRANSITIONS ========== */
@@ -235,7 +236,7 @@ a, button {
   }
 
   body {
-    background: var(--bg-primary);
+    background: #f6f7f8;
     color: var(--text-primary);
     font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     text-rendering: optimizeLegibility;

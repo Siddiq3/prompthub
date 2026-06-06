@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPromptBySlug, getPrompts } from "@/src/lib/data";
 import { getRelatedPrompts } from "@/src/lib/content";
+import { getApprovalNotice, isHumanApprovedContent } from "@/src/lib/contentApproval";
 import { PromptCopyButton, ShareButtons } from "@/src/components/PromptArticleActions";
 import { SITE_URL } from "@/src/config";
 import { formatDate } from "@/src/utils/prompts";
@@ -98,23 +99,27 @@ export default async function PromptDetailsPage({ params }) {
   const author = prompt.author || "SiddiqKolimi";
   const updatedAt = prompt.updatedAt || prompt.createdAt;
   const badges = Array.isArray(prompt.badges) ? prompt.badges : [];
+  const hasApprovedEditorial = isHumanApprovedContent(prompt);
   const compatibleModels =
     Array.isArray(prompt.compatibleModels) && prompt.compatibleModels.length
       ? prompt.compatibleModels
       : [prompt.modelLabel || prompt.model || "AI model"];
-  const intro = cleanText(prompt.intro || prompt.seoIntro);
-  const aboutParagraphs = cleanTextArray(prompt.about_paragraphs);
-  const whatIsParagraph = cleanText(prompt.what_is_paragraph);
-  const whatIsClosingParagraph = cleanText(prompt.what_is_closing_paragraph);
+  const intro = hasApprovedEditorial ? cleanText(prompt.intro || prompt.seoIntro) : "";
+  const aboutParagraphs = hasApprovedEditorial ? cleanTextArray(prompt.about_paragraphs) : [];
+  const whatIsParagraph = hasApprovedEditorial ? cleanText(prompt.what_is_paragraph) : "";
+  const whatIsClosingParagraph = hasApprovedEditorial ? cleanText(prompt.what_is_closing_paragraph) : "";
   const promptText = cleanText(prompt.prompt);
   const negativePrompt = cleanText(prompt.negativePrompt);
-  const howToSteps = cleanTextArray(prompt.howToSteps);
-  const tips = cleanTextArray(prompt.tips?.length ? prompt.tips : prompt.prompt_tips);
-  const whoIsItFor = cleanText(prompt.who_is_it_for);
-  const howItWorks = cleanText(prompt.how_it_works);
-  const faqItems = cleanFaqItems(prompt.faqItems).length
-    ? cleanFaqItems(prompt.faqItems)
-    : cleanFaqItems(prompt.faq);
+  const howToSteps = hasApprovedEditorial ? cleanTextArray(prompt.howToSteps) : [];
+  const tips = hasApprovedEditorial ? cleanTextArray(prompt.tips?.length ? prompt.tips : prompt.prompt_tips) : [];
+  const whoIsItFor = hasApprovedEditorial ? cleanText(prompt.who_is_it_for) : "";
+  const howItWorks = hasApprovedEditorial ? cleanText(prompt.how_it_works) : "";
+  const approvedFaqItems = hasApprovedEditorial
+    ? cleanFaqItems(prompt.faqItems).length
+      ? cleanFaqItems(prompt.faqItems)
+      : cleanFaqItems(prompt.faq)
+    : [];
+  const faqItems = approvedFaqItems;
   const tags = cleanTextArray(prompt.tags);
   const displayTags = cleanTextArray(prompt.displayTags);
   const imageAspectClass = getAspectRatioClass(prompt.aspectRatio);
@@ -160,6 +165,9 @@ export default async function PromptDetailsPage({ params }) {
               <h1 className="text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">{title}</h1>
               <p className="text-sm leading-6 text-slate-500">
                 {author} · Updated {updatedAt ? formatDate(updatedAt) : "recently"} · {category} · {readMinutes} min read
+              </p>
+              <p className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
+                {getApprovalNotice(prompt)}
               </p>
 
               {badges.length ? (

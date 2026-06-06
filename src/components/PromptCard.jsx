@@ -22,7 +22,7 @@ function PromptCard({ prompt, priority = false, onSave, savedPrompts = [] }) {
   ];
   const visibleTags = orderedTags.slice(0, 3);
 
-  const promptText = prompt.prompt || prompt.promptText || prompt.shortDescription || "";
+  const promptText = prompt.shortDescription || "";
   const truncatedPrompt = promptText.length > 100 ? promptText.substring(0, 100) + "..." : promptText;
 
   const getToolBadge = () => {
@@ -122,9 +122,11 @@ function PromptCard({ prompt, priority = false, onSave, savedPrompts = [] }) {
           )}
         </div>
 
-        <p className="text-sm text-[#9CA3B8] line-clamp-2 flex-1">
-          {truncatedPrompt}
-        </p>
+        {truncatedPrompt ? (
+          <p className="text-sm text-[#9CA3B8] line-clamp-2 flex-1">
+            {truncatedPrompt}
+          </p>
+        ) : null}
 
         {visibleTags.length > 0 && (
           <div className="flex flex-wrap gap-1">

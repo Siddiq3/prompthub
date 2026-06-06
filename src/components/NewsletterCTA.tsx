@@ -50,18 +50,13 @@ export default function NewsletterCTA() {
   };
 
   return (
-    <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="border-t border-slate-200 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 to-purple-600 p-12 sm:p-16"
+        className="relative overflow-hidden rounded-lg border border-slate-200 bg-white p-6 sm:p-8"
       >
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-grid-pattern" />
-        </div>
-
         {/* Content */}
         <div className="relative z-10 space-y-6">
           {/* Header */}
@@ -70,17 +65,17 @@ export default function NewsletterCTA() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="flex items-center gap-2 text-white/90 text-sm font-bold uppercase tracking-wider"
+              className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-[#2271b1]"
             >
               <FiMail className="w-5 h-5" />
               Newsletter
             </motion.div>
 
-            <h2 className="text-4xl sm:text-5xl font-black text-white">
+            <h2 className="text-3xl font-bold text-slate-950 sm:text-4xl">
               Get New Prompts Weekly
             </h2>
 
-            <p className="text-lg text-white/80 max-w-xl">
+            <p className="max-w-xl text-base leading-7 text-slate-600">
               Subscribe to our newsletter and receive 5+ new premium prompts directly to your inbox every week. No spam, ever.
             </p>
           </div>
@@ -100,21 +95,21 @@ export default function NewsletterCTA() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email..."
               disabled={status === 'loading'}
-              className="w-full px-6 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition disabled:opacity-50"
+              className="w-full rounded-md border border-slate-300 bg-white px-5 py-3 text-slate-900 placeholder:text-slate-400 transition focus:border-[#2271b1] focus:outline-none disabled:opacity-50"
             />
 
             <motion.button
               type="submit"
               disabled={status === 'loading' || status === 'success'}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ y: -1 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-6 py-3 rounded-lg bg-white text-blue-600 font-bold flex justify-center items-center gap-2 hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-[#2271b1] px-6 py-3 font-bold text-white transition hover:bg-[#135e96] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               {status === 'loading' ? (
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity }}
-                  className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full"
+                  className="h-5 w-5 rounded-full border-2 border-white border-t-transparent"
                 />
               ) : (
                 <FiArrowRight className="w-5 h-5" />
@@ -131,7 +126,7 @@ export default function NewsletterCTA() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className={`text-sm font-semibold ${
-                status === 'error' ? 'text-red-200' : 'text-green-200'
+                status === 'error' ? 'text-red-600' : 'text-emerald-700'
               }`}
             >
               {message}
@@ -139,9 +134,9 @@ export default function NewsletterCTA() {
           )}
 
           {/* Social Proof */}
-          <div className="pt-6 border-t border-white/10">
-            <p className="text-sm text-white/70">
-              💌 Join 50,000+ creators getting inspired weekly
+          <div className="border-t border-slate-200 pt-5">
+            <p className="text-sm text-slate-500">
+              Join 50,000+ creators getting inspired weekly
             </p>
           </div>
         </div>

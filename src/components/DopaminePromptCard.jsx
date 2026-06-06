@@ -136,10 +136,11 @@ export default function DopaminePromptCard({ prompt, position = 0 }) {
           {prompt.title}
         </motion.h3>
 
-        {/* Description preview */}
-        <p className="text-sm text-slate-400 line-clamp-2">
-          {prompt.prompt.substring(0, 80)}...
-        </p>
+        {prompt.shortDescription ? (
+          <p className="text-sm text-slate-400 line-clamp-2">
+            {prompt.shortDescription}
+          </p>
+        ) : null}
 
         {/* Category tags */}
         <div className="flex flex-wrap gap-2">

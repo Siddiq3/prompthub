@@ -1,4 +1,5 @@
 import { normalizeImageUrl } from "../utils/imageUrl.js";
+import { normalizeApprovalStatus, normalizeContentSource } from "./contentApproval.js";
 
 const VIDEO_WORKFLOW_DATA = [
   {
@@ -33,6 +34,11 @@ const VIDEO_WORKFLOW_DATA = [
     previewImage: "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/video-preview/v0001.webp",
     previewVideo: "https://cdn.jsdelivr.net/gh/Siddiq3/promtdata@main/video-clips/v0001.mp4",
     slug: "ipl-stadium-crowd-cam-ai-video-prompt-realistic",
+    approvalStatus: "approved",
+    contentSource: "human",
+    isHumanWritten: true,
+    approvedBy: "SiddiqKolimi",
+    approvedAt: "2026-05-25T22:00:00Z",
     aliases: ["ipl-stadium-crowd-cam-ai-video-v0001"],
     badges: ["🔥 Viral", "🏏 IPL Style"],
     workflowSteps: [
@@ -197,6 +203,9 @@ export const normalizeVideoWorkflow = (workflow, index = 0) => {
     thumbnail: normalizeImageUrl(workflow.thumbnail || workflow.previewImage || ""),
     previewImage: normalizeImageUrl(workflow.previewImage || workflow.thumbnail || ""),
     previewVideo: normalizeImageUrl(workflow.previewVideo || ""),
+    approvalStatus: normalizeApprovalStatus(workflow.approvalStatus),
+    contentSource: normalizeContentSource(workflow.contentSource),
+    isHumanWritten: workflow.isHumanWritten === true || normalizeContentSource(workflow.contentSource) === "human",
     badges,
     trendingBadges: workflow.isTrending ? badges : badges.slice(0, 2),
     steps,

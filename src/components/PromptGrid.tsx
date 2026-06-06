@@ -31,7 +31,7 @@ export default function PromptGrid({
   }
 
   const gridClasses = {
-    grid: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max',
+    grid: 'grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3',
     masonry: 'columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6',
     list: 'space-y-4',
   };
@@ -75,7 +75,7 @@ function LoadingGrid() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: i * 0.05 }}
-          className="bg-slate-100 rounded-2xl aspect-square animate-pulse"
+          className="aspect-square animate-pulse rounded-lg bg-slate-100"
         />
       ))}
     </div>

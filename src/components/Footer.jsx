@@ -4,20 +4,20 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-slate-900 dark:bg-black border-t border-slate-800">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-12">
+    <footer className="w-full border-t border-slate-200 bg-white">
+      <div className="mx-auto w-full max-w-7xl space-y-10 px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         {/* Footer Content Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-white font-bold text-lg">PhotoPromptsHub</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
+            <h3 className="text-xl font-bold text-slate-950">PhotoPromptsHub</h3>
+            <p className="text-sm leading-7 text-slate-600">
               The premier library of AI image prompts for creators, designers, and artists.
             </p>
             <div className="flex gap-4 pt-2">
               <a
                 href="https://www.instagram.com/photosprompthub?igsh=MTNoNzJvYmxraG1meQ=="
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-500 transition-colors hover:text-[#2271b1]"
                 aria-label="Instagram"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -30,7 +30,7 @@ function Footer() {
               </a>
               <a
                 href="https://whatsapp.com/channel/0029VbCfYa9002TAlsIdh71m"
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-500 transition-colors hover:text-[#2271b1]"
                 aria-label="WhatsApp"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -42,7 +42,7 @@ function Footer() {
               </a>
               <a
                 href="https://t.me/photopromptshub"
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-500 transition-colors hover:text-[#2271b1]"
                 aria-label="Telegram"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -56,25 +56,25 @@ function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-white font-semibold text-sm">Explore</h4>
+            <h4 className="text-sm font-bold uppercase tracking-[0.16em] text-slate-950">Explore</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/prompts" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/prompts" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   All Prompts
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/categories" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="/latest" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/latest" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Latest
                 </Link>
               </li>
               <li>
-                <Link href="/trending" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/trending" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Trending
                 </Link>
               </li>
@@ -83,25 +83,25 @@ function Footer() {
 
           {/* Support & Legal */}
           <div className="space-y-4">
-            <h4 className="text-white font-semibold text-sm">Support</h4>
+            <h4 className="text-sm font-bold uppercase tracking-[0.16em] text-slate-950">Support</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/about" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/contact" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/privacy-policy" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/terms" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Terms & Conditions
                 </Link>
               </li>
@@ -110,15 +110,15 @@ function Footer() {
 
           {/* Legal */}
           <div className="space-y-4">
-            <h4 className="text-white font-semibold text-sm">Legal</h4>
+            <h4 className="text-sm font-bold uppercase tracking-[0.16em] text-slate-950">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/disclaimer" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/disclaimer" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   Disclaimer
                 </Link>
               </li>
               <li>
-                <Link href="/dmca" className="text-slate-400 hover:text-white text-sm transition-colors">
+                <Link href="/dmca" className="text-sm text-slate-600 transition-colors hover:text-[#2271b1]">
                   DMCA & Content Removal
                 </Link>
               </li>
@@ -127,14 +127,14 @@ function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-slate-800"></div>
+        <div className="border-t border-slate-200"></div>
 
         {/* Bottom Footer */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-400 text-sm text-center sm:text-left">
+        <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-slate-500 sm:flex-row sm:text-left">
           <p>© {currentYear} PhotoPromptsHub. All rights reserved.</p>
-          <p>Made with ❤️ for creative professionals</p>
+          <p>Made for creative professionals</p>
           <p>
-            <a href="https://www.instagram.com/siddiqkolimi/" className="hover:text-white transition-colors inline-block py-1">
+            <a href="https://www.instagram.com/siddiqkolimi/" className="inline-block py-1 transition-colors hover:text-[#2271b1]">
               Developed by Siddiq Kolimi
             </a>
           </p>

@@ -23,26 +23,29 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900 border-b border-slate-800">
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7C3AED] to-[#EC4899] flex items-center justify-center text-white font-clash font-bold text-lg">
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#2271b1] text-lg font-bold text-white">
                 P
               </div>
-              <span className="font-clash font-bold text-lg text-white hidden sm:block">PhotoPrompts</span>
+              <span className="hidden text-xl font-bold tracking-tight text-slate-950 sm:block">PhotoPromptsHub</span>
             </Link>
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center gap-2">
-              <Link href="/prompts" className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition">
+              <Link href="/prompts" className="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-[#2271b1] transition">
                 Prompts
               </Link>
-              <Link href="/categories" className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition">
+              <Link href="/categories" className="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-[#2271b1] transition">
                 Categories
               </Link>
-              <Link href="/trending" className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition">
+              <Link href="/latest" className="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-[#2271b1] transition">
+                Latest
+              </Link>
+              <Link href="/trending" className="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-[#2271b1] transition">
                 Trending
               </Link>
             </div>
@@ -51,25 +54,25 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 text-sm transition"
+                className="hidden items-center gap-2 rounded-md border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm text-slate-700 transition hover:border-[#2271b1] hover:bg-white hover:text-[#2271b1] md:flex"
               >
                 <FaSearch className="w-4 h-4" />
                 <span>Search</span>
-                <span className="ml-2 text-slate-500 text-xs">⌘K</span>
+                <span className="ml-2 text-xs text-slate-400">⌘K</span>
               </button>
 
-              <Link href="/saved" className="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="Saved Prompts">
+              <Link href="/saved" className="rounded-md p-2 text-slate-600 transition hover:bg-slate-100 hover:text-[#2271b1]" title="Saved Prompts">
                 <FaBookmark className="w-5 h-5" />
               </Link>
 
-              <Link href="/prompts" className="hidden sm:block px-5 py-2 rounded-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 text-sm font-semibold transition">
+              <Link href="/prompts" className="hidden rounded-md bg-[#2271b1] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#135e96] sm:block">
                 Browse
               </Link>
 
               {/* Mobile search button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="md:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-300 transition"
+                className="rounded-md p-2 text-slate-600 transition hover:bg-slate-100 md:hidden"
               >
                 <FaSearch className="w-5 h-5" />
               </button>
@@ -77,7 +80,7 @@ export default function Navbar() {
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-300 transition"
+                className="rounded-md p-2 text-slate-600 transition hover:bg-slate-100 md:hidden"
               >
                 {isMobileMenuOpen ? (
                   <FaTimes className="w-5 h-5" />
@@ -90,31 +93,38 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden border-t border-slate-800 bg-slate-900 py-3 px-4">
+            <div className="border-t border-slate-200 bg-white px-4 py-3 md:hidden">
               <Link
                 href="/prompts"
-                className="block px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded transition"
+                className="block rounded px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#2271b1]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Prompts
               </Link>
               <Link
                 href="/categories"
-                className="block px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded transition"
+                className="block rounded px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#2271b1]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Categories
               </Link>
               <Link
+                href="/latest"
+                className="block rounded px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#2271b1]"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Latest
+              </Link>
+              <Link
                 href="/trending"
-                className="block px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded transition"
+                className="block rounded px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#2271b1]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Trending
               </Link>
               <Link
                 href="/prompts"
-                className="block mt-2 px-4 py-2 rounded-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 text-sm font-semibold text-center transition"
+                className="mt-2 block rounded-md bg-[#2271b1] px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-[#135e96]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Browse Prompts
@@ -129,4 +139,3 @@ export default function Navbar() {
     </>
   );
 }
-

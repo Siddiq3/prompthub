@@ -47,6 +47,7 @@ export interface Prompt {
   title: string;
   slug: string;
   prompt: string;
+  shortDescription?: string;
   negativePrompt: string;
   tags: string[];
   displayTags?: string[];
@@ -59,6 +60,11 @@ export interface Prompt {
   createdAt: string;
   updatedAt?: string;
   previewImage: string;
+  approvalStatus?: 'approved' | 'pending' | 'rejected' | string;
+  contentSource?: 'human' | string;
+  isHumanWritten?: boolean;
+  approvedBy?: string;
+  approvedAt?: string;
   badges?: Badge[];
   seo: SEO;
   seoIntro?: string;
@@ -278,6 +284,11 @@ export interface VideoWorkflow {
   thumbnail: string;
   previewImage?: string;
   previewVideo?: string;
+  approvalStatus?: 'approved' | 'pending' | 'rejected' | string;
+  contentSource?: 'human' | string;
+  isHumanWritten?: boolean;
+  approvedBy?: string;
+  approvedAt?: string;
   badges?: Badge[];
   trendingBadges?: Badge[];
   steps: VideoWorkflowStep[];

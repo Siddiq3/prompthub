@@ -248,9 +248,11 @@ function FeaturedCard({ prompt }) {
           </h3>
 
           {/* Description */}
-          <p className="text-slate-300 line-clamp-2 text-sm sm:text-base">
-            {prompt.prompt.substring(0, 120)}...
-          </p>
+          {prompt.shortDescription ? (
+            <p className="text-slate-300 line-clamp-2 text-sm sm:text-base">
+              {prompt.shortDescription}
+            </p>
+          ) : null}
 
           {/* Tags */}
           <div className="flex gap-2 flex-wrap">

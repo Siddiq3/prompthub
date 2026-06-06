@@ -21,7 +21,7 @@ function NavbarWithSuspense() {
 export default function ClientLayout({ children }) {
   return (
     <>
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-white" />
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[#f6f7f8]" />
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand-ink focus:px-4 focus:py-2 focus:text-white"
@@ -55,7 +55,7 @@ export default function ClientLayout({ children }) {
           color: '#111827',
         }}
         buttonStyle={{
-          background: '#7c3aed',
+          background: '#2271b1',
           color: '#fff',
           borderRadius: '8px',
           padding: '12px 20px',

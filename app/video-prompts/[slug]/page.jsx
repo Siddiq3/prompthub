@@ -12,6 +12,7 @@ import {
   WorkflowTimeline,
 } from "@/src/components/video-workflows";
 import FaqAccordion from "@/src/components/FaqAccordion";
+import { isHumanApprovedContent } from "@/src/lib/contentApproval";
 
 export const revalidate = 3600;
 
@@ -26,16 +27,21 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const hasApprovedEditorial = isHumanApprovedContent(workflow);
+  const description = hasApprovedEditorial
+    ? workflow.seo?.metaDescription || workflow.description || workflow.title
+    : workflow.title;
+
   return {
     title: workflow.seo?.metaTitle || `${workflow.title} | PhotoPromptsHub`,
-    description: workflow.seo?.metaDescription || workflow.description,
+    description,
     keywords: workflow.seo?.keywords || [],
     alternates: {
       canonical: `${baseUrl}/video-prompts/${workflow.slug}`,
     },
     openGraph: {
       title: workflow.seo?.metaTitle || workflow.title,
-      description: workflow.seo?.metaDescription || workflow.description,
+      description,
       url: `${baseUrl}/video-prompts/${workflow.slug}`,
       images: workflow.thumbnail ? [{ url: workflow.thumbnail, alt: workflow.title }] : [],
       type: "article",
@@ -43,7 +49,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: "summary_large_image",
       title: workflow.seo?.metaTitle || workflow.title,
-      description: workflow.seo?.metaDescription || workflow.description,
+      description,
       images: workflow.thumbnail ? [workflow.thumbnail] : [],
     },
   };
@@ -55,24 +61,10 @@ export default async function VideoWorkflowPage({ params }) {
   if (!workflow) notFound();
 
   const relatedWorkflows = await getRelatedVideoWorkflows(workflow, 3);
-  const howToSteps = workflow.howToSteps?.length
-    ? workflow.howToSteps
-    : workflow.steps.map((step) => `Copy Step ${step.stepNumber} and use it in ${step.platform}.`);
-  const tips = workflow.tips?.length
-    ? workflow.tips
-    : workflow.steps.flatMap((step) => step.tips || []).slice(0, 5);
-  const faqItems = workflow.faqItems?.length
-    ? workflow.faqItems
-    : [
-        {
-          question: `What tools do I need for ${workflow.title}?`,
-          answer: `This workflow uses ${workflow.toolsUsed.join(" and ")}. You can adapt the prompts for similar image and video generation tools.`,
-        },
-        {
-          question: "Can I copy each workflow prompt separately?",
-          answer: "Yes. Each step has its own copy button so you can copy only the prompt needed for that stage.",
-        },
-      ];
+  const hasApprovedEditorial = isHumanApprovedContent(workflow);
+  const howToSteps = hasApprovedEditorial && workflow.howToSteps?.length ? workflow.howToSteps : [];
+  const tips = hasApprovedEditorial && workflow.tips?.length ? workflow.tips : [];
+  const faqItems = hasApprovedEditorial && workflow.faqItems?.length ? workflow.faqItems : [];
   const schema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
@@ -122,6 +114,7 @@ export default async function VideoWorkflowPage({ params }) {
               </div>
             </section>
 
+            {hasApprovedEditorial ? (
             <article className="space-y-10 text-slate-700">
               <section className="space-y-4">
                 <h2 className="text-3xl font-bold text-slate-900">About This Video Workflow</h2>
@@ -133,19 +126,21 @@ export default async function VideoWorkflowPage({ params }) {
                 </p>
               </section>
 
-              <section className="space-y-5">
-                <h2 className="text-3xl font-bold text-slate-900">How to Use This Workflow</h2>
-                <ol className="space-y-4">
-                  {howToSteps.map((step, index) => (
-                    <li key={step} className="flex gap-4">
-                      <span className="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
-                        {index + 1}
-                      </span>
-                      <span className="text-sm leading-7">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </section>
+              {howToSteps.length ? (
+                <section className="space-y-5">
+                  <h2 className="text-3xl font-bold text-slate-900">How to Use This Workflow</h2>
+                  <ol className="space-y-4">
+                    {howToSteps.map((step, index) => (
+                      <li key={step} className="flex gap-4">
+                        <span className="mt-1 flex h-8 w-8 flex-none items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+                          {index + 1}
+                        </span>
+                        <span className="text-sm leading-7">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              ) : null}
 
               {tips.length ? (
                 <section className="space-y-5">
@@ -160,11 +155,14 @@ export default async function VideoWorkflowPage({ params }) {
                 </section>
               ) : null}
 
-              <section className="space-y-5">
-                <h2 className="text-3xl font-bold text-slate-900">Frequently Asked Questions</h2>
-                <FaqAccordion faqItems={faqItems} />
-              </section>
+              {faqItems.length ? (
+                <section className="space-y-5">
+                  <h2 className="text-3xl font-bold text-slate-900">Frequently Asked Questions</h2>
+                  <FaqAccordion faqItems={faqItems} />
+                </section>
+              ) : null}
             </article>
+            ) : null}
           </div>
 
           <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">

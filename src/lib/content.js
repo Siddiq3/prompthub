@@ -67,16 +67,6 @@ export const comparePromptsByDate = (left, right, direction = "desc") => {
 const dedupeById = (items = []) =>
   items.filter((item, index) => items.findIndex((entry) => entry.id === item.id) === index);
 
-const formatHumanList = (items = []) => {
-  const values = items.filter(Boolean);
-
-  if (!values.length) return "";
-  if (values.length === 1) return values[0];
-  if (values.length === 2) return `${values[0]} and ${values[1]}`;
-
-  return `${values.slice(0, -1).join(", ")}, and ${values[values.length - 1]}`;
-};
-
 const buildTagEntries = (counts = new Map(), limit) => {
   const items = [...counts.entries()]
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
@@ -141,9 +131,7 @@ export const enrichPrompts = (prompts) => {
     const category = derivePrimaryCategory({ category: prompt.category, tags: rawTags });
     const subjectTags = getSubjectTags(rawTags, category);
     const categoryMeta = getCategoryMeta(category);
-    const shortDescription =
-      clampText(prompt.prompt, 124) ||
-      `${prompt.title} is a ${category.toLowerCase()} prompt prepared for ${modelLabel}.`;
+    const shortDescription = clampText(prompt.shortDescription, 124);
 
     return {
       ...prompt,
@@ -164,9 +152,7 @@ export const enrichPrompts = (prompts) => {
       formattedDate: formatDate(prompt.createdAt),
       tagSlugs: rawTags.map((tag) => slugify(tag)),
       shortDescription,
-      seoIntro: prompt.seoIntro || `${prompt.title} is a ${category.toLowerCase()} prompt for ${modelLabel}. It works well for ${formatHumanList(
-        displayTags.slice(0, 3).map((tag) => formatTagLabel(tag))
-      ) || `${category.toLowerCase()} scenes`} and is framed for a ${prompt.aspectRatio} composition.`,
+      seoIntro: prompt.seoIntro || "",
       bestFor: dedupeById(
         [
           { id: `${prompt.id}-category`, label: category },
@@ -240,7 +226,6 @@ export const getTagLanding = (prompts, value) => {
       href: buildCategoryPath(categoryName)
     }))
     .slice(0, 4);
-  const categorySummary = formatHumanList(relatedCategories.map((category) => category.name));
 
   return {
     name,
@@ -251,8 +236,8 @@ export const getTagLanding = (prompts, value) => {
     prompts: items,
     latestPrompt: items[0] || null,
     relatedCategories,
-    intro: `Use the ${label.toLowerCase()} tag when ${label.toLowerCase()} is part of the look or mood you want, while the main subject still comes from a broader category such as ${categorySummary || "the rest of the library"}.`,
-    description: `Browse ${label.toLowerCase()} prompts across ${categorySummary || "multiple categories"} on PhotoPromptsHub.`
+    intro: "",
+    description: ""
   };
 };
 
