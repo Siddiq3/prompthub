@@ -3,6 +3,23 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { formatTagLabel } from "../lib/taxonomy";
 
+const ASPECT_RATIO_CLASSES = {
+  "1:1": "aspect-square",
+  "4:3": "aspect-[4/3]",
+  "3:4": "aspect-[3/4]",
+  "4:5": "aspect-[4/5]",
+  "16:9": "aspect-video",
+  "9:16": "aspect-[9/16]",
+  "3:2": "aspect-[3/2]",
+  "2:3": "aspect-[2/3]",
+  "21:9": "aspect-[21/9]",
+};
+
+const getAspectRatioClass = (aspectRatio) => {
+  const normalized = String(aspectRatio || "").replace(/\s+/g, "");
+  return ASPECT_RATIO_CLASSES[normalized] || "aspect-[3/4]";
+};
+
 /**
  * Server-side prompt card for static pages
  * Pure static component - no interactive handlers
@@ -29,17 +46,18 @@ export default function PromptCardServer({ prompt }) {
     ...prompt.displayTags.filter((tag) => !subjectTagSlugs.has(String(tag).trim().toLowerCase()))
   ];
   const visibleTags = orderedTags.slice(0, 2);
+  const aspectClass = getAspectRatioClass(prompt.aspectRatio);
 
   return (
     <Link href={`/prompt/${prompt.slug}`} prefetch={true} className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl">
       <article className="flex flex-col h-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-        <div className="relative aspect-video overflow-hidden bg-slate-100 dark:bg-slate-700">
+        <div className={`relative overflow-hidden bg-slate-100 dark:bg-slate-700 ${aspectClass}`}>
           {prompt.previewImage && (
             <Image
               src={prompt.previewImage}
               alt={prompt.title}
               fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
+              className="object-contain group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           )}

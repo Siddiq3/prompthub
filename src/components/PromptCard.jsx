@@ -61,7 +61,7 @@ function PromptCard({ prompt, priority = false, onSave, savedPrompts = [] }) {
             title={prompt.title}
             priority={priority}
             className="w-full h-full"
-            imageClassName="w-full h-full object-cover"
+            imageClassName="w-full h-full object-contain"
             aspectClassName=""
             onLoadingComplete={() => setImageLoading(false)}
           />

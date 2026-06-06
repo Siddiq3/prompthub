@@ -48,7 +48,7 @@ function TrendingCard({ prompt }) {
           alt={prompt.title}
           title={prompt.title}
           className="w-full h-full"
-          imageClassName="group-hover:scale-110 transition-transform duration-500 object-cover"
+          imageClassName="group-hover:scale-105 transition-transform duration-500 object-contain"
           aspectClassName=""
         />
 

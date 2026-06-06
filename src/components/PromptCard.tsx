@@ -23,8 +23,9 @@ const MODEL_COLORS: Record<string, { bg: string; text: string }> = {
 
 const ASPECT_RATIO_MAP: Record<string, string> = {
   '1:1': 'aspect-square',
-  '4:3': 'aspect-video',
+  '4:3': 'aspect-[4/3]',
   '3:4': 'aspect-[3/4]',
+  '4:5': 'aspect-[4/5]',
   '16:9': 'aspect-video',
   '9:16': 'aspect-[9/16]',
   '3:2': 'aspect-[3/2]',
@@ -94,7 +95,7 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
       <Link href={getPromptUrl(prompt.slug)} prefetch={true} className="block">
         <div className="group flex gap-4 p-4 rounded-[12px] bg-white border border-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer">
           <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
-            <Image src={prompt.previewImage} alt={prompt.title} fill className="object-cover" />
+            <Image src={prompt.previewImage} alt={prompt.title} fill className="object-contain" />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -141,7 +142,7 @@ export default function PromptCard({ prompt, variant = 'grid', isSaved: external
       >
         <div className={`relative overflow-hidden bg-slate-100 ${aspectClass}`}>
           <div className="absolute inset-0 transition-transform duration-300 ease-[ease] group-hover:scale-105">
-            <Image src={prompt.previewImage} alt={prompt.title} fill className="object-cover" />
+            <Image src={prompt.previewImage} alt={prompt.title} fill className="object-contain" />
           </div>
 
           <div className="absolute top-3 left-3 z-10">

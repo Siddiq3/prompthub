@@ -35,6 +35,23 @@ const countWords = (items = []) =>
     .split(/\s+/)
     .filter(Boolean).length;
 
+const ASPECT_RATIO_CLASSES = {
+  "1:1": "aspect-square",
+  "4:3": "aspect-[4/3]",
+  "3:4": "aspect-[3/4]",
+  "4:5": "aspect-[4/5]",
+  "16:9": "aspect-video",
+  "9:16": "aspect-[9/16]",
+  "3:2": "aspect-[3/2]",
+  "2:3": "aspect-[2/3]",
+  "21:9": "aspect-[21/9]",
+};
+
+const getAspectRatioClass = (aspectRatio, fallback = "aspect-[4/5]") => {
+  const normalized = String(aspectRatio || "").replace(/\s+/g, "");
+  return ASPECT_RATIO_CLASSES[normalized] || fallback;
+};
+
 function AdSlot({ id, compact = false }) {
   return (
     <div className="space-y-1">
@@ -100,6 +117,7 @@ export default async function PromptDetailsPage({ params }) {
     : cleanFaqItems(prompt.faq);
   const tags = cleanTextArray(prompt.tags);
   const displayTags = cleanTextArray(prompt.displayTags);
+  const imageAspectClass = getAspectRatioClass(prompt.aspectRatio);
   const renderedWordCount = countWords([
     title,
     intro,
@@ -159,14 +177,14 @@ export default async function PromptDetailsPage({ params }) {
               </p>
             </div>
 
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+            <div className={`relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 ${imageAspectClass}`}>
               {prompt.previewImage ? (
                 <Image
                   src={prompt.previewImage}
                   alt={title}
                   fill
                   loading="lazy"
-                  className="object-cover"
+                  className="object-contain"
                   sizes="(max-width: 1024px) 100vw, 360px"
                 />
               ) : null}
@@ -301,9 +319,9 @@ export default async function PromptDetailsPage({ params }) {
               <div className="grid gap-5 sm:grid-cols-3">
                 {relatedPrompts.map((item) => (
                   <Link key={item.id} href={`/prompt/${item.slug}`} className="group overflow-hidden rounded-lg border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg">
-                    <div className="relative aspect-[4/5] bg-slate-100">
+                    <div className={`relative bg-slate-100 ${getAspectRatioClass(item.aspectRatio)}`}>
                       {item.previewImage ? (
-                        <Image src={item.previewImage} alt={item.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 220px" />
+                        <Image src={item.previewImage} alt={item.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 220px" />
                       ) : null}
                     </div>
                     <div className="space-y-2 p-4">

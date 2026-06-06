@@ -67,7 +67,7 @@ function SmartImage({
           sizes={sizes}
           priority={priority}
           quality={85}
-          className={`object-cover group-hover:scale-110 transition-transform duration-300 ${
+          className={`${imageClassName || "object-contain group-hover:scale-105 transition-transform duration-300"} ${
             imageLoaded ? "opacity-100" : "opacity-0"
           } transition-opacity duration-300`}
           onError={handleError}
@@ -87,4 +87,3 @@ function SmartImage({
 }
 
 export default SmartImage;
-

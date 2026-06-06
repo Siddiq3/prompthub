@@ -80,7 +80,7 @@ async function LatestSection() {
         </div>
       </div>
 
-      <PromptGrid prompts={latestItems.slice(0, 9)} variant="grid" />
+      <PromptGrid prompts={latestItems} variant="grid" />
 
       <div className="mt-10 flex justify-center">
         <a href="/prompts" className="inline-flex h-14 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED] to-[#EC4899] px-8 text-base font-semibold text-white shadow-lg shadow-[#7C3AED]/20 transition hover:opacity-95">

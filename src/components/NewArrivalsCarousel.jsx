@@ -91,7 +91,7 @@ export default function NewArrivalsCarousel({ title, description, prompts }) {
                     alt={prompt.title}
                     title={prompt.title}
                     className="w-full h-full"
-                    imageClassName="group-hover:scale-110 transition-transform duration-300"
+                    imageClassName="object-contain group-hover:scale-105 transition-transform duration-300"
                     aspectClassName=""
                   />
                 </div>
