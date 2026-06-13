@@ -75,8 +75,8 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value: process.env.NODE_ENV === "production"
-              ? "default-src 'self'; img-src * data:; media-src 'self' https: blob:; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https:"
-              : "default-src 'self'; img-src * data: blob:; media-src 'self' https: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net localhost:*; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https: http: ws: wss:",
+              ? "default-src 'self'; img-src * data:; media-src 'self' https: blob:; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https:; frame-src 'self' googleads.g.doubleclick.net tpc.googlesyndication.com"
+              : "default-src 'self'; img-src * data: blob:; media-src 'self' https: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net pagead2.googlesyndication.com localhost:*; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https: http: ws: wss:; frame-src 'self' googleads.g.doubleclick.net tpc.googlesyndication.com",
           },
         ],
       },
