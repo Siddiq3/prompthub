@@ -52,6 +52,13 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased overflow-x-hidden" suppressHydrationWarning>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1501898465253880"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body className={`${font.variable} font-sans antialiased h-full overflow-x-hidden bg-[#f6f7f8] text-slate-900 transition-colors duration-300`}>
         <Providers>
           <ClientLayout>{children}</ClientLayout>

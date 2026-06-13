@@ -11,10 +11,10 @@ function PrivacyPolicy() {
   return (
     <ContentPageLayout
       title="Privacy Policy"
-      description="This Privacy Policy explains what limited information PhotoPromptsHub may receive when you browse the website, how browser storage works, and how future advertising services such as Google AdSense may use cookies."
+      description="This Privacy Policy explains what limited information PhotoPromptsHub may receive when you browse the website, how browser storage works, and how third-party services may use cookies."
       path="/privacy-policy"
       seoTitle="Privacy Policy for PhotoPromptsHub"
-      seoDescription="Read the PhotoPromptsHub Privacy Policy covering browser storage, cookies, future Google AdSense use, external links, and your privacy choices."
+      seoDescription="Read the PhotoPromptsHub Privacy Policy covering browser storage, cookies, third-party services, external links, and your privacy choices."
       breadcrumbs={breadcrumbs}
       eyebrow="Privacy Policy"
       meta={["Last updated March 10, 2026", "No account registration required"]}
@@ -56,9 +56,9 @@ function PrivacyPolicy() {
       </section>
 
       <section className="rounded-[1.75rem] border border-slate-200 bg-white/95 p-5 shadow-soft sm:p-6">
-        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Google AdSense and Advertising</h2>
+        <h2 className="font-heading text-2xl font-semibold text-brand-ink">Advertising Services</h2>
         <p className="mt-3 text-sm leading-7 text-slate-600">
-          This website may use third-party advertising services such as Google AdSense in the future. If enabled, third-party vendors, including Google, may use cookies to serve ads based on a user’s previous visits to this website or other websites.
+          This website may use third-party advertising services in the future. If enabled, advertising partners may use cookies to serve ads based on a user’s previous visits to this website or other websites.
         </p>
         <p className="mt-3 text-sm leading-7 text-slate-600">
           Advertising cookies may be used to show more relevant ads and to measure ad performance. Users may opt out of personalized advertising by visiting Google Ads Settings. If advertising is enabled later, this policy may be updated to reflect the services being used at that time.

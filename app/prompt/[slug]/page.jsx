@@ -53,24 +53,6 @@ const getAspectRatioClass = (aspectRatio, fallback = "aspect-[4/5]") => {
   return ASPECT_RATIO_CLASSES[normalized] || fallback;
 };
 
-function AdSlot({ id, compact = false }) {
-  return (
-    <div className="space-y-1">
-      <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">Advertisement</p>
-      <div
-        id={id}
-        className={[
-          "ad-slot flex w-full items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50 text-xs text-slate-400",
-          compact ? "max-w-[320px]" : "max-w-[320px] sm:max-w-none",
-          compact ? "min-h-[250px]" : "min-h-[120px] sm:min-h-[160px]",
-        ].join(" ")}
-      >
-        {/* Google AdSense unit here */}
-      </div>
-    </div>
-  );
-}
-
 function getExplicitRelatedPrompts(allPrompts, prompt, limit = 3) {
   const relatedKeys = Array.isArray(prompt.relatedSlugs) ? prompt.relatedSlugs : [];
   const explicit = relatedKeys
@@ -199,8 +181,6 @@ export default async function PromptDetailsPage({ params }) {
             </div>
           </header>
 
-          <AdSlot id="ad-top" />
-
           {(intro || aboutParagraphs.length) ? (
             <section className="space-y-5 text-base leading-8 text-slate-700">
               {intro ? <p>{intro}</p> : null}
@@ -244,8 +224,6 @@ export default async function PromptDetailsPage({ params }) {
             ) : null}
           </section>
 
-          <AdSlot id="ad-mid" />
-
           {howToSteps.length ? (
             <section className="space-y-5">
               <h2 className="text-3xl font-bold leading-tight text-slate-950">How to use this prompt</h2>
@@ -282,8 +260,6 @@ export default async function PromptDetailsPage({ params }) {
             </section>
           ) : null}
 
-          <AdSlot id="ad-before-faq" />
-
           {faqItems.length ? (
             <section className="space-y-5">
               <h2 className="text-3xl font-bold leading-tight text-slate-950">Frequently asked questions</h2>
@@ -299,12 +275,10 @@ export default async function PromptDetailsPage({ params }) {
           ) : null}
 
           <div className="space-y-8 lg:hidden">
-            <AdSlot id="ad-mobile-sidebar-top" compact />
             {displayTags.length ? (
               <SidebarTags tags={displayTags} />
             ) : null}
             <SidebarShare title={title} url={pageUrl} />
-            <AdSlot id="ad-mobile-sidebar-bottom" compact />
           </div>
 
           {tags.length ? (
@@ -346,10 +320,8 @@ export default async function PromptDetailsPage({ params }) {
 
         <aside className="hidden lg:block">
           <div className="sticky top-24 space-y-8">
-            <AdSlot id="ad-sidebar-top" compact />
             {displayTags.length ? <SidebarTags tags={displayTags} /> : null}
             <SidebarShare title={title} url={pageUrl} />
-            <AdSlot id="ad-sidebar-bottom" compact />
           </div>
         </aside>
       </div>
